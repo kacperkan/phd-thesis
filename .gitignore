@@ -22,3 +22,8 @@ Makefile
 **/*.sls
 **/*.swp
 **/*.toc
+**/*.fls
+**/*.fdb*
+**/*.synctex*
+
+.DS_Store
