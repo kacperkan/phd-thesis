@@ -25,5 +25,6 @@ Makefile
 **/*.fls
 **/*.fdb*
 **/*.synctex*
+!main.pdf
 
 .DS_Store
