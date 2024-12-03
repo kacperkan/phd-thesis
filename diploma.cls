@@ -508,7 +508,7 @@
 \newcommand{\frontpageheader}{mschead.png}
 
 \newcommand{\kieruneklocal}{in~the~field~of~study }
-\newcommand{\dyscyplinalocal}{in~the~field~of~study }
+\newcommand{\dyscyplinalocal}{in~the~discipline~of }
 \newcommand{\specjalnosclocal}{and~specialisation }
 \newcommand{\titlelocal}{\@engtitle }
 \newcommand{\albumlocal}{student record book number }
@@ -546,7 +546,7 @@
         {
             \setmainfont{Adagio Slab Light}
             \fontsize{43pt}{43pt}\selectfont
-            PhD Diploma Thesis
+            PhD Thesis
         }
         \vskip 4em
         {
@@ -569,7 +569,7 @@
         {
             \setmainfont{Helvetica Light}
             \fontsize{12pt}{16pt}\selectfont
-            \albumlocal \@album
+            % \albumlocal \@album
             \vskip 2em
             \promotorlocal\\\@promotor
             \vskip 2em
