@@ -651,7 +651,6 @@
         \node[anchor=north east, inner sep=0pt] at(13.8, -19.6) {\@author};
     \end{tikzpicture}
 	\clearpage
-    \cleardoublepage
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -688,7 +687,7 @@
 		\draw[thick] (11.9,-13.8) -- (12.7,-13.8);
 	\end{tikzpicture}
 	% \fi
-    \cleardoublepage
+    % \cleardoublepage
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
