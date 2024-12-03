@@ -604,6 +604,7 @@
     \thispagestyle{empty}
     \begin{center}
         \textbf{\large\@title}
+        \vskip 1em
         
         \textbf{Streszczenie}
     \end{center}
@@ -620,7 +621,8 @@
     \thispagestyle{empty}
     \begin{center}
         \textbf{\large\@engtitle}
-        
+        \vskip 1em
+
         \textbf{Abstract}
     \end{center}
     \@thesisabstract

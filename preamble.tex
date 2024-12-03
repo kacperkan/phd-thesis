@@ -1,0 +1,105 @@
+\newcommand{\red}[1]{{\color{red}#1}}
+\newcommand{\todo}[1]{{\color{red}#1}}
+\newcommand{\TODO}[1]{\textbf{\color{red}[TODO: #1]}}
+% --- disable by uncommenting \renewcommand{\TODO}[1]{}
+% \renewcommand{\todo}[1]{#1}
+
+% It is strongly recommended to use hyperref, especially for the review
+% version. hyperref with option pagebackref eases the reviewers' job. Please
+% disable hyperref *only* if you encounter grave issues, e.g. with the file
+% validation for the camera-ready version. If you comment hyperref and then
+% uncomment it, you should delete *.aux before re-running LaTeX. (Or just hit
+% 'q' on the first LaTeX run, let it finish, and you should be clear).
+\definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
+\usepackage[pagebackref,breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
+
+\usepackage{fontawesome}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{relsize}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{multirow}
+\usepackage[T1]{fontenc}
+\usepackage{bm}
+\usepackage{emo}
+\usepackage{mathtools}
+\usepackage[percent]{overpic}
+\usepackage[accsupp]{axessibility}
+\usepackage[inline]{enumitem}
+\usepackage[utf8]{inputenc}\DeclareUnicodeCharacter{2212}{-}
+\usepackage{tcolorbox}
+
+\usepackage{anyfontsize}
+\usepackage{pgfplots}
+
+\def\mathdefault#1{#1}
+\everymath=\expandafter{\the\everymath\displaystyle}
+\pgfplotsset{compat=1.18}
+
+\usepackage{tikz}
+
+\usetikzlibrary{calendar,fpu,matrix, positioning,arrows,arrows.meta,calc,decorations.pathreplacing,decorations.text,spy}
+\tikzset{
+  % style for inserting images as nodes
+  img/.style={
+      % text width=2cm, %% don't use this text height=2cm, %% don't use this
+      inner sep=0pt,     % % use this
+      outer sep=0pt,     % % and this
+      rectangle,
+      align=center} % only for debugging..
+}
+
+\usepackage[normalem]{ulem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{colortbl}
+
+\newcommand{\KK}[1]{\textbf{\color{teal}[KK: #1]}}
+\newcommand{\kk}[1]{{\color{teal}#1}}
+
+\definecolor{julieta_colour}{RGB}{217,95,2}
+\newcommand{\JM}[1]{\textbf{\color{julieta_colour}[JM: #1]}}
+\newcommand{\jm}[1]{{\color{julieta_colour}#1}}
+
+\renewcommand{\todo}[1]{{\color{red}#1}}  % a proposal text, use sparingly
+
+\definecolor{dark_green}{rgb}{0, 0.5, 0}
+\newcommand{\ky}[1]{{\color{dark_green}#1}}
+\newcommand{\KY}[1]{{\color{dark_green}{\bf [KY: #1]}}}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\mlp}{MLP}
+\DeclareMathOperator*{\upsample}{upsample}
+\DeclareMathOperator*{\downsample}{downsample}
+\DeclareMathOperator*{\diag}{diag}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+% It is strongly recommended to use hyperref, especially for the review
+% version. hyperref with option pagebackref eases the reviewers' job. Please
+% disable hyperref *only* if you encounter grave issues, e.g. with the file
+% validation for the camera-ready version. If you comment hyperref and then
+% uncomment it, you should delete ReviewTempalte.aux before re-running LaTeX.
+% (Or just hit 'q' on the first LaTeX run, let it finish, and you should be
+% clear). Define the \ours macro
+
+% Support for easy cross-referencing
+\usepackage[capitalize]{cleveref}
+\crefname{section}{Sec.}{Secs.}
+\Crefname{section}{Section}{Sections}
+\Crefname{table}{Table}{Tables}
+\crefname{table}{Tab.}{Tabs.}
+
+\renewcommand{\paragraph}[1]{\vspace{.5em}\noindent\textbf{#1}}
+  % \setlength{\parindent}{0pt}%
+  \newcommand\mycoloredbox[1]{\textcolor{#1}{\rule{0.5em}{0.5em}}}
+  % \definecolor{thirdbestcolor}{rgb}{1,1, 0.6}
+  % \definecolor{secondbestcolor}{rgb}{1, 0.9, 0.6}
+  % \definecolor{firstbestcolor}{rgb}{1, 0.6, 0.6}
+  % \definecolor{thirdbestcolor}{html}{}
+  \definecolor{secondbestcolor}{HTML}{16E9CB}
+  \definecolor{firstbestcolor}{HTML}{169EE9}
+  \newcommand{\tablefirstbest}[0]{\cellcolor{firstbestcolor}}
+  \newcommand{\tablesecondbest}[0]{\cellcolor{secondbestcolor}}
+  % \newcommand{\tablethirdbest}[0]{\cellcolor{thirdbestcolor}}
