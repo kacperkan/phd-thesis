@@ -26,5 +26,6 @@ Makefile
 **/*.fdb*
 **/*.synctex*
 !main.pdf
+aux/main.xdv
 
 .DS_Store
