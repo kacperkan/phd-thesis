@@ -4,73 +4,27 @@
 % Pick thesis type and faculty
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass{diploma} 
-\instytut{Faculty of Electronics and Information Technology}
-\dyscyplina{Information and Communication Technology}
-\title{Renderowanie Ludzi z Kilku Próbek z Użyciem Częściowej Informacji}
-\engtitle{Few-Shot Human Neural Rendering with Partial Information}
-% \album{KD-277}
-\author{Kacper Kania, M.Sc.}
-\promotor{Tomasz Trzciński, Prof. PhD DSc.}
-\promotorpomocniczy{Marek Kowalski, PhD DSc.}
-\date{2025}
-\longdate{2025-01-01}
 
+\input{preamble.tex}
 
-%\grantlicense{TRUE} % [TRUE|FALSE]
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Streszczenie pracy i abstract.
-% In case of thesis in English swap the order - English version goes first.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\streszczeniepracy{
-To jest streszczenie. To jest trochę za krótkie, jako że powinno zająć całą stronę.
-\lipsum[1-4]
-} % koniec streszczenia
-
-
-\slowakluczowe{A, B, C}
-
-\thesisabstract{
-This is abstract. This one is a little too short as it should occupy the whole page.
-
-\lipsum[1-4]
-} % end of abstract
+\input{metadata.tex}
+\input{sections/abstracts/english.tex}
+\input{sections/abstracts/polish.tex}
+\input{acknowledgements.tex}
 
 
 
-
-
-\thesiskeywords{X, Y, Z}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Tu zaczyna się dokument
-% Here is the beginning of the document
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 % Headers
 \frontpages
 
-% Właściwa treść jest w pliku tekst/main.tex
-% Real contents is in tekst/main.tex
-% \input{tekst/main}
-
-% % Bibliografia - musi być
-% % Bibliography - must exist
-% \bibliografia
-
-% % Strony końcowe - można zakomentować, jeśli zbędne
-% % Additional pages - comment out if not needed
-
-% % Wykaz symboli i skrótów - patrz opis w tekście przykładowym
 \acronymslist
 % % % Spis rysunków
-% \listoffigures
+\listoffigures
 % % % Spis tabel
-% \listoftables
+\listoftables
 % % % Załączniki (plik appendices.tex)
-% \easyappendices
+\easyappendices
 \end{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

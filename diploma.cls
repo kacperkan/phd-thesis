@@ -98,7 +98,7 @@
 \fi
 \setotherlanguage{polish}
 \setotherlanguage{english}
-\setotherlanguage{latin}
+% \setotherlanguage{latin}
 % -------------------------------------------------------------------
 % Wymiary strony
 % Zalecane:
@@ -201,7 +201,6 @@
 \addbibresource{EE-dyplom.bib}
 \DeclareNameAlias{default}{family-given} % nazwisko na początku
 \newcommand{\bibliografia}{
-    \cleardoublepage
     \phantomsection
     \addcontentsline{toc}{chapter}{\refname}
     {
@@ -323,7 +322,7 @@
 % -------------------------------------------------------------------
 % Kolory
 % -------------------------------------------------------------------
-\RequirePackage[usenames,dvipsnames]{xcolor}
+\RequirePackage[dvipsnames]{xcolor}
 \definecolor{mysamplecolor}{rgb}{0.123, 0.456, 0.789}
 % Kolory wydziałów "budowlanych"
 \definecolor{bud}{RGB}{106, 186, 156}
@@ -578,6 +577,7 @@
         \citylocal \@date
         }
     \end{center}
+    \cleardoublepage
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -595,10 +595,12 @@
 \newcommand{\thesiskeywords}[1]{
     \newcommand{\@thesiskeywords}{#1}
 }
+\newcommand{\thesisacknowledgements}[1]{
+    \newcommand{\@thesisacknowledgements}{#1}
+}
 
 % Streszczenie polskie
 \newcommand{\stronastreszczenia}{
-    \cleardoublepage
     \thispagestyle{empty}
     \begin{center}
         \textbf{\large\@title}
@@ -610,12 +612,11 @@
     \vskip 2em
     \noindent\textbf{Słowa kluczowe: }
     \@slowakluczowe
-    \cleardoublepage
+    \clearpage
 }
 
 % Abstract angielski
 \newcommand{\abstractpage}{
-    \cleardoublepage
     \thispagestyle{empty}
     \begin{center}
         \textbf{\large\@engtitle}
@@ -627,15 +628,24 @@
     \vskip 2em
     \noindent\textbf{Keywords: }
     \@thesiskeywords
-    \cleardoublepage
+    \clearpage
 }
 
+\newcommand{\acknowledgements}{
+    \thispagestyle{empty}
+    \begin{center}
+        \textbf{\Huge Acknowledgements}
+    \end{center}
+    \@thesisacknowledgements
+    \cleardoublepage
+}
 % Spięcie stron streszczeń we właściwej
 % kolejności w jedno polecenie.
 \newcommand{\abstractpages}{
     \abstractpage
     \stronastreszczenia
 }
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Oświadczenia o autorstwie
@@ -650,7 +660,6 @@
         \node[anchor=north west, inner sep=0pt] at(-0.8, -5.2) {\@kierunek};
         \node[anchor=north east, inner sep=0pt] at(13.8, -19.6) {\@author};
     \end{tikzpicture}
-	\clearpage
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -687,7 +696,6 @@
 		\draw[thick] (11.9,-13.8) -- (12.7,-13.8);
 	\end{tikzpicture}
 	% \fi
-    % \cleardoublepage
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -698,6 +706,7 @@
     \counterwithout{lstlisting}{chapter} % hack niestety
     \pagestyle{empty}
     \maketitle
+    \acknowledgements
     \abstractpages
 % Zgodnie z Zarządzeniem JM Rektora 3/2022, oświadczenia o autorstwie i
 % opcjonalne oświadczenie o udzieleniu licencji składane są w systemie USOS
@@ -707,7 +716,6 @@
 %    \authorship
 %    \licensedthesis
     \tableofcontents
-    \cleardoublepage
     \pagestyle{headings}
 }
 
@@ -715,7 +723,6 @@
 % Lista skrótów i symboli
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\acronymslist}{
-%    \cleardoublepage
     \chapter*{\acronymstitle}
     \pagestyle{plain}
     \addcontentsline{toc}{chapter}{\acronymstitle}
@@ -730,7 +737,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcounter{easyappendix}[chapter]
 \newenvironment{easyappendix}[1]{
-    \cleardoublepage
     \refstepcounter{easyappendix}
     \addcontentsline{app}{chapter}{\hspace{1em}\theeasyappendix\hspace{1em} #1\dotfill}
     \par\bigskip

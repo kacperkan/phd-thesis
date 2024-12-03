@@ -17,4 +17,13 @@
             ]
         }
     ],
+    "latex-workshop.formatting.latexindent.args": [
+        "-l",
+        "%DIR%/.localSettings.yaml",
+        "-m",
+        "-c",
+        "%OUTDIR%/",
+        "%TMPFILE%",
+    ],
+    "latex-workshop.latex.outDir": "%DIR%/aux",
 }
