@@ -1,30 +1,25 @@
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Wybierz rodzaj pracy dyplomowej oraz wydział
-% Pick thesis type and faculty
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass{diploma} 
 
 \input{preamble.tex}
 
-\input{metadata.tex}
-\input{sections/abstracts/english.tex}
-\input{sections/abstracts/polish.tex}
-\input{acknowledgements.tex}
+\input{sections/0_metadata.tex}
+\input{sections/0_abstracts/english.tex}
+\input{sections/0_abstracts/polish.tex}
+\input{sections/0_abstracts/laysummary.tex}
+\input{sections/0_acknowledgements.tex}
 
 
 
 \begin{document}
-% Headers
-\frontpages
+\documentpreface{}
+\input{sections/0_symbols.tex}
+\input{sections/0_glossary.tex}
+\input{sections/1_introduction.tex}
+\input{sections/2_background.tex}
 
-\acronymslist
-% % % Spis rysunków
-\listoffigures
-% % % Spis tabel
-\listoftables
-% % % Załączniki (plik appendices.tex)
-\easyappendices
+\input{sections/10_discussion.tex}
+\applybibliography{}
+
 \end{document}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

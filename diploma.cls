@@ -53,10 +53,13 @@
 % Wykaz symboli i skrótów
 % Pakiet musi być wczytany przed mathspec
 % -------------------------------------------------------------------
+
+\usepackage[T1]{fontenc}
+\RequirePackage{inputenc}
 \RequirePackage[acronym,symbols,nopostdot]{glossaries}
 \setglossarysection{section}
 \makeglossaries
-\loadglsentries{glossary}
+\loadglsentries{sections/0_glossary}
 \newcommand{\acronymstitle}{List of Abbreviations and Symbols}
 
 % -------------------------------------------------------------------
@@ -70,6 +73,9 @@
 % https://tug.org/FontCatalogue/
 % -------------------------------------------------------------------
 
+\RequirePackage{mathtools}
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
 \RequirePackage{mathspec} % wczytuje również fontspec
 % \setmainfont{Latin Modern Roman}
 % \setromanfont{Latin Modern Roman}
@@ -77,6 +83,12 @@
 % \setmonofont{Latin Modern Mono}
 % \setmathrm{Latin Modern Math}
 % \setmathfont(Digits,Latin)[Scale=MatchLowercase]{Latin Modern Math}
+
+\RequirePackage{tocloft}
+\renewcommand{\cftpartleader}{\cftdotfill{\cftdotsep}} % for parts
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} % for chapters
+%\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} % for sections, if you really want! (It is default in report and book class (So you may not need it).
+
 
 % -------------------------------------------------------------------
 % Podstawowa konfiguracja XeLaTeX
@@ -193,34 +205,35 @@
 % Do wyboru: styl numeracyjny wg normy PN (?)
 % ALBO styl harwardzki
 % -------------------------------------------------------------------
-\RequirePackage[backend=biber,
-        style=ieee,     % styl numeryczny IEEE prawie jak PN
-        sorting=nyt,    % sortowanie spisu po nazwiskach
-        citestyle=numeric-comp % kompaktowe odnośniki numeryczne typu [21-23]
-    ]{biblatex}
-\addbibresource{EE-dyplom.bib}
-\DeclareNameAlias{default}{family-given} % nazwisko na początku
-\newcommand{\bibliografia}{
-    \phantomsection
-    \addcontentsline{toc}{chapter}{\refname}
-    {
-        \sloppy
-        \printbibliography
-    }
-}
+% \RequirePackage[backend=biber,
+%         style=ieee,     % styl numeryczny IEEE prawie jak PN
+%         sorting=nyt,    % sortowanie spisu po nazwiskach
+%         citestyle=numeric-comp % kompaktowe odnośniki numeryczne typu [21-23]
+%     ]{biblatex}
+% \addbibresource{main.bib}
+% \DeclareNameAlias{default}{family-given} % nazwisko na początku
+% \newcommand{\applybibliography}{
+%     \phantomsection
+%     \addcontentsline{toc}{chapter}{Bibliography}
+%     {
+%         \sloppy
+%         \printbibliography
+%     }
+% }
 % -------------------------------------------------------------------
 % Alternatywa - styl harwardzki:
 % -------------------------------------------------------------------
-%\RequirePackage{natbib}
-%\bibliographystyle{agsm}
-%\newcommand{\bibliografia}{
-%        \bibliography{EE-dyplom.bib}
-%}
+\RequirePackage[numbers,sort&compress]{natbib}
+\setlength{\bibsep}{1pt plus 1pt minus 1pt}
+\bibliographystyle{agsm}
+\newcommand{\applybibliography}{
+       \bibliography{main.bib}
+}
 
 % -------------------------------------------------------------------
 % Żeby spis treści zawierał to co trzeba
 % -------------------------------------------------------------------
-\RequirePackage[nottoc]{tocbibind}
+\RequirePackage{tocbibind}
 
 % -------------------------------------------------------------------
 % Numeracja tabel i rysunków
@@ -303,7 +316,9 @@
     linkbordercolor={1 0 0},     % color of frame around internal links (if colorlinks=false)
     citebordercolor={0 1 0},     % color of frame around citations
     urlbordercolor={0 1 1},     % color of frame around URL links 
+    breaklinks=true,        % allow links to break over lines
 }
+
 
 % -------------------------------------------------------------------
 % Wypełniacze do testowania typografii
@@ -598,16 +613,16 @@
 \newcommand{\thesisacknowledgements}[1]{
     \newcommand{\@thesisacknowledgements}{#1}
 }
+\newcommand{\thesislaysummary}[1]{
+    \newcommand{\@thesislaysummary}{#1}
+}
 
 % Streszczenie polskie
 \newcommand{\stronastreszczenia}{
     \thispagestyle{empty}
-    \begin{center}
-        \textbf{\large\@title}
-        \vskip 1em
-        
-        \textbf{Streszczenie}
-    \end{center}
+    \chapter*{Streszczenie}
+    \addcontentsline{toc}{chapter}{Streszczenie}
+    \thispagestyle{empty}
     \@streszczeniepracy
     
     \vskip 2em
@@ -618,13 +633,15 @@
 
 % Abstract angielski
 \newcommand{\abstractpage}{
+    \chapter*{Abstract}
+    \addcontentsline{toc}{chapter}{Abstract}
     \thispagestyle{empty}
-    \begin{center}
-        \textbf{\large\@engtitle}
-        \vskip 1em
+    % \begin{center}
+    %     \textbf{\large\@engtitle}
+    %     \vskip 1em
 
-        \textbf{Abstract}
-    \end{center}
+    %     \textbf{Abstract}
+    % \end{center}
     \@thesisabstract
     
     \vskip 2em
@@ -634,11 +651,17 @@
 }
 
 \newcommand{\acknowledgements}{
+    \chapter*{Acknowledgements}
+    \addcontentsline{toc}{chapter}{Acknowledgements}
     \thispagestyle{empty}
-    \begin{center}
-        \textbf{\Huge Acknowledgements}
-    \end{center}
     \@thesisacknowledgements
+    \cleardoublepage
+}
+\newcommand{\laysummary}{
+    \chapter*{Lay Summary}
+    \addcontentsline{toc}{chapter}{Lay Summary}
+    \thispagestyle{empty}
+    \@thesislaysummary
     \cleardoublepage
 }
 % Spięcie stron streszczeń we właściwej
@@ -705,11 +728,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \AtBeginDocument{\addtocontents{toc}{\protect\thispagestyle{empty}}} 
 \newcommand{\frontpages}{
+    \frontmatter
     \counterwithout{lstlisting}{chapter} % hack niestety
     \pagestyle{empty}
     \maketitle
     \acknowledgements
     \abstractpages
+    \laysummary
 % Zgodnie z Zarządzeniem JM Rektora 3/2022, oświadczenia o autorstwie i
 % opcjonalne oświadczenie o udzieleniu licencji składane są w systemie USOS
 % APD.
@@ -719,7 +744,19 @@
 %    \licensedthesis
     \tableofcontents
     \pagestyle{headings}
+    \mainmatter
 }
+
+\newcommand{\documentpreface}{%
+% Headers
+\frontpages
+
+\acronymslist
+% % % Spis rysunków
+\listoffigures
+% % % Spis tabel
+\listoftables
+ }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Lista skrótów i symboli
@@ -771,3 +808,19 @@
 
     \easyappendices
 }
+
+\RequirePackage{xspace}
+
+% already, then \xspace.
+\makeatletter
+\DeclareRobustCommand\onedot{\futurelet\@let@token\@onedot}
+\def\@onedot{\ifx\@let@token.\else.\null\fi\xspace}
+
+\def\eg{\emph{e.g}\onedot} \def\Eg{\emph{E.g}\onedot}
+\def\ie{\emph{i.e}\onedot} \def\Ie{\emph{I.e}\onedot}
+\def\cf{\emph{cf}\onedot} \def\Cf{\emph{Cf}\onedot}
+\def\etc{\emph{etc}\onedot} \def\vs{\emph{vs}\onedot}
+\def\wrt{w.r.t\onedot} \def\dof{d.o.f\onedot}
+\def\iid{i.i.d\onedot} \def\wolog{w.l.o.g\onedot}
+\def\etal{\emph{et al}\onedot}
+\makeatother

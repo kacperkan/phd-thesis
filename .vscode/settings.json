@@ -26,6 +26,6 @@
         "%TMPFILE%",
     ],
     "latex-workshop.latex.outDir": "%DIR%/aux",
-    "editor.wordWrap": "on",
-    "editor.wordWrapColumn": 79,
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 80,
 }

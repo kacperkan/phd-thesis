@@ -25,6 +25,7 @@ Makefile
 **/*.fls
 **/*.fdb*
 **/*.synctex*
+**/*.glsdefs*
 !main.pdf
 aux/main.xdv
 

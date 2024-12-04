@@ -1,0 +1,19 @@
+\newsavebox\neuralnet
+\begin{lrbox}{\neuralnet}
+  \begin{tikzpicture}
+    \node[circle, thick, fill=white, draw] (x1) {};
+    \node[circle, thick, fill=white, draw, below=0.1em of x1] (x2) {};
+    \node[circle, thick, fill=white, draw, below=0.1em of x2] (x3) {};
+    \node[circle, thick, fill=white, draw, above=0.1em of x1] (x4) {};
+    \node[circle, thick, fill=white, draw, above=0.1em of x4] (x5) {};
+
+    \node[circle, thick, fill=white, draw, right=2em of x1] (x11) {};
+    \node[circle, thick, fill=white, draw, below=0.1em of x11] (x12) {};
+    \node[circle, thick, fill=white, draw, above=0.1em of x11] (x13) {};
+
+    \foreach \x in {1,...,5}
+    \foreach \y in {1,...,3}
+    \draw (x\x) -- (x1\y);
+  \end{tikzpicture}
+\end{lrbox}
+

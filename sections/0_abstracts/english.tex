@@ -1,0 +1,44 @@
+\thesisabstract{
+  This thesis is a series of publications that introduce novel methods for human neural rendering using limited information, focusing on Neural Radiance Fields (NeRFs) and 3D Gaussian Splatting (3DGS).
+  It explores how these models construct 3D representations from 2D images and
+  demonstrates ways to condition these representations for generating
+  high-quality human renderings.
+  We propose techniques that use simple, interpretable inputs derived from
+  sparse training data and extends these methods to perform effectively in
+  few-shot learning scenarios.
+
+  We begin by examining the field of neural radiance fields, addressing
+  limitations in existing approaches and presenting contributions to
+  controllable radiance fields.
+  By incorporating partial and sparse data during training, it leverages the
+  smoothness of neural networks to produce controllable, high-quality human
+  images.
+
+  To tackle the reliance on extensive, high-quality data annotations from
+  multi-view videos, we introduce a new method for training neural radiance
+  fields in few-shot, multi-view settings.
+  This approach learns internal deformation templates, which blend smoothly
+  during inference, significantly improving image quality compared to existing
+  baselines and enabling effective human rendering from limited input images.
+
+  The work also addresses the need for adaptable computational efficiency during
+  inference.
+  It proposes a fine-to-coarse learning strategy for 3D Gaussian Splatting,
+  which upscales a latent 2D grid that stores Gaussian representations.
+  This strategy achieves competitive results while allowing deployment on
+  various computational devices with minimal quality loss.
+
+  In addition, we develop a novel model for controlling radiance fields through
+  environmental lighting.
+  By incorporating precomputed radiance transfer, this model enables physically
+  plausible scene relighting and provides users with intuitive control over
+  lighting in reconstructed scenes.
+
+  This research advances the state of the art in controllable neural radiance
+  fields and expands their application to few-shot learning scenarios.
+  These innovations enhance the possibilities for human rendering from limited
+  information and open new directions for future research in the field.
+}
+
+\thesiskeywords{Neural Rendering, Neural Radiance Fields, Few-Shot Learning, Human Rendering, Partial Information, Gaussian Splatting}
+
