@@ -128,8 +128,26 @@ and address their fundamental problem---lack of controllability.
   Our proposed was acknowledged by the reviewers and was accepted to the CVPR
   2023 conference.
 
-  Thirdly, .
-  ..
+  Thirdly, volumetric representation are computationally intensive to render,
+  compared to the traditional mesh representation.
+  For NeRFs~\cite{mildenhall2020nerf}, it takes seven days on V100 NVidia GPU to
+  train for single scene, and more than 60 seconds to render a single
+  image---way beyond any practical applications.
+  Although many approaches have been proposed to speed up the rendering
+  process~\cite{garbin2021fastnerf,yu2021plenoctrees,reiser2021kilonerf,hedman2021baking,mueller2022instant},
+  they usually make a trade-off between memory requirements, quality, and
+  rendering speed.
+  3D Gaussian Splatting~\cite{kerbl20233d} (3DGS) rose as an alternative to NeRF, offering both high-quality rendering at interactive frame rates.
+  However, those frame rates could be achieved with the most advanced GPU units
+  available at that time.
+  As we see the potential in 3DGS to be a viable canonical representation for 3D
+  data, akin to 3D meshes, a need for its adaptability to different
+  computational resources exists.
+  Meshes can be adapted easily with levels of detail (LoD) approaches that
+  remove detail from meshes that do not affect the general object's perception
+  if necessary.
+
+  \TODO{LumiGauss}
 
 \section{Research objectives}
 
