@@ -205,30 +205,31 @@
 % Do wyboru: styl numeracyjny wg normy PN (?)
 % ALBO styl harwardzki
 % -------------------------------------------------------------------
-% \RequirePackage[backend=biber,
-%         style=ieee,     % styl numeryczny IEEE prawie jak PN
-%         sorting=nyt,    % sortowanie spisu po nazwiskach
-%         citestyle=numeric-comp % kompaktowe odnośniki numeryczne typu [21-23]
-%     ]{biblatex}
-% \addbibresource{main.bib}
-% \DeclareNameAlias{default}{family-given} % nazwisko na początku
-% \newcommand{\applybibliography}{
-%     \phantomsection
-%     \addcontentsline{toc}{chapter}{Bibliography}
-%     {
-%         \sloppy
-%         \printbibliography
-%     }
-% }
+\RequirePackage[backend=biber,
+        style=ieee,     % styl numeryczny IEEE prawie jak PN
+        sorting=nyt,    % sortowanie spisu po nazwiskach
+        citestyle=numeric-comp, % kompaktowe odnośniki numeryczne typu [21-23]
+        backref=true,
+    ]{biblatex}
+\DeclareNameAlias{default}{family-given} % nazwisko na początku
+\addbibresource{main.bib}
+\newcommand{\applybibliography}{
+    \phantomsection
+    \addcontentsline{toc}{chapter}{Bibliography}
+    {
+        \sloppy
+        \printbibliography
+    }
+}
 % -------------------------------------------------------------------
 % Alternatywa - styl harwardzki:
 % -------------------------------------------------------------------
-\RequirePackage[numbers,sort&compress]{natbib}
-\setlength{\bibsep}{1pt plus 1pt minus 1pt}
-\bibliographystyle{agsm}
-\newcommand{\applybibliography}{
-       \bibliography{main.bib}
-}
+% \RequirePackage[numbers,sort&compress]{biblatex}
+% % \setlength{\bibsep}{1pt plus 1pt minus 1pt}
+% \bibliographystyle{agsm}
+% \newcommand{\applybibliography}{
+%        \bibliography{main.bib}
+% }
 
 % -------------------------------------------------------------------
 % Żeby spis treści zawierał to co trzeba
@@ -616,6 +617,9 @@
 \newcommand{\thesislaysummary}[1]{
     \newcommand{\@thesislaysummary}{#1}
 }
+\newcommand{\thesisarticles}[1]{
+    \newcommand{\@thesisarticles}{#1}
+}
 
 % Streszczenie polskie
 \newcommand{\stronastreszczenia}{
@@ -662,6 +666,13 @@
     \addcontentsline{toc}{chapter}{Lay Summary}
     \thispagestyle{empty}
     \@thesislaysummary
+    \cleardoublepage
+}
+\newcommand{\articles}{
+    \chapter*{Publications in this thesis}
+    \addcontentsline{toc}{chapter}{Publications in this thesis}
+    \thispagestyle{empty}
+    \@thesisarticles
     \cleardoublepage
 }
 % Spięcie stron streszczeń we właściwej
@@ -735,6 +746,7 @@
     \acknowledgements
     \abstractpages
     \laysummary
+    \articles
 % Zgodnie z Zarządzeniem JM Rektora 3/2022, oświadczenia o autorstwie i
 % opcjonalne oświadczenie o udzieleniu licencji składane są w systemie USOS
 % APD.

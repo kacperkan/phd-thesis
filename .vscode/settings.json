@@ -28,4 +28,7 @@
     "latex-workshop.latex.outDir": "%DIR%/aux",
     "editor.wordWrap": "wordWrapColumn",
     "editor.wordWrapColumn": 80,
+    "cSpell.words": [
+        "editability"
+    ],
 }

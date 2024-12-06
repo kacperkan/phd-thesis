@@ -14,9 +14,9 @@ scenes.
 However, NeRF has limitations in terms of memory and computational
 requirements, which makes it difficult to scale to large scenes.
 
-To alievate the problem, \citet{kerbl20233d} proposed a new technique---3D
+To alleviate the problem, \textcite{kerbl20233d} proposed a new technique---3D
 Gaussian Splatting (3DGS).
-3DGS is a neural rendering technique that represents a 3D scene as a set of 3D Gaussian that are splatted to an image space using algorithm proposed by~\citet{zwicker2001ewa}.
+3DGS is a neural rendering technique that represents a 3D scene as a set of 3D Gaussian that are splatted to an image space using algorithm proposed by~\textcite{zwicker2001ewa}.
 In contrast to NeRF, 3DGS is more memory efficient and can be used to render
 large scenes.
 It can also render scenes with millions of points in real-time on a single
@@ -25,13 +25,119 @@ GPU.
 In this thesis, we focus on those two milestone techniques in neural rendering
 and address their fundamental problem---lack of controllability.
 
-\section{Motivation and problem statement}
+\section{Motivation and challenges}
+
+  NeRF and 3DGS are both impressive techniques that can generate realistic
+  images.
+  However, a single scene representation needs to be trained on a high-end GPU
+  for hours or even days just to render a novel view at the inference time.
+  However, any type of controllability is difficult to achieve with those
+  models.
+  That includes changing the lighting conditions, subject's attributes or even
+  the scene itself.
+  We see imbuing those models with controllability as a an important step
+  towards making them more useful in practice.
+  Our proposed models are designed to address this issue.
+
+  One may ask why the controllability is a feat sought after to be researched.
+  We see the inspiration in how human artists work.
+  Imagine an artist working on 3D game where they need an asset, like a 3D mesh,
+  to be created.
+  Such a mesh takes much effort since it includes modeling, creating a UV map
+  which can then be textured.
+  After the process is finish, the artist's supervisor may task him to change
+  the model to some extent which requires the artist to redo all the effort
+  again.
+  Such a process is not limited to 3D assets as meshes and could be applied to
+  3DGS or NeRF.
+  However, 3DGS and NeRFs are volumetric in nature.
+  Our exploited and well-established practices no longer apply to them since
+  volumetric representations do not have the underlying surface representation.
+  For that reason, we see a couple of avenues which we explore in this thesis.
+
+  Firstly, \textcite{park2021nerfies} proposed NeRFies, a model that creates a
+  volumetric representation of a person from a self-captured sequence with a
+  phone camera.
+  Since the inception of NeRFs~\cite{mildenhall2020nerf}, it was among the first
+  works the achieved such a high quality of reconstructions from a casual
+  videos.
+  In its primal form, NeRFies were unable to control the avatar in any other way
+  than by a linear interpolation of latent embeddings that embedded the video's
+  time dimension.
+  The follow-up work, HyperNeRF~\cite{park2021hypernerf} handles this issue by
+  projecting the learnable embeddings with $\latentdimension$ onto a
+  lower-dimensional space~$\real^\projecteddimension$ where $\projecteddimension
+    {\ll}\latentdimension$.
+  After the assumption that the $\projecteddimension{=}2$ is enough to explain
+  the sequence variability, that projected embedding becomes a 2-dimensional
+  space that can be traversed in an interpretable way.
+  However, that space is not intuitive since the projection is a non-linear
+  operation and one cannot predict how values affect the results.
+  To mitigate that issue, we propose to leverage smoothness of Multilayer
+  Perceptrons (MLPs)~\cite{tancik2020fourier,park2021nerfies} to constrain the
+  projection via sparse supervision.
+  We realize our approach as a weakly-supervised MLP that out of many images
+  from the sequence (we assume at least 100 frames in our work) only a few are
+  provided with a coarse annotation.
+  Such annotations denote what values a chosen attribute takes and where its
+  effect spans in the image space.
+  We show that our method, which we dubbed CoNeRF~\cite{kania2022conerf} and
+  published at the CVPR 2022 conference, imbues NeRFs with a flexible
+  editability feature without the lose of the rendering quality.
+
+  Secondly, approaches such as CoNeRF~\cite{kania2022conerf},
+  EditNeRF~\cite{liu2021editing} or FigNeRF~\cite{xie2021fig} focus solely on
+  static elements of the scene, hence their controllability is limited to
+  changing colors or textures in general.
+  HyperNeRF~\cite{park2021hypernerf} arises as a potential solution due to its
+  ability to model object deformations.
+  However, our initial experiments showed that those changes cannot handle
+  motions that affect a subject globally, \eg, jumping jacks performed by a
+  person.
+  To solve the issue, \textcite{fang2022fast} proposes to model the deformation
+  via a multi-scale voxel structure which works well in the synthetic setting,
+  such as the one proposed by~\textcite{pumarola2021d}.
+
+  There exists a plethora of works that approach the problem from the another
+  angle---instead of modeling the motion purely from data, they use a template
+  model in the form of a 3D mesh to canonicalize deformed
+  points~\cite{zielonka2022instant}.
+  Such methods rely on the accuracy of the \textit{registration}, \ie, fitting
+  the template mesh to subject.
+  Since the registration methods~\cite{feng2021learning, zielonka2022towards}
+  are imperfect estimators, they inherently contain registration errors.
+  Those deviations are exacerbated by learnable radiance field models which
+  assume a perfectly calibrated scene.
+  The authors of those approaches usually mitigate the issue with additional
+  latent space~\cite{grassal2022neural,kania2022conerf,martin2021nerf} that
+  requires thousands of video frames to learn an avatar of high-fidelity that
+  reacts correctly to deformations such as wrinkles on the forehead.
+  At the same time, performing the registration on the large scale is
+  costly~\cite{cao2022authentic}.
+  In this thesis, we seek a remedy for those obstacles.
+  We propose a method that is data-efficient, easy to improve with a minimal
+  user input and can model realistic deformation dependent changes in the
+  subject.
+  Inspired by classical methods in character texturing~\cite{oat2007animated}
+  and motion modeling~\cite{lewis2014practice}, we propose
+  BlendFields~\cite{kania2023blendfields}.
+  We build on VolTeMorph's~\cite{garbin2024voltemorph} approach to point
+  canonicalization to provide a data-efficient way to control the character.
+  We further introduce a physically-based mixture of predefined, learned from
+  data wrinkle templates that represent expression-dependent skin deformations.
+  Our proposed was acknowledged by the reviewers and was accepted to the CVPR
+  2023 conference.
+
+  Thirdly, .
+  ..
 
 \section{Research objectives}
 
 \section{Contributions}
 
 \section{Thesis outline}
+
+\section{Publications not included in the thesis}
 
   % Deep learning
 
