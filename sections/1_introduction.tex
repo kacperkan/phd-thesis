@@ -120,7 +120,8 @@ and address their fundamental problem---lack of controllability.
   subject.
   Inspired by classical methods in character texturing~\cite{oat2007animated}
   and motion modeling~\cite{lewis2014practice}, we propose
-  BlendFields~\cite{kania2023blendfields}.
+  BlendFields~\cite{kania2023blendfields}, an \textit{homage} to traditional
+  blendshapes~\cite{lewis2014practice}.
   We build on VolTeMorph's~\cite{garbin2024voltemorph} approach to point
   canonicalization to provide a data-efficient way to control the character.
   We further introduce a physically-based mixture of predefined, learned from
@@ -128,7 +129,27 @@ and address their fundamental problem---lack of controllability.
   Our proposed was acknowledged by the reviewers and was accepted to the CVPR
   2023 conference.
 
-  Thirdly, volumetric representation are computationally intensive to render,
+  Thirdly, having the texture and coarse mesh-based controllability, we strive
+  for control scene settings directly.
+  The inverse rendering of 3D scenes is an ill-posed problem where many
+  different lighting settings may explain the same light
+  effects~\cite{patow2003survey}.
+  To facilitate solving the problem, many approaches use datasets of single
+  object's images captured under different lighting
+  conditions~\cite{chen2022hallucinated,yang2023crnerf,rudnev2022nerfosr}.
+  These approaches cannot decouple albedo from the lighting
+  effects~\cite{chen2022hallucinated,yang2023crnerf} or need additional neural
+  networks to predict correct shadows~\cite{rudnev2022nerfosr} which limits
+  methods' practicality.
+  We propose to use recently proposed 2D Gaussian Splatting~\cite{huang20242d}
+  which exhibit remarkable quality of the surface reconstruction.
+  Together with our precomputed radiance transfer from classical computer
+  graphics approaches~\cite{slomp2006gentle,ramamoorthi2001envmap}, our
+  LumiGauss achieves state-of-the-art reconstruction quality with the ability to
+  render novel lighting conditions with high fidelity.
+  Our work received positive reviews for the WACV 2025 conference.
+
+  Finally, volumetric representation are computationally intensive to render,
   compared to the traditional mesh representation.
   For NeRFs~\cite{mildenhall2020nerf}, it takes seven days on V100 NVidia GPU to
   train for single scene, and more than 60 seconds to render a single
@@ -147,21 +168,122 @@ and address their fundamental problem---lack of controllability.
   remove detail from meshes that do not affect the general object's perception
   if necessary.
 
-  \TODO{LumiGauss}
-
 \section{Research objectives}
+  In this thesis, we explore different avenues of radiance field
+  controllability.
+  With this goal in mind, we aim at answering the following research questions:
+  \begin{enumerate}[label=(\textbf{RQ \arabic*})]
+    \item \label{enum:texturing}
+          Can we imbue a Neural Radiance Field (NeRF) with a controllability by
+          providing sparse annotations to the training dataset?
+          How many annotations suffice to learn smooth interpolation capabilities
+          between controlled values?
+
+    \item \label{enum:movement}
+          Are extreme facial expressions known from the literature sufficient to learn
+          expression-dependent details that extrapolate to expressions unseen at the
+          training time?
+
+    \item \label{enum:lighting}
+          Is it possible to learn an underlying radiance transfer function of a scene
+          from images taken in ``in-the-wild'' setting?
+          Can such a transfer function generalize to unknown environment maps?
+
+    \item \label{enum:resources}
+          How to learn a single 3D Gaussian Splatting (3DGS) representation that can be
+          adapted to different computational regimes at inference time in a feed-forward
+          mode?
+  \end{enumerate}
+
+  Each of these questions is a representative of possible among many others
+  controllability directions for radiance fields.
+  In case of this thesis, we present summarize our methods as controls of:
+  texture~\cite{kania2022conerf,kania2023blendfields},
+  shape~\cite{kania2023blendfields}, lightning~\cite{kaleta2024lumigauss} and
+  use of resources~\cite{kania2024clog}.
+  To answer~\ref{enum:texturing}, we describe our CoNeRF~\cite{kania2022conerf}.
+  It is one of the pioneering works that uses sparsely annotated frames to
+  continuously control the subject in a post-hoc manner.
+  We leverage the fact that MLP used in NeRFs are smooth functions biased
+  towards low frequency signals~\cite{tancik2020fourier}.
+  For that reason, NeRF can learn to interpolate smoothly the annotation signal
+  between frames of high similarity.
+  We show that this assumption is sufficient to obtain both novel view synthesis
+  and novel attribute synthesis with a single model.
+
+  We further move towards answering~\ref{enum:movement}.
+  We introduce BlendFields~\cite{kania2023blendfields}, achieving two primary
+  goals: ability to generalize unknown expressions via a predefined face mesh
+  template, and a mixture model of training expressions that can produce
+  spatially coherent, expression-dependent wrinkles on the face from as few as
+  three expressions.
+  In our work, we build on VolTeMorph~\cite{garbin2024voltemorph} to achieve to
+  former, and focus on the latter contribution.
+  Inspired by texture maps in classical computer graphics
+  pipelines~\cite{oat2007animated}, we define a set of learnable radiance
+  fields, each being overfit to a particular extreme expression from the
+  training set.
+  We define an extreme expression as one of the possible expressions involving
+  the most facial muscles.
+  Building on VolTeMorph~\cite{garbin2024voltemorph} allows us to use an
+  underlying tetrahedral mesh to compute physical quantities such as the volume
+  change of tetrahedra under a given expression.
+  We use those quantities to linearly interpolate between the pretrained
+  radiance fields.
+  We mix the tetrahedra independently which makes rendering novel expressions
+  possible.
+  For example, BlendFields can render one of the eyebrows raised while
+  maintaining the other in a natural position, which is a difficult expression
+  to make for majority of people.
+
+  Our LumiGauss~\cite{kaleta2024lumigauss} answers~\ref{enum:lighting}.
+  In contrary to common approaches~\cite{rudnev2022nerfosr}, we posit that the
+  radiance transfer function known among computer graphics
+  researchers~\cite{ramamoorthi2001envmap} can be learned from unconstrained
+  photo collection under varying lighting conditions.
+  To this end, we use 2DGS~\cite{huang20242d} which gives us a smooth shape
+  representation, difficult to achieve when using 3DGS~\cite{kerbl20233d}.
+  With the use of contributed priors, we induce learning Gaussian's Spherical
+  Harmonics such that they correctly react to changing environment maps.
+  Not only our approach is fast to train, but renders realistic scenes and
+  object's shadows even under novel lighting conditions.
+
+  All the contributions so far are affected by a specific disadvantage---a
+  single model needs to be trained from scratch and it can be deployed only on
+  high-end hardware.
+  We then ask if we can train a single model that is adaptable at inference time
+  to different hardware regimes~\ref{enum:resources}.
+  We propose CLoG~\cite{kania2024clog} as a potential remedy.
+  Our approach uses the fact that one can constrain the number of Gaussians in
+  3DGS~\cite{kerbl20233d} to a specific number, such that it can be formed as a
+  2D grid by simple reshape operation.
+  With a specific training coarse-to-fine training protocol we contributed, the
+  model learns a representation that converges to a high-quality volumetric
+  structure.
+  In the second training stage, we leverage the fact that Gaussians's can be
+  spatially sorted in such a manner that their descriptors are placed next to
+  each other if they are similar.
+  That forms a low-frequency image which can be modulated with an off-the-shelf
+  continuous upsampling architecture~\cite{vasconcelos2023cuf}.
+  The architecture outputs a new grid of the given resolution.
+  We show in our work that such an approach achieves remarkable results and can
+  output any number of Gaussians at inference time with high quality.
 
 \section{Contributions}
+  Building on those questions, we structure this thesis in several chapters
+  corresponding to the answers.
+  An answer is in a form of a scientific article where we introduce the following:
+  \begin{itemize}
+    \item A novel approach for controlling trained radiance fields with the use of sparsely annotated images from a casually captured data.
+    \item A new model capable of blending trained radiance fields from multi-view frames in an interpretable way and extrapolating to novel human expressions for the trained subject.
+    \item The first use of Gaussian Splatting methods that learns a coherent shape representation of a subject and an ability to distill the varying lighting conditions in the data to a radiance transfer function.
+    \item A novel paradigm for learning Gaussian Splatting models as 2D grids to achieve flexibility to adapt the model to different computational regimes at inference time.
+  \end{itemize}
 
+  \subsection{Controllability of Texture from Partial Information}
+  \subsection{Controllability of Expression from Few-Shot Learning}
+  \subsection{LumiGauss}
+  \subsection{CLoG}
 \section{Thesis outline}
 
 \section{Publications not included in the thesis}
-
-  % Deep learning
-
-  % Neural rendering
-
-  % neural radiance field
-
-  % 3D Gaussian Splatting
-

@@ -212,7 +212,6 @@
         backref=true,
     ]{biblatex}
 \DeclareNameAlias{default}{family-given} % nazwisko na początku
-\addbibresource{main.bib}
 \newcommand{\applybibliography}{
     \phantomsection
     \addcontentsline{toc}{chapter}{Bibliography}
@@ -451,15 +450,14 @@
 % Wyliczenia
 % Zalecenie: tylko kropka lub myślnik
 % -------------------------------------------------------------------
-\RequirePackage{enumitem}
-\newlength\docparskip
-\setlength{\docparskip}{\parskip}
-\setlist[itemize,1]{nosep,
-        label=$\bullet$,    % ustawiony krój ma kwadratowe kropki
-}
-\setlist[itemize,2]{nosep,label=--}
-\setlist[itemize,3]{nosep,label=-}
-\setlist[itemize,4]{nosep,label=$\cdot$}
+% \newlength\docparskip
+% \setlength{\docparskip}{\parskip}
+% \setlist[itemize,1]{nosep,
+%         label=$\bullet$,    % ustawiony krój ma kwadratowe kropki
+% }
+% \setlist[itemize,2]{nosep,label=--}
+% \setlist[itemize,3]{nosep,label=-}
+% \setlist[itemize,4]{nosep,label=$\cdot$}
 %\setlist[description]{font=\normalfont, labelwidth=3em}
 
 % -------------------------------------------------------------------
@@ -836,3 +834,20 @@
 \def\iid{i.i.d\onedot} \def\wolog{w.l.o.g\onedot}
 \def\etal{\emph{et al}\onedot}
 \makeatother
+
+\AtEndPreamble{
+    \usepackage[capitalize]{cleveref}
+    \crefname{section}{Sec.}{Secs.}
+    \Crefname{section}{Section}{Sections}
+    \Crefname{table}{Table}{Tables}
+    \crefname{table}{Tab.}{Tabs.}
+    \Crefname{enumerate}{Item}{Items}
+    \crefname{enumerate}{}{}
+}
+
+% ---------------------------------------------------------------
+
+%% More compact compact itemize/enumeration (e.g. list contributions)
+\RequirePackage[shortlabels,inline]{enumitem}
+% \setlist[itemize]{noitemsep,leftmargin=*,topsep=0em}
+% \setlist[enumerate]{noitemsep,leftmargin=*,topsep=0em}
