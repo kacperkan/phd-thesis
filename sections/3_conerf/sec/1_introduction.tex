@@ -1,0 +1,86 @@
+\section{Introduction}
+  \label{sec:conerf-intro}
+  Neural radiance field (NeRF)~\cite{mildenhall2020nerf} methods have recently
+  gained popularity thanks to their ability to render photorealistic
+  novel-view images~\cite{martin2021nerf,
+  park2020deformable,park2021hypernerf,zhang2020nerf++}.
+  In order to widen the scope to other possible applications, such as digital
+  media production, a natural question is whether these methods could be
+  extended to enable \textit{direct} and \textit{intuitive} control by a
+  digital artist, or even a casual user.
+  However, current techniques only allow coarse-grain controls over
+  materials~\cite{zhang2021nerfactor}, color~\cite{jang2021codenerf}, or
+  object placement~\cite{yang2021learning}, or only support changes that they
+  are designed to deal with, such as shape deformations on a learned shape
+  space of chairs~\cite{liu2021editing}, or are limited to facial expressions
+  encoded by an explicit face model~\cite{gafni2021dynamic}.
+  By contrast, we are interested in \textit{fine-grained} control without
+  limiting ourselves to a specific class of objects or their properties.
+  For example, given a self-portrait video, we would like to be able to
+  control individual \textit{attributes} (e.g. whether the mouth is open or
+  closed); see~\cref{fig:conerf-teaser}.
+  We would like to achieve this objective with minimal user intervention,
+  without the need of specialized capture setups~\cite{liu2021neural}.
+
+  However, it is unclear how fine-grained control can be achieved, as current
+  state-of-the-art models~\cite{park2021hypernerf} encode the structure of the
+  3D scene in a \textit{single} and \textit{not interpretable} latent code.
+  For the example of face manipulation, one could attempt to resolve this
+  problem by providing \textit{dense} supervision by matching images to the
+  corresponding Facial Action Coding System (FACS)~\cite{facs} action units.
+  Unfortunately, this would require either an automatic annotation process or
+  careful and extensive per-frame human annotations, making the process
+  expensive, generally unwieldy, and, most importantly, domain-specific.
+  Automated tools for domain-agnostic latent disentanglement are a very active
+  topic of research in machine learning~\cite{higgins2016beta,
+  higgins2018towards, chen2016infogan}, but no effective plug-and-play
+  solution exists yet.
+
+  Conversely, we borrow ideas from 3D morphable
+  models~(3DMM)~\cite{blanz1999morphable}, and in particular to recent
+  extensions that achieve local control by \textit{spatial disentanglement} of
+  control attributes~\cite{wu2016anatomically,neumann2013sparse}.
+  Rather than having a single global code controlling the expression of the
+  \textit{entire} face, we would like to have a set of \textit{local}
+  ``attributes'', each controlling the corresponding \textit{localized}
+  appearance; more specifically, we assume spatial quasi-conditional
+  independence of attributes~\cite{wu2016anatomically}.
+  For our example in~\cref{fig:conerf-teaser}, we seek an attribute capable to
+  control the appearance of the mouth, another to control the appearance of
+  the eye, etc.
+
+Thus, we introduce a learning framework
+  denoted CoNeRF~(i.e. Controllable~NeRF) that is capable of achieving this
+  objective with just \textit{few-shot} supervision.
+  As illustrated in~\cref{fig:conerf-teaser}, given a single one-minute video,
+  and with as little as two annotations per attribute, CoNeRF allows
+  \textit{fine-grained}, \textit{direct}, and \textit{interpretable} control
+  over attributes.
+  Our core idea is to provide, on top of the ground truth attribute tuple,
+  \textit{sparse} 2D mask annotations that specify which region of the image
+  an attribute controls, in spirit of Interactive Digital
+  Photomontage~\cite{agarwala2004interactive} and Video
+  Sprites~\cite{schodl2002controlled}.
+  Further, by treating attributes as latent variables within the framework,
+  the mask annotations can be automatically propagated to the whole input
+  video.
+  Thanks to the quasi-conditional independence of attributes, our technique
+  allows us to synthesize expressions that were \textit{never} seen at
+  training time; e.g.~the input video never contained a frame where both eyes
+  were closed and the actor had a smiling expression;
+  see~\cref{fig:conerf-teaser}~(green box).
+
+  \paragraph{Contributions}
+    To summarize, our CoNeRF method\footnote{Code and dataset are released
+    \href{https://github.com/kacperkan/conerf}{here}.
+    }:
+    \vspace{-.5em}
+    \begin{itemize}[leftmargin=*]
+      \setlength\itemsep{-.3em}
+      \item provides \textit{direct}, \textit{intuitive}, and \textit{fine-grained} control over 3D neural representations encoded as NeRF;
+      \item achieves this via \textit{few-shot} supervision, \eg, just a handful of annotations in the form of attribute values and corresponding 2D mask are needed for a one minute video;
+      \item while inspired by domain-specific facial animation research~\cite{wu2016anatomically}, it provides a \textit{domain-agnostic} technique.
+    \end{itemize}
+
+    \color{black}
+

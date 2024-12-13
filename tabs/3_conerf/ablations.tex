@@ -1,0 +1,29 @@
+\begin{table}
+  \centering
+  \normalsize
+  \setlength{\tabcolsep}{2pt}
+  \begin{tabular}{@{}lccc ccc@{}}
+    \toprule
+          & \multicolumn{3}{c}{Real (interpolation)} & \multicolumn{3}{c}{Synthetic (novel view \& attr.)}                                                                                  \\
+    \cmidrule(lr){2-4}
+    \cmidrule(lr){5-7}
+    Model & PSNR $\uparrow$ & MS-SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR
+    $\uparrow$ & MS-SSIM $\uparrow$ & LPIPS $\downarrow$ \\ \midrule Base
+    ($\loss{recon}$) & 32.457 & 0.981 & 0.168 & 24.407 & 0.718 & 0.173 \\
+    $+\loss{enc}$ & 32.478 & 0.982 & 0.167 & 27.018 & 0.871 & 0.164 \\ $+
+    \loss{enc} +\loss{attr}$ & 32.254 & 0.981 & 0.167 & 27.322 & 0.873 & 0.147
+    \\ $+ \loss{enc} + \loss{attr} +\loss{mask}$ & 32.342 & 0.981 & 0.168 &
+    \textbf{32.394} & \textbf{0.972} & \textbf{0.139}\\
+    \bottomrule\end{tabular} \caption{ \textbf{{Effect of loss functions --}}
+    We report the rendering quality of our method as we procedurally introduce
+    the loss terms.
+    % < \resizebox 
+    For controlled rendering with novel views and attributes (synthetic data),
+    each loss term adds to the rendering quality, with the $\loss{mask}$ being
+    critical.
+    For the novel view rendering on real data, addition of loss functions for
+    controllability do not have a significant effect on the rendering
+    quality---they do no harm.
+  } % \caption
+  \label{tab:conerf-ablations}
+\end{table}

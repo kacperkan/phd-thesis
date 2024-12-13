@@ -1,0 +1,24 @@
+\begin{table}
+  \centering
+  \begin{tabular}{@{}lccc@{}}
+    \toprule
+    Method                                & Left eye & Right eye & Mouth \\
+    \midrule
+    HyperNeRF AP \cite{park2021hypernerf} &                              \\
+    HyperNeRF DS \cite{park2021hypernerf} &                              \\
+    HyperNeRF AP + Proj                   &                              \\
+    HyperNeRF DS + Proj                   &                              \\
+    \midrule
+    \textbf{Ours}                         &                              \\
+    \bottomrule
+  \end{tabular}
+  \caption{
+    \textbf{Geometric validation} of our learned spatial independence of conditioning attributes.
+    We measure the independence for \textsc{Face I} dataset by changing one of
+    attributes in $\hat{\rho}$ and calculating the variance of keypoints
+    coordinates associated with for $\hat{\rho}_i \neq \hat{\rho}_j$.
+    Standard HyperNeRF predicts the image from $\phi$ while "+ Proj" means
+    predicting the image from $\hat{\rho}$ as in \textbf{ours}.
+  } % \caption
+  \label{tab:conerf-geometric-validation}
+\end{table}

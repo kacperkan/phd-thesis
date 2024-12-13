@@ -1,0 +1,14 @@
+\begin{figure*}[!tbhp]
+  \centering
+  \includegraphics[width=\linewidth]{fig/\conerfdirname/assets/pipeline3.pdf}
+  \caption{We design our architecture as a two-branched HyperNeRF network \cite{park2021hypernerf}.
+    The masking branch predicts $\hat{\mathbf{m}}$ that masks appropriate
+    elements from $\mathbf{w}$ such that only appropriate elements of
+    $\mathbf{w}$ affect corresponding $\mathbf{x}$.
+    To avoid entanglement of $\hat{\theta}$ via function that maps
+    $[\mathbf{x}, \hat{\theta}]$ to $\mathbf{w}$, we use separate networks
+    mapping $[\mathbf{x}, \hat{\theta}_i]$ to $\mathbf{w}_i$ as separate
+    networks for each $\hat{\rho}_i \in \hat{\rho}$.
+  }
+  \label{fig:conerf-pipeline}
+\end{figure*}

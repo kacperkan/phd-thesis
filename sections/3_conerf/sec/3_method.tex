@@ -1,0 +1,218 @@
+\input{fig/\conerfdirname/overview}
+\section{Controllable NeRF (CoNeRF)}
+  Given a collection of $\nImages$ color images $\images \in [0,1]^{\width \times \height \times 3}$, we train our controllable neural radiance field model by an auto-decoding optimization~\cite{park2019deepsdf} whose losses can be grouped into two main subsets:
+  \begin{align}
+    \argmin_{\allpars=\pars, \latents}
+    \underbrace{\loss{rep}(\allpars \given \images)}_\text{\cref{sec:conerf-autodecode}}{+}
+    \underbrace{\loss{ctrl}(\allpars \given
+      \{\Mask^\gt_{\iImage, \iAttribute} \}, \{\attribute^\gt_{\iImage,\iAttribute}\} )}_\text{\cref{sec:conerf-control}}
+    .
+  \end{align}
+  The first group consists of the classical HyperNeRF~\cite{park2021hypernerf} auto-decoder losses, attempting to optimize neural network parameters $\pars$ jointly with latent codes $\latents$ to \textit{reproduce} the corresponding input images $\images$:
+  \begin{align}
+    \loss{rep}(\cdot) =
+    \loss{recon}(\pars, \latents \given \images) +
+    \loss{enc}(\latents)
+    .
+    \label{eq:conerf-loss_render}
+  \end{align}
+  The latter allow us to inject \textit{explicit control} into the representation, and are our core contribution:
+  \begin{align}
+    \loss{ctrl}(\cdot)
+     & = \loss{mask}(\pars, \latents \given \{\Mask^\gt_{\iImage, \iAttribute} \})     & \text{g.t. masks}      \\
+     & + \loss{attr}(\pars, \latents \given \{\attribute^\gt_{\iImage,\iAttribute}\}). & \text{g.t. attributes}
+    \label{eq:loss_control}
+  \end{align}
+  As mentioned earlier in \cref{sec:conerf-intro}, we aim for a neural 3D
+  appearance model that is controlled by a collection of attributes
+  $\attributes {=} \{\attribute_\iAttribute\}$, and we expect each image to be
+  a manifestation of a different value of attributes, that is, each image
+  $\image_\iImage$, and hence each latent code $\latent_\iImage$, will have a
+  corresponding attribute~$\attributes_\iImage$.
+  The learnable connection between latent codes $\latent$ and the attributes
+  $\attributes$, which we represent via regressors, is detailed
+  in~\cref{sec:conerf-inference}.
+
+  \subsection{Reconstruction losses}
+    \label{sec:conerf-autodecode}
+    The primary loss guiding the training of the NeRF model is the
+    reconstruction loss, which simply aims to reconstruct observations
+    $\images$.
+    As in other neural radiance field models~\cite{mildenhall2020nerf, martin2021nerf, park2020deformable, park2021hypernerf} we simply minimize the L2 photometric reconstruction error with respect to ground truth images:
+    \begin{equation}
+      \loss{recon}(\cdot) = \sum_\iImage \expect_{\ray \sim \image_\iImage} \left[ \left\|\bC(\ray \given \latent_\iImage, \pars)-\bC^\text{gt}(\ray) \right\|_2^2 \right]
+      .
+      \label{eq:conerf-recon}
+    \end{equation}
+    As is typical in auto-decoders, and following~\cite{park2019deepsdf}, we impose a zero-mean Gaussian prior on the latent codes~$\latents$:
+    \begin{equation}
+      \loss{enc}(\cdot) = \sum_\iImage \left\| \latent_\iImage \right\|^2_2
+      .
+      \label{eq:conerf-latent_prior}
+    \end{equation}
+
+  \subsection{Control losses}
+    \label{sec:conerf-control}
+    The user defines a \textit{discrete} set of $\nAttributes$ number of
+    attributes that they seek to control, that are \textit{sparsely}
+    supervised across frames---we only supervise attributes \textit{when} we
+    have an annotation, and let others be discovered on their own throughout
+    the training process, as guided by~\cref{eq:conerf-loss_render}.
+    More specifically, for a particular image $\image_\iImage$, and a particular attribute $\attribute_\iAttribute$, the user specifies the quantities:
+    \begin{itemize}
+      \item $\attribute_{\iImage, \iAttribute} \in [-1,1]$: specifying the value for the $\iAttribute$-th attribute in the $\iImage$-th image; see the \textit{sliders} in~\cref{fig:conerf-teaser};
+      \item $\Mask_{\iImage, \iAttribute} \in [0,1]^{\width \times \height}$: roughly specifying the image region that is controlled by the $\iAttribute$-th attribute in the $\iImage$-th image; see the \textit{masks} in~\cref{fig:conerf-teaser}.
+    \end{itemize}
+    To formalize sparse supervision, we employ an indicator function
+    $\indicator_{\iImage, \iAttribute}$, where $\indicator_{\iImage,
+    \iAttribute}=1$ if an annotation for attribute $\iAttribute$ for image
+    $\iImage$ is provided, otherwise $\indicator_{\iImage, \iAttribute}=0$.
+    We then write the loss for \textit{attribute} supervision as:
+    \begin{equation}
+      \loss{attr}(\cdot) =
+      \sum_\iImage \sum_\iAttribute
+      \indicator_{\iImage, \iAttribute}
+      |\attribute_{\iImage,\iAttribute} - \attribute^\gt_{\iImage,\iAttribute}|^2
+      .
+    \end{equation}
+
+    For the mask few-shot supervision, \
+    we employ the volume rendering in~\cref{eq:conerf-volren} to project the 3D volumetric neural mask field $\mask_\iAttribute(\bx)$ into image space, and then supervise it as:
+    \newcommand{\crossentropy}[2]{\text{CE}\left(#1,#2\right)}
+    \begin{equation}
+      \loss{mask}(\cdot) \!= \!\!\sum_{\iImage, \iAttribute}
+      \indicator_{\iImage, \iAttribute} \:
+      \expect_\ray
+      \left[
+        \crossentropy
+        {\Mask(\ray \given \latent_\iImage, \pars)}
+        {\Mask^\gt_{\iImage, \iAttribute}(\ray)}
+        \right]
+      ,
+      \label{eq:conerf-mask}
+    \end{equation}
+    where $\crossentropy{\cdot}{\cdot}$ denotes cross entropy, and the field $\sigma(\bx)$ in~\cref{eq:conerf-volren} is learned by minimizing~\cref{eq:conerf-recon}.
+    Importantly, as we do not wish for~\cref{eq:conerf-mask} to interfere with
+    the training of the underlying 3D representation learned through
+    \cref{eq:conerf-recon}, we \textit{stop gradients}
+    in~\cref{eq:conerf-mask} w.r.t. $\sigma(\bx)$.
+    Furthermore, in practice, because the attribute mask vs.
+    background distribution can be highly imbalanced depending on which attribute the user is trying to control (\eg an eye only covers a very small portion of an image), we employ a \textit{focal loss}~\cite{lin2017focal} in place of the standard cross entropy loss.
+
+  \subsection{Controlling and rendering images}
+    \label{sec:conerf-inference}
+    In what follows, we drop the image subscript $\iImage$ to simplify
+    notation without any loss of generality.
+    Given a $B$-dimensional latent code $\latent$ representing the 3D scene behind an image, we derive a mapping to our $A$ attributes via a neural map $\Attribute$ with learnable parameters $\pars$:
+    \begin{equation}
+      \{ \attribute_\iAttribute \} = \AttributeNet(\latent \given \pars), \quad
+      \AttributeNet : \real^\latentDim \rightarrow [0,1]^\nAttributes
+      ,
+    \end{equation}
+    where these correspond to the \textit{sliders} in~\cref{fig:conerf-teaser}.
+    In the same spirit of~\cref{eq:conerf-hypermap}, to allow for complex
+    topological changes that may not be represented by the change in a single
+    scalar value alone, we lift the attributes to a hyperspace.
+    In addition, since each attribute governs different aspects of the scene, we employ \textit{per-attribute} learnable hypermaps $\{\hypermap_\iAttribute\}$, which we write:
+    \begin{align}
+      \attribute_\iAttribute(\point) & = \hypermap_\iAttribute(\point, \attribute_\iAttribute \given \pars) \quad \hypermap_\iAttribute: \real^3 \times \real \rightarrow \real^\hyperAttributeDim
+      .
+    \end{align}
+    Note that while $\attribute_\iAttribute$ is a scalar \textit{value},
+    $\attribute_\iAttribute(\point)$ is a \textit{field} that can be queried
+    at any point $\point$ in space.
+    These fields are concatenated to form
+    $\attributes(\point)=\{\attribute_\iAttribute(\point)\}$.
+
+    We then provide all this information to generate an \textit{attribute
+    masking field} via a network $\MaskNet(\cdot \given \pars)$.
+    This field determines which attribute \textit{attends} to which position in space~$\point$:
+    \begin{align}
+      \label{eq:conerf-mask_c}
+      \mask_0(\point) & \oplus \mask(\point) = \MaskNet(\Canonicalizer(\point), \bbeta(\point), \attributes(\point) \given \pars),                   \\
+      \MaskNet        & : \real^3 \times \real^\latentDim \times \real^{\nAttributes \times \hyperAttributeDim} \rightarrow \real^{\nAttributes+1}_+
+      ,
+    \end{align}
+    where $\oplus$ is a concatenation operator, $\mask(\point){=}\{\mask_\iAttribute(\point)\}$, and the additional mask $\mask_0(\point)$ denotes space that is not affected by \textit{any} attribute.
+    Note that because the mask location should be affected by both the
+    particular attribute of interest (\eg, the selected eye status) and the
+    global appearance of the scene (\eg, head movement), $\MaskNet$ takes both
+    $\bbeta(\point)$ and $\attributes(\point)$ as input in addition to
+    $\Canonicalizer(\point)$.
+    In addition, because the mask is modeling the attention related to attributes, collectively, these masks satisfy the partition of unity property:
+    \begin{align}
+      \mask_0(\point) + \Sigma_\iAttribute [\mask_\iAttribute(\point)] = 1 \quad \forall \point \in \real^3
+      .
+    \end{align}
+    Finally, in a similar spirit to~\cref{eq:conerf-hypernerf}, all of this information is processed by a neural network that produces the desired radiance and density fields used in volume rendering:
+    \begin{equation}
+      \begin{rcases}
+        \bc(\point) \\
+        \sigma(\point)
+      \end{rcases} \!\!=\! \Representation(\Canonicalizer(\point),
+      \underbrace{\mask(\point) \odot \attributes(\point)}_\text{attribute controls},
+      \underbrace{\mask_0(\point) \cdot \latent(\point)}_\text{everything else}
+      \given \pars)
+      .
+      \label{eq:conerf-representation}
+    \end{equation}
+    In particular, note that $\mask(\point){=}0$ implies
+    $\mask_0(\point){=}1$, hence our solution has the capability of reverting
+    to classical HyperNeRF~\cref{eq:conerf-hypernerf}, where all change in the
+    scene is globally encoded in $\bbeta(\point)$.
+    Finally, these fields can be used to render the mask in image space, following a process analogous to volume rendering of radiance:
+    \begin{equation}
+      \Mask(\ray\given\allpars) \!=\!\!
+      \int_{t_n}^{t_f} \!\!\!\!
+      T(t) \cdot \sigma(\br(t)) \cdot [\mask_0(\ray(t)) \oplus \mask(\ray(t))]
+      \, dt .
+      \label{eq:conerf-volren}
+    \end{equation}
+    We depict our inference flow in~\cref{fig:conerf-pipeline}~(b).
+
+  \subsection{Implementation details}
+    We implement our method for NeRF based on the JAX \cite{jax2018github}
+    implementation of HyperNeRF~\cite{park2021hypernerf}.
+    We use both the scheduled windowed positional encoding and weight
+    initialization of \cite{park2020deformable}, as well as the coarse-to-fine
+    training strategy~\cite{park2021hypernerf}.
+
+    Besides the newly added networks, we follow the same architecture as
+    HyperNeRF.
+    For the attribute network $\Attribute$ we use a six-layer multi-layer
+    perceptron (MLP) with 32 neurons at each layer, with a skip connection at
+    the fifth layer, following \cite{park2020deformable,park2021hypernerf}.
+    For the lifting network $\hypermap_\iAttribute$, we use the same
+    architecture as $\hypermap$, except for the input and output dimension
+    sizes.
+    For the masking network $\MaskNet$ we use a four-layer MLP with 128
+    neurons at each layer, followed by an additional 64 neuron layer with a
+    skip connection.
+    The network $\Representation$ also shares the same architecture as
+    HyperNeRF, but with a different input dimension size to accommodate for
+    the changes our method introduces.
+
+    \paragraph{2D implementation}
+      To show that our idea is not limited to neural radiance fields, we also
+      test a 2D version of our framework that can be used to directly
+      represent images, without going through volume rendering.
+      We use the same architecture and training procedure as in the NeRF case,
+      with the exception that we do not predict the density $\sigma$, and we
+      also do not have the notion of depth---each ray is directly the pixel.
+      We center crop each video and resize each frame to be $128\times128$.
+
+    \paragraph{Hyperparameters}
+      We train all our NeRF models with $480\times270$ images and with 128
+      samples per ray.
+      We train for 250k iterations with a batch size of 512 rays.
+      During training, we maintain that 10\% of rays are sampled from
+      annotated images.
+      We set $\loss{attr}=10^{-1}$, $\loss{mask}=10^{-2}$ and
+      $\loss{enc}=10^{-4}$.
+      For the number of hyper dimensions we set $\hyperAttributeDim = 8$.
+      For the 2D implementation experiments, we sample 64 random images from
+      the scene and further subsample 1024 pixels from each of them.
+      For all experiments we use Adam~\cite{kingma2014adam} with learning rate
+      $10^{-4}$ exponentially decaying to $10^{-5}$ in 250k iterations.
+      We provide additional details in the supplementary material.
+      Training a single model takes around 12 hours on an NVIDIA V100 GPU.

@@ -1,0 +1,20 @@
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\linewidth]{fig/\conerfdirname/assets/failure.pdf}
+  \caption{{\bf Failure cases --}
+    Our model may learn spurious interpolations for controlled elements that
+    occupy little space in the image and with insufficient/careless
+    annotations.
+    % the number of annotations is not sufficient.
+    For the metronome, due to the fast motion of the pendulum and its
+    specularity, without careful annotation our method may simply learn its
+    motion blur or sometimes even completely ignore the pendulum.
+    In the face example, this may result in the eye blinking multiple times
+    while interpolating between the attribute values of $-1$ and $1$.
+    Both cases are preventable with more careful annotations and by annotating
+    more frames.
+    % interpolating between $-1$ and $1$ of all attributes causes opening eyes
+    % for several values. 
+  }
+  \label{fig:conerf-failure-cases}
+\end{figure}

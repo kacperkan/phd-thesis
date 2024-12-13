@@ -1,0 +1,24 @@
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{fig/\conerfdirname/assets/update-attributes.pdf}
+  \caption{{\bf Novel view and novel attribute synthesis on real data --}
+    We synthesize scenes from a novel view and with a novel attribute
+    combination, not seen during training.
+    % \ky{
+    A naive extension of HyperNeRF, HyperNeRF{+}$\pi$ fails to disentangle
+    attributes and results in a modification of the scene irrespectively of
+    attribute meaning \eg, opening mouth results in closing eyes at the same
+    time.
+    % is not what the attributes are describing--- and vice versa. 
+    Ours-$\MaskNet$ improves the results, but does not disentangles the
+    attribute space, as successfully done by our complete method.
+    % results in entanglement.
+    The differences between these methods can even lead to complete failure
+    cases, as shown in the metronome and the toy car case.
+  }
+  % \cite{park2021hypernerf} with a projection network $\mathcal{A}$ to predict
+  % attribute values $\{\attribute_\iAttribute\}$ causes that changes in the
+  % output become entangled, \eg, opening the mouth also closes the
+  % eyes.%causes closing eyes. }
+  \label{fig:conerf-novel_view}
+\end{figure}

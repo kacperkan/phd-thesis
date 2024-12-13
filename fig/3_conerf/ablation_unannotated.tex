@@ -1,0 +1,26 @@
+% not using primes (not canonicalized parameters)
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.38\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{fig/\conerfdirname/assets/beta-importance-annotations.pdf}
+    \caption{annotated samples}
+  \end{subfigure}
+  \hfill{}
+  \begin{subfigure}[t]{0.595\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{fig/\conerfdirname/assets/beta-importance-preds.pdf}
+    \caption{renderings}
+  \end{subfigure}
+  \caption{{\bf Example with unannotated attributes --}
+    We show an example of how our method performs when a part of the image
+    changes appearance, but is not annotated.
+    With the annotations in (a), we synthesize the scene with novel view and
+    attributes in (b), where the two rows are with different $\bbeta$
+    configurations.
+    We denote the attribute configuration on the top of each column in (b).
+    As shown, the change that is not annotated is simply encoded in the
+    per-image encoding $\bbeta$.
+  }
+  \label{fig:conerf-ablation_unannotated}
+\end{figure}

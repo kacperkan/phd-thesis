@@ -1,0 +1,253 @@
+\input{fig/\conerfdirname/novel_view}
+
+\section{Results}
+  \label{sec:conerf-results}
+
+  \subsection{Datasets and baselines}
+
+    We evaluate our method on two datasets: real video sequences captured with
+    a smartphone ({\it real dataset}) and synthetically rendered sequences
+    ({\it synthetic dataset}).
+    Here we introduce those datasets and the baselines for our approach.
+
+    \paragraph{Real dataset}
+      % We evaluate our method on two types of data: real video sequences
+      % captured with a smartphone and synthetically rendered sequences.
+      Each of the seven real sequences is 1 minute long and was captured
+      either with a Google Pixel 3a or an Apple iPhone 13 Pro.
+      Four of them consists of people performing different facial expressions
+      including smiling, frowning, closing or opening eyes, and opening mouth.
+      % One of the four, we capture only the frontal view of the person, which
+      % we reserve for the 2D image experiment.
+      For the other three, we captured a toy car changing its shape ({\it
+      a.k.a.
+        }
+      Transformer), a single metronome, and two metronomes beating with
+      different rates.
+      For one of the four videos depicting people, to use it for the 2D
+      implementation case, we captured it with a static camera that shows a
+      frontal view of the person.
+      All other sequences feature camera motions showing front and sides of
+      the object in the center of the scene.
+      % \mk{One of the four videos depicting people is captured with a static
+      % camera that shows a frontal view of the person, this video is reserved
+      % for evaluating the 2D implementation of our method described in the
+      % preceding section. All the remaining captures feature a moving camera
+      % that captures the front and sides of the objects in the center of the
+      % scene.}
+      For videos with human subjects, the subjects signed a participant
+      consent form, which was approved by a research ethics board.
+      We informed the participants that their data will be altered with our
+      method.
+
+      We extract frames at 15 FPS which gives approximately 900 frames per
+      capture.
+      % \KY{do you mean every other frame is validation?}
+      Because novel attribute synthesis via user control on real scenes does
+      not have a ground truth view---we aim to create scenes with unseen
+      attribute combinations---the benefit of our method is best seen
+      qualitatively.
+      Nonetheless, to quantitatively evaluate the rendering quality, we
+      interpolate between two frames and evaluate its quality.
+      In more detail, to minimize the chance of the dynamic nature of the
+      scene interfering with this assessment, we use every other frame as a
+      test frame for the interpolation task.
+
+      % Annotations 
+      For all human videos, we define three attributes---one for the status of
+      each of the two eyes, and one for the mouth.
+      We annotate only six frames per video in this case, specifically the
+      frames that contain the extremes of each attribute (\eg, left eye fully
+      open).
+      For the toy car, we set the shape of the toy car to be an attribute, and
+      annotate two extremes from two different view points---when the toy is
+      in robot-mode and when it is in car-mode from its left and right side.
+      For the metronomes, we consider the state of the pendulum to be the
+      attribute and annotate the two frames with the two extremes for the
+      single metronome case, and seven frames for the two metronome case as
+      the pendulums of the two metronomes are often close to each other and
+      required special annotations for these close-up cases;
+      see~\cref{fig:conerf-novel_view}.
+
+    \paragraph{Synthetic dataset}
+      Since the lack of ground-truth data renders measuring the quality of
+      novel attribute synthesis infeasible in practice, we leverage Kubric
+      software~\cite{kubric2021github} to generate synthetic dataset, where we
+      know exactly the state of each object in the scene.
+      % is it is difficult to quantitatively measure novel attribute synthesis
+      % with real data, we further use
+      We create a simple scene where three 3D objects, the teapot
+      \cite{teapot}, the Stanford bunny \cite{bunny}, and Suzanne
+      \cite{suzanne}, are placed within the scene and are rendered with
+      varying surface colors, which are our attributes;
+      see~\cref{fig:conerf-kubric3d}.
+      % We create one dataset that is in 3D for the NeRF experiments, and one
+      % in 2D, using a top-view camera for the 2D tests. \KY{Below might
+      % change---we might just to color changes ;)} \todo{% We move each object
+      % in the scene independently of others on a predefined trajectory. }%
+      We generate 900 frames for training and 900 frames for testing.
+      To ensure that the attribute combination during training is not seen in
+      the test scene, we set the attributes to be synchronized for the
+      training split, and desynchronized for the test split.
+      % \ky{
+      We further render the test split from different camera positions than
+      the training split to account for novel views.
+      % }
+      We randomly sample 5\% of the frames with a given attribute for each
+      object to be set as the ground-truth attribute.
+      During validation, we use attribute values directly to predict the
+      image.
+
+    \paragraph{Baselines}
+      To evaluate the reconstruction quality of our method, CoNeRF, we compare
+      it with four different baselines: \CIRCLE{1}~standard
+      NeRF~\cite{mildenhall2020nerf}; \CIRCLE{2}~NeRF+Latent, a simple
+      extension to NeRF where we concatenate each coordinate $\bx$ with a
+      learnable latent code $\bbeta$ to support appearance changes of the
+      scene; \CIRCLE{3}~Nerfies \cite{park2020deformable}; and
+      \CIRCLE{4}~HyperNeRF\footnote{We use the version with dynamic plane
+      slicing as it consistently outperforms the axis-aligned strategy; see
+      \cite{park2021hypernerf} for more details.
+      }~\cite{park2021hypernerf}.
+      % \ky{
+      Additionally, as existing methods do not support attribute-based control
+      with a few-shot supervision, we create another baseline \CIRCLE{5} by
+      extending HyperNeRF with a simple linear regressor $\pi$ that regresses
+      $\bbeta_c$ given $\balpha_c$.
+      We call this baseline HyperNeRF{+}$\pi$.
+      % } \ky{ We also compare our approach against a %setting with disabled
+      % mask part of our %pipeline. } slightly re-written
+      To further show the importance of masking, we also compare our approach
+      against a stripped-down version of our method, Ours{-}$\MaskNet $, where
+      we disable the part of our pipeline responsible for masking.
+      All baselines that utilize annotations were trained with the same sparse
+      labels as our method.
+      % \MK{is the above sentence I added true?} Ours{-}$\MaskNet$ to show its
+      % importance.\tom{this sounds like some weird ablation study description}
+      % \ky{} where we use $\mathcal{A}$ and $\mathcal{G}$ modules instead of
+      % $\mathcal{H}$ (see \cref{fig:laced-implicit}). In short, we project
+      % $\bbeta$ with an MLP, supervise the obtained representation with
+      % annotations and use it as the latent representation that is processed
+      % as in HyperNeRF \cite{park2021hypernerf}. We refer to this baseline as
+      % HyperNeRF{+}Proj.
+
+  \subsection{Comparison with the baselines}
+    \input{fig/\conerfdirname/annotate}
+
+    \paragraph{Qualitative highlights}
+      % \ky{%
+      We first show qualitative examples of novel attribute and view synthesis
+      on the real dataset in \cref{fig:conerf-novel_view}.
+      Our method allows for controlling the selected attribute without
+      changing other aspects of the image---our control is disentangled.
+      This disentanglement allows our method to generate images with attribute
+      combinations that were not seen at training time.
+      % Our method allows to independently control multiple attributes without
+      % the risk of entangling them with each other. In the case of
+      % HyperNeRF{+}$\pi$, a simple regression strategy is unable to
+      % disentangle the motions that happen within the scene which results in
+      % uncontrollable rendering ({\it e.g.,} opening mouth triggered by
+      % closing the eyes). 
+      On the contrary, as there is no incentive for the learned embeddings of
+      HyperNeRF to be disentangled, the simple regression strategy of
+      HyperNeRF{+}$\pi$ results in entangled control, where when one tries to
+      close/open the mouth it ends up affecting the eyes.
+      % \KY{This might need rewrite after Fig3 is finalized}.
+      The same phenomenon happens also for Ours{-}$\MaskNet$.
+      % is unable to produce a distentangled representation as evidenced by
+      % issues like the mouth opening when only the attribute responsible for
+      % one of the eyes is modified.
+      Moreover, due to the complexity of motions in the scene,
+      HyperNeRF{+}$\pi$ fails completely to render novel views of the toy car,
+      whereas our method, with only four annotated frames, successfully
+      provides both controllability and high-quality renderings.
+      % }%
+      Please also see \SupplementaryMaterial for more qualitative results,
+      including a video demonstration.
+
+      Note that in all of these sequences, we provide highly sparse
+      annotations and yet our method learns how each attribute should
+      influence the appearance of the scene.
+      In \cref{fig:conerf-annotate}, we show an example annotation and how the
+      method finds the mask for unannotated views.
+
+      \input{tabs/\conerfdirname/kubric3d}
+      \input{fig/\conerfdirname/kubric3d}
+    \paragraph{Quantitative results on synthetic dataset}
+      To complete the qualitative evaluation of our method, we provide results
+      using synthetic dataset with available ground truth.
+      We measure Peak Signal-to-Noise Ratio (PSNR), Multi-scale Structural
+      Similarity (MS-SSIM)~\cite{wang2003multiscale}, and Learned Perceptual
+      Image Patch Similarity (LPIPS)~\cite{zhang2018unreasonable} and report
+      them in~\cref{tab:conerf-kubric3d}.
+      With only 5\% of the annotations, our method provides the best
+      novel-view and novel-attribute synthesis results, as reconfirmed by the
+      qualitative examples in~\cref{tab:conerf-kubric3d}.
+      As shown, neither HyperNeRF{+}$\pi$ nor Ours{-}$\MaskNet$ is able to
+      provide good results in this case, as without disentangled control of
+      each attribute, the novel attribute and view settings of each test frame
+      cannot be synthesized properly.
+
+    \paragraph{Interpolation task}
+      To further verify that our rendering quality does not degrade with the
+      introduction of controllability, we evaluate our method on a frame
+      interpolation task without any attribute control.
+      Unsurprisingly, as shown in~\cref{tab:conerf-sota}, all methods that
+      support dynamic scenes work similarly, including ours for interpolation.
+      Note that for the interpolation task, we interpolate every other frame,
+      in order to minimize the chance of attributes affecting the evaluation.
+      Here, we are purely interested in the rendering quality from a novel
+      view.
+
+      \input{tabs/\conerfdirname/sota}
+
+      \input{fig/\conerfdirname/2d-interpolation-nosynth}
+  \subsection{Direct 2D rendering}
+    To verify how our approach generalizes beyond NeRF models and volume
+    rendering, we apply our method to videos taken from a single view point,
+    creating a 2D rendering task.
+    We show in~\cref{fig:conerf-2d-interpolation} a proof-of-concept for
+    employing our approach outside of NeRF applications to allow controllable
+    neural generative models.
+
+  \subsection{Ablation study}
+    \input{tabs/\conerfdirname/ablations}
+    \paragraph{Loss functions}
+      In~\cref{tab:conerf-ablations}, we show how each loss term affects the
+      network's performance, contributing to performance improvements.
+      When rendering novel views with novel attributes, the full formulation
+      is a must, as without all loss terms the performance drops
+      significantly---for example, results without $\loss{mask}$ is similar to
+      Ours-$\MaskNet$ results in~\cref{tab:conerf-kubric3d} and
+      \cref{fig:conerf-kubric3d}.
+      In the case of the interpolation task, the additional loss functions for
+      controllability have no significant effect on the rendering quality.
+      In other words, our controllability losses \textbf{do not interfere}
+      with the rendering quality, other than imbuing the framework with
+      controllability.
+      \vspace{-0.2em}
+
+      \input{fig/\conerfdirname/ablation_annotate}
+    \paragraph{Quality of few shot supervision}
+      We test how sensitive our method is against the quality of annotation
+      supervision.
+      In~\cref{fig:conerf-ablation_annotate} we demonstrate how each
+      annotation leads to the final rendering quality.
+      Our framework is robust to a moderate degree to the inaccuracies in the
+      annotations.
+      However, when they are too restrictive, the mask may collapse, as shown
+      on the top row.
+      Too large of a mask could also lead to moderate entanglement of
+      attributes, as shown in the bottom row.
+      Still, in all cases, our method provides a reasonable control over what
+      is annotated.
+
+      \input{fig/\conerfdirname/ablation_unannotated}
+    \paragraph{Unannotated attributes}
+      A natural question to ask is then what happens with the unannotated
+      changes that may exist in the scene.
+      In~\cref{fig:conerf-ablation_unannotated} we show how the method
+      performs when annotating only parts of the appearance change within the
+      scene.
+      The unannotated changes of the scene get encoded as $\bbeta$, as in the
+      case of HyperNeRF~\cite{park2021hypernerf}.

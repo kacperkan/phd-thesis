@@ -1,0 +1,107 @@
+\section{Related works}
+  \label{sec:conerf-related}
+  Neural Radiance Fields~\cite{mildenhall2020nerf} provide high-quality
+  renderings of scenes from novel views with just a few exemplar images
+  captured by a handheld device.
+  Various extensions have been suggested to date.
+  These include ones that focus on improving the quality of
+  results~\cite{martin2021nerf, park2020deformable, park2021hypernerf,
+  zhang2020nerf++}, ones that allow a single model to be used for multiple
+  scenes~\cite{schwarz2020graf, trevithick2020grf}, and some considering
+  controllability of the rendering output at a coarse
+  level~\cite{guo2020object, yu2021unsupervised, liu2021editing,
+  yang2021learning, xie2021fig, zhang2021nerfactor}, as we detail next.
+
+  In more detail, existing works enable only compositional control of object
+  location~\cite{yang2021learning,yu2021unsupervised}, and recent extensions
+  also allow for finer-grain reproduction of global illumination
+  effects~\cite{guo2020object}.
+  NeRFactor~\cite{zhang2021nerfactor} shows one can model albedos and BRDFs,
+  and shadows, which can be used to, \eg, edit material, but the manipulation
+  they support is limited to what is modeled through the rendering equation.
+  CodeNeRF~\cite{jang2021codenerf} and EditNeRF~\cite{liu2021editing} showed
+  that one can edit NeRF models by modifying the shape and appearance
+  encoding, but they require a curated dataset of objects viewed under
+  different views and colors.
+  HyperNeRF~\cite{park2021hypernerf}, on the other hand can adapt to unseen
+  changes specific to the scene, but learns an arbitrary attribute (ambient)
+  space that cannot be supervised, and, as we show in
+  \cref{sec:conerf-results}, cannot be easily related to specific local
+  attribute within the scene for controllability.
+
+  \paragraph{Explicit supervision}
+    One can also condition NeRF representations~\cite{gafni2021dynamic} with
+    face attribute predicted by pre-trained face tracking networks, such as
+    Face2Face~\cite{thies2016face2face}.
+    Similarly, for human bodies, A-NeRF~\cite{su2021anerf} and
+    NARF~\cite{noguchi2021neural} use the SMPL~\cite{loper2015smpl} model to
+    generate interpretable pose parameters, and
+    Neural~Actor~\cite{liu2021neural} further includes normal and texture maps
+    for more detailed rendering.
+    While these models result in controllable NeRF, they are limited to
+    domain-specific control and the availability of a heavily engineered
+    control model.
+
+  \paragraph{Controllable neural implicits}
+    Controllability of neural 3D \textit{implicit} representations has also
+    been addressed by the research community.
+    Many works have limited focus on learning \textit{human} neural implicit
+    representations while enabling the control via SMPL
+    parameters~\cite{loper2015smpl}, or linear blend skinning
+    weights~\cite{zheng2021pamir, he2021arch++, saito2021scanimate,
+    mihajlovic2021leap, ma2021scale, deng2020nasa, alldieck2021imghum,
+    zins2021data}.
+    Some initial attempts at learned disentangled of shape and poses have also
+    been made in A-SDF~\cite{mu2021sdf}, allowing behavior control of the
+    output geometry~(\eg doors open vs.
+    closed) while maintaining the general shape.
+    However, the approach is limited to controlling $\text{SE}(3)$
+    articulation of objects, and requires dense 3D supervision.
+  \subsection{Neural Radiance Field (NeRF)}
+    For completeness, we briefly discuss NeRF before diving into the details
+    of our method.
+    A Neural Radiance Field captures a volumetric representation of a specific
+    scene within the weights of a neural network.
+    As input, it receives a sample position~$\bx$ and a view direction~$\bv$
+    and outputs the density of the scene $\sigma$ at position~$\bx$ as well as
+    the color~$\bc$ at position~$\bx$ as seen from view direction~$\bv$.
+    One then renders image pixels~$\bC$ via volume
+    rendering~\cite{kajiya1984ray}.
+    In more detail, $\bx$ is defined by observing rays~$\br(t)$ as
+    \mbox{$\bx=\br(t)$}, where $t$ parameterizes at which point of the ray you
+    are computing for.
+    One then renders the color of each pixel $\bC(\br)$ by computing
+    \begin{equation}
+      \bC\left(\br\right) = \int_{t_n}^{t_f} T(t) \sigma\left(\br(t)\right) \bc\left(\br(t), \bv\right) dt
+      \;,
+      \label{eq:conerf-volume_render}
+    \end{equation}
+    where $\bv$ is the viewing angle of the ray $\br$, $t_n$ and $t_f$ are the near and far planes of the rendering volume, and
+    \begin{equation}
+      T(t) = \exp \left ( - \int_{t_n}^t \sigma({\bf r}(s)) ds \right ) \;,
+      \end{equation} is the accumulated transmittance.
+    Integration in \cref{eq:conerf-volume_render} is typically done via
+    numerical integration~\cite{mildenhall2020nerf}.
+
+  \subsection{HyperNeRF}
+    Note that in its original formulation~\cref{eq:conerf-volume_render} is
+    only able to model \textit{static} scenes.
+    Various recent works~\cite{park2020deformable, park2021hypernerf,
+    tretschk2021non} have been proposed to explicitly account for possible
+    appearance changes in a scene (for example, temporal changes in a video).
+    To achieve this, they introduce the notion of \textit{canonical} \textit{hyperspace} -- more formally given a 3D query point $\bx$ and the collection $\pars$ of all parameters that describe the model, they define:
+    \begin{align}
+      \Canonicalizer(\bx)         & \equiv \Canonicalizer(\bx \given \bbeta, \pars ), \quad                 & \text{Canonicalizer} \label{eq:conerf-canonicalizer} \\
+      \bbeta(\bx)                 & \equiv \hypermap (\bx \given \bbeta, \pars ), \quad                     & \text{Hyper~Map} \label{eq:conerf-hypermap}          \\
+      \bc(\point), \sigma(\point) & = \Representation(\Canonicalizer(\bx), \bbeta(\bx) \given \pars). \quad & \text{Hyper~NeRF}
+      \label{eq:conerf-hypernerf}
+    \end{align}
+    where the location is canonicalized via a canonicalizer $\Canonicalizer$, and the appearances, represented by $\bbeta$, are mapped to a hyperspace via $\hypermap$, which are then utilized by another neural network $\Representation$ to retrieve the color $\bc$ and the density $\sigma$ at the query location.
+    Note throughout this paper we denote $\latent$ to indicates a latent code,
+    while $\latent(\point)$ to indicate the corresponding field generated by
+    the hypermap lifting.
+    With this latent lifting, these methods render the scene via
+    \cref{eq:conerf-volume_render}.
+    Note that the original NeRF model can be thought of the case where
+    $\Canonicalizer$ and $\hypermap$ are identity mappings.
+

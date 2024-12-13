@@ -1,0 +1,30 @@
+\begin{figure}[!tbhp]
+  \centering
+  \begin{subfigure}[b]{.48\columnwidth}
+    \centering
+    \includegraphics[width=\linewidth]{fig/\conerfdirname/assets/toy/dataset.pdf}
+    \caption{2D toy dataset}
+    \label{subfig:conerf-2d-dataset}
+  \end{subfigure}
+  \hfill{}
+  \begin{subfigure}[b]{.48\columnwidth}
+    \centering
+    \includegraphics[width=\linewidth]{fig/\conerfdirname/assets/toy/wo_sup.pdf}
+    \vspace{.1em}
+    \caption{1D projection without supervision}
+    \label{subfig:conerf-without-sup}
+
+    \centering
+    \includegraphics[width=\linewidth]{fig/\conerfdirname/assets/toy/with_sup.pdf}
+    \vspace{.1em}
+    \caption{1D projection with supervision}
+    \label{subfig:conerf-with-sup}
+  \end{subfigure}
+  \caption{Here we show that a simple neural network can discover an intrinsic 1D structure of a 2D manifold.
+    Without a supervision, the network freely spans the data on the $[-\infty,
+    \infty]$ range while imposing a soft constraint in a form of the few-shot
+    supervision limits this range to take particular values ($[-1, 1]$ in this
+    case).
+  }
+  \label{fig:toy-span}
+\end{figure}

@@ -1,0 +1,20 @@
+\section{Conclusions}
+We have introduced CoNeRF, an intuitive controllable NeRF model that can be trained with few-shot annotations in the form of attribute masks.
+The core contribution of our method is that we represent attributes as localized masks, which are then treated as latent variables within the framework.
+To do so we regress the attribute and their corresponding masks with neural networks.
+This leads to a few-shot learning setup, where the network learns to regress provided annotations, and if they are not provided for a given image, proper attributes and masked are discovered throughout training automatically.
+We have shown that our method allows users to easily annotate what to control and how, within a single video simply by annotating a few frames, which then allows rendering of the scene from novel views and with novel attributes, at high quality.
+
+\paragraph{Limitations}
+While our method delivers controllability to NeRF models, there is room for improvement.
+First, our disentanglement of attribute strictly relies on the locality assumption---if multiple attributes act on a single pixel, our method is likely to have entangled outcomes when rendering with different attributes. 
+An interesting direction would therefore be to incorporate manifold disentanglement approaches~\cite{li2020markov,zhang2021product} to our method.
+Second, while very few, we still require sparse annotations.
+Unsupervised discovery of controllable attributes, for example as in \cite{kulkarni2019unsupervised}, in a scene remains yet to be explored.
+Lastly, we resort to user intuition on which frames should be annotated---we heuristically choose frames with extreme attributes (\eg, mouth fully open).
+While this is a valid strategy, an interesting direction for future research would be to employ active learning techniques for this purpose~\cite{ren2020survey,belharbi2021deep}
+
+We further discuss potential societal impact of our work in the \SupplementaryMaterial.
+
+
+\endinput

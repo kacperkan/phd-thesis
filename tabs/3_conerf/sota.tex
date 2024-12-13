@@ -1,0 +1,27 @@
+\begin{table}
+  \centering
+  \begin{tabular}{@{}lccc@{}}
+    \toprule
+    Method                     & PSNR $\uparrow$ & MS-SSIM $\uparrow$ & LPIPS $\downarrow$ \\
+    \midrule
+    NeRF                       & 28.795          & 0.951              & 0.210              \\
+    NeRF + Latent              & 32.653          & 0.981              & 0.182              \\
+    NeRFies                    & 32.274          & 0.981              & 0.180              \\
+    HyperNeRF                  & 32.520          & 0.981              & 0.169              \\
+    \midrule
+    \textbf{Ours}{-}$\MaskNet$ & 32.061          & 0.979              & 0.167              \\
+    \textbf{Ours}              & 32.342          & 0.981              & 0.168              \\
+
+    \bottomrule
+  \end{tabular}
+  \caption{
+    \textbf{Quantitative results (interpolation) -- }
+    We report results in terms of PSNR, MS-SSIM, and LPIPS for the
+    interpolation task.
+    These results are obtained for interpolated view synthesis only, not for
+    novel attribute rendering.
+    Our method provides similar performance in terms of rendering quality, but
+    with controllability.
+  } % \caption
+  \label{tab:conerf-sota}
+\end{table}

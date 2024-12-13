@@ -1,0 +1,19 @@
+\begin{table}
+  \centering
+  \begin{tabular}{@{}lccc@{}}
+    \toprule
+    Method                     & PSNR$\uparrow$  & MS-SSIM$\uparrow$ & LPIPS$\downarrow$ \\
+    \midrule
+    HyperNeRF{+}$\pi$          & 25.963          & 0.854             & 0.158             \\
+    \textbf{Ours}{-}$\MaskNet$ & 27.868          & 0.898             & 0.155             \\
+    \textbf{Ours}              & \textbf{32.394} & \textbf{0.972}    & \textbf{0.139}    \\
+    \bottomrule
+  \end{tabular}
+  \caption{
+    \textbf{Novel view and novel attributes results -- }
+    We report average PSNR, MS-SSIM, and LPIPS values for novel view and novel
+    attribute synthesis on synthetic data.
+    Our method gives the best results.
+  } % \caption
+  \label{tab:conerf-kubric3d}
+\end{table}
