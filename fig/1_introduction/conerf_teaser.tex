@@ -1,0 +1,25 @@
+% not using primes (not canonicalized parameters)
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.38\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{assets/conerf/img/beta-importance-annotations.pdf}
+    \caption{annotated samples}
+  \end{subfigure}
+  \hfill{}
+  \begin{subfigure}[t]{0.595\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{assets/conerf/img/beta-importance-preds.pdf}
+    \caption{renderings from the trained model}
+  \end{subfigure}
+  \caption{{\bf Example with annotations and controlled attributes --}
+    We show an example of how our \conerf is capable of controlling attributes
+    selected sparse annotations at the training time.
+    Top row shows possible value combinations ($\color{red}{-}$ denoting closed
+    eye, $\color{orange}{0}$ neutral position and $\color{green}{+}$ an open eye)
+    and $\{\bbeta_1,\bbeta_2\}$ possible values of attributes that are not
+    explicitly learned from the annotations but purely from data (please
+    see~\cref{chap:conerf} for further explanation).
+  }
+  \label{fig:conerf-teaser}
+\end{figure}

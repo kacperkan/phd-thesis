@@ -52,21 +52,108 @@
 \Crefname{table}{Table}{Tables}
 \crefname{table}{Tab.}{Tabs.}
 
-\renewcommand{\paragraph}[1]{\vspace{.5em}\noindent\textbf{#1}}
-  % \setlength{\parindent}{0pt}%
-  \newcommand\mycoloredbox[1]{\textcolor{#1}{\rule{0.5em}{0.5em}}}
-  % \definecolor{thirdbestcolor}{rgb}{1,1, 0.6}
-  % \definecolor{secondbestcolor}{rgb}{1, 0.9, 0.6}
-  % \definecolor{firstbestcolor}{rgb}{1, 0.6, 0.6}
-  % \definecolor{thirdbestcolor}{html}{}
-  \definecolor{secondbestcolor}{HTML}{16E9CB}
-  \definecolor{firstbestcolor}{HTML}{169EE9}
-  \newcommand{\tablefirstbest}[0]{\cellcolor{firstbestcolor}}
-  \newcommand{\tablesecondbest}[0]{\cellcolor{secondbestcolor}}
-  % \newcommand{\tablethirdbest}[0]{\cellcolor{thirdbestcolor}}
+\newcommand\mycoloredbox[1]{\textcolor{#1}{\rule{0.5em}{0.5em}}}
+\definecolor{secondbestcolor}{HTML}{16E9CB}
+\definecolor{firstbestcolor}{HTML}{169EE9}
+\newcommand{\tablefirstbest}[0]{\cellcolor{firstbestcolor}}
+\newcommand{\tablesecondbest}[0]{\cellcolor{secondbestcolor}}
 
-  \input{tikz_addons.tex}
+\input{tikz_addons.tex}
 
-  \newcommand{\real}{\mathbb{R}}
-  \newcommand{\latentdimension}{D}
-  \newcommand{\projecteddimension}{d}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\latentdimension}{D}
+\newcommand{\projecteddimension}{d}
+
+\makeatletter
+\DeclareCiteCommand{\fullciteallauthors}
+{\defcounter{maxnames}{99}
+  \usebibmacro{prenote}}
+{\usedriver
+  {\DeclareNameAlias{sortname}{default}}
+  {\thefield{entrytype}}}
+{\multicitedelim}
+{\usebibmacro{postnote}}
+
+\renewcommand*{\mkbibnamegiven}[1]{
+  \ifitemannotation{highlight}
+  {\textbf{#1}}
+  {#1}}
+
+\renewcommand*{\mkbibnamefamily}[1]{
+  \ifitemannotation{highlight}
+  {\textbf{#1}}
+  {#1}}
+
+\makeatother
+% \renewcommand{\paragraph}[1]{ \vspace{.5em}\noindent\textbf{#1} }
+
+\newcommand{\conerf}{CoNeRF\xspace}
+\newcommand{\blendfields}{BlendFields\xspace}
+\newcommand{\lumigauss}{LumiGauss\xspace}
+\newcommand{\clog}{CLoG\xspace}
+
+% ======== CoNeRF ======= %
+
+% % % basic math symbols %
+\usepackage{dsfont}
+\newcommand{\loss}[1]{\mathcal{L}_\text{#1}}
+\newcommand{\calL}{\mathcal{L}}
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\expect}{\mathbb{E}}
+\newcommand{\IR}{{\mathbb{R}}}
+\newcommand{\IE}{{\mathbb{E}}}
+\newcommand{\balpha}{{\boldsymbol{\alpha}}}
+\newcommand{\bbeta}{{\boldsymbol{\beta}}}
+\newcommand{\bzero}{{\mathbf{0}}}
+\newcommand{\bx}{{\mathbf{x}}}
+\newcommand{\bc}{{\mathbf{c}}}
+\newcommand{\bd}{{\mathbf{d}}}
+\newcommand{\bC}{{\mathbf{C}}}
+\newcommand{\boldm}{{\mathbf{m}}}
+\newcommand{\bM}{{\mathbf{M}}}
+\newcommand{\br}{{\mathbf{r}}}
+\newcommand{\bv}{{\mathbf{v}}}
+\newcommand{\bI}{{\mathbf{I}}}
+\newcommand{\beps}{{\boldsymbol{\epsilon}}}
+\newcommand{\Canonicalizer}{{\mathcal{K}}}
+% \newcommand{\Canonicalizer}{{\mathcal{S}}}
+% \newcommand{\LifterA}{{\mathcal{G}}} %< OBSOLETE
+% \newcommand{\LifterB}{{\mathcal{H}}} %< OBSOLETE
+\newcommand{\hypermap}{\mathcal{H}}
+\newcommand{\Representation}{{\mathcal{R}}}
+\newcommand{\Attribute}{{\mathcal{A}}}
+\newcommand{\AttributeSet}{{\mathfrak{A}}}
+\newcommand{\MaskSet}{{\mathfrak{M}}}
+\newcommand{\reglambda}[1]{\lambda_\text{#1}}
+\newcommand{\pars}{\boldsymbol{\theta}}
+\newcommand{\given}{;}
+
+\newcommand{\iImage}{c}
+\newcommand{\nImages}{C}
+\newcommand{\image}{\mathbf{C}}
+\newcommand{\images}{\{\image_\iImage\}}
+\newcommand{\latents}{\{\boldsymbol\beta_\iImage\}}
+\newcommand{\latent}{\boldsymbol\beta}
+\newcommand{\latentDim}{B}
+\newcommand{\attrib}{\boldsymbol\alpha}
+\newcommand{\allpars}{\boldsymbol\theta}
+\newcommand{\iFrame}{k}
+\newcommand{\width}{W}
+\newcommand{\height}{H}
+\newcommand{\nAttributes}{A}
+\newcommand{\hyperAttributeDim}{d}
+\newcommand{\iAttribute}{a}
+\newcommand{\attribute}{\alpha}
+\newcommand{\attributes}{\boldsymbol\alpha}
+\newcommand{\Mask}{\mathbf{M}}
+\newcommand{\mask}{\mathbf{m}}
+\newcommand{\indicator}{\delta}
+\newcommand{\gt}{\text{gt}}
+\newcommand{\AttributeNet}{\mathcal{A}}
+\newcommand{\point}{\mathbf{x}}
+\newcommand{\MaskNet}{\mathcal{M}}
+\newcommand{\stopgrad}{\xcancel{\nabla}}
+\newcommand{\field}{\mathbf{f}}
+\newcommand{\VolRend}{\mathcal{V}}
+\newcommand{\ray}{\br}

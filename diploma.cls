@@ -103,13 +103,14 @@
 
 \RequirePackage{xltxtra}
 \RequirePackage{polyglossia}
-\ifnum\strcmp{\locallang}{PL} = 0 
-    \setdefaultlanguage{polish}
-\else
-    \setdefaultlanguage{english}
-\fi
-\setotherlanguage{polish}
+% \ifnum\strcmp{\locallang}{PL} = 0 
+%     \setdefaultlanguage{polish}
+% \else
+%     \setdefaultlanguage{english}
+% \fi
+% \setotherlanguage{polish}
 \setotherlanguage{english}
+\setdefaultlanguage{english}
 % \setotherlanguage{latin}
 % -------------------------------------------------------------------
 % Wymiary strony
@@ -205,11 +206,14 @@
 % Do wyboru: styl numeracyjny wg normy PN (?)
 % ALBO styl harwardzki
 % -------------------------------------------------------------------
-\RequirePackage[backend=biber,
+\RequirePackage[
         style=ieee,     % styl numeryczny IEEE prawie jak PN
         sorting=nyt,    % sortowanie spisu po nazwiskach
         citestyle=numeric-comp, % kompaktowe odnośniki numeryczne typu [21-23]
         backref=true,
+        natbib=true,
+        maxbibnames=99,
+        backrefstyle=three,
     ]{biblatex}
 \DeclareNameAlias{default}{family-given} % nazwisko na początku
 \newcommand{\applybibliography}{
@@ -220,6 +224,7 @@
         \printbibliography
     }
 }
+
 % -------------------------------------------------------------------
 % Alternatywa - styl harwardzki:
 % -------------------------------------------------------------------
@@ -289,8 +294,8 @@
 % Znaki cytowania % PL-EN
 % -------------------------------------------------------------------
 \RequirePackage{csquotes}
-\setquotestyle[guillemets]{polish}
-%\setquotestyle{english}
+% \setquotestyle[guillemets]{polish}
+\setquotestyle{english}
 
 % -------------------------------------------------------------------
 % Klikalne linki

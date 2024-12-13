@@ -314,7 +314,7 @@ modifyLineBreaks:
         columns: 79
         multipleSpacesToSingle: 1
         removeBlockLineBreaks: 1
-        when: before                        # before/after
+        when: after                        # before/after
         comments:
             wrap: 1                           # 0/1
             inheritLeadingSpace: 0            # 0/1

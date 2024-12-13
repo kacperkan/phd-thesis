@@ -1,8 +1,8 @@
 \chapter{Introduction}
 \label{chap:introduction}
 
-With the advent of deep learning, research have been exploring varying ways to
-apply it to computer graphics.
+                   With the advent of deep learning, research have been
+                   exploring varying ways to apply it to computer graphics.
 One of the most recent and promising approaches is neural rendering.
 Neural rendering is a field that combines deep learning and computer graphics
 to generate realistic images of 3D scenes.
@@ -14,16 +14,17 @@ scenes.
 However, NeRF has limitations in terms of memory and computational
 requirements, which makes it difficult to scale to large scenes.
 
-To alleviate the problem, \textcite{kerbl20233d} proposed a new technique---3D
-Gaussian Splatting (3DGS).
+                   To alleviate the problem, \textcite{kerbl20233d} proposed a
+                   new technique---3D Gaussian Splatting (3DGS).
 3DGS is a neural rendering technique that represents a 3D scene as a set of 3D Gaussian that are splatted to an image space using algorithm proposed by~\textcite{zwicker2001ewa}.
-In contrast to NeRF, 3DGS is more memory efficient and can be used to render
-large scenes.
+ In contrast to NeRF, 3DGS is more memory efficient and can be used to render
+ large scenes.
 It can also render scenes with millions of points in real-time on a single
 GPU.
 
-In this thesis, we focus on those two milestone techniques in neural rendering
-and address their fundamental problem---lack of controllability.
+                   In this thesis, we focus on those two milestone techniques
+                   in neural rendering and address their fundamental
+                   problem---lack of controllability.
 
 \section{Motivation and challenges}
 
@@ -41,8 +42,8 @@ and address their fundamental problem---lack of controllability.
 
   One may ask why the controllability is a feat sought after to be researched.
   We see the inspiration in how human artists work.
-  Imagine an artist working on 3D game where they need an asset, like a 3D mesh,
-  to be created.
+  Imagine an artist working on 3D game where they need an asset, like a 3D
+  mesh, to be created.
   Such a mesh takes much effort since it includes modeling, creating a UV map
   which can then be textured.
   After the process is finish, the artist's supervisor may task him to change
@@ -52,22 +53,23 @@ and address their fundamental problem---lack of controllability.
   3DGS or NeRF.
   However, 3DGS and NeRFs are volumetric in nature.
   Our exploited and well-established practices no longer apply to them since
-  volumetric representations do not have the underlying surface representation.
+  volumetric representations do not have the underlying surface
+  representation.
   For that reason, we see a couple of avenues which we explore in this thesis.
 
   Firstly, \textcite{park2021nerfies} proposed NeRFies, a model that creates a
   volumetric representation of a person from a self-captured sequence with a
   phone camera.
-  Since the inception of NeRFs~\cite{mildenhall2020nerf}, it was among the first
-  works the achieved such a high quality of reconstructions from a casual
-  videos.
-  In its primal form, NeRFies were unable to control the avatar in any other way
-  than by a linear interpolation of latent embeddings that embedded the video's
-  time dimension.
+  Since the inception of NeRFs~\cite{mildenhall2020nerf}, it was among the
+  first works the achieved such a high quality of reconstructions from a
+  casual videos.
+  In its primal form, NeRFies were unable to control the avatar in any other
+  way than by a linear interpolation of latent embeddings that embedded the
+  video's time dimension.
   The follow-up work, HyperNeRF~\cite{park2021hypernerf} handles this issue by
   projecting the learnable embeddings with $\latentdimension$ onto a
-  lower-dimensional space~$\real^\projecteddimension$ where $\projecteddimension
-    {\ll}\latentdimension$.
+  lower-dimensional space~$\real^\projecteddimension$ where
+  $\projecteddimension {\ll}\latentdimension$.
   After the assumption that the $\projecteddimension{=}2$ is enough to explain
   the sequence variability, that projected embedding becomes a 2-dimensional
   space that can be traversed in an interpretable way.
@@ -94,9 +96,9 @@ and address their fundamental problem---lack of controllability.
   However, our initial experiments showed that those changes cannot handle
   motions that affect a subject globally, \eg, jumping jacks performed by a
   person.
-  To solve the issue, \textcite{fang2022fast} proposes to model the deformation
-  via a multi-scale voxel structure which works well in the synthetic setting,
-  such as the one proposed by~\textcite{pumarola2021d}.
+  To solve the issue, \textcite{fang2022fast} proposes to model the
+  deformation via a multi-scale voxel structure which works well in the
+  synthetic setting, such as the one proposed by~\textcite{pumarola2021d}.
 
   There exists a plethora of works that approach the problem from the another
   angle---instead of modeling the motion purely from data, they use a template
@@ -125,7 +127,8 @@ and address their fundamental problem---lack of controllability.
   We build on VolTeMorph's~\cite{garbin2024voltemorph} approach to point
   canonicalization to provide a data-efficient way to control the character.
   We further introduce a physically-based mixture of predefined, learned from
-  data wrinkle templates that represent expression-dependent skin deformations.
+  data wrinkle templates that represent expression-dependent skin
+  deformations.
   Our proposed was acknowledged by the reviewers and was accepted to the CVPR
   2023 conference.
 
@@ -145,24 +148,24 @@ and address their fundamental problem---lack of controllability.
   which exhibit remarkable quality of the surface reconstruction.
   Together with our precomputed radiance transfer from classical computer
   graphics approaches~\cite{slomp2006gentle,ramamoorthi2001envmap}, our
-  LumiGauss achieves state-of-the-art reconstruction quality with the ability to
-  render novel lighting conditions with high fidelity.
+  LumiGauss achieves state-of-the-art reconstruction quality with the ability
+  to render novel lighting conditions with high fidelity.
   Our work received positive reviews for the WACV 2025 conference.
 
   Finally, volumetric representation are computationally intensive to render,
   compared to the traditional mesh representation.
-  For NeRFs~\cite{mildenhall2020nerf}, it takes seven days on V100 NVidia GPU to
-  train for single scene, and more than 60 seconds to render a single
+  For NeRFs~\cite{mildenhall2020nerf}, it takes seven days on V100 NVidia GPU
+  to train for single scene, and more than 60 seconds to render a single
   image---way beyond any practical applications.
   Although many approaches have been proposed to speed up the rendering
   process~\cite{garbin2021fastnerf,yu2021plenoctrees,reiser2021kilonerf,hedman2021baking,mueller2022instant},
   they usually make a trade-off between memory requirements, quality, and
   rendering speed.
   3D Gaussian Splatting~\cite{kerbl20233d} (3DGS) rose as an alternative to NeRF, offering both high-quality rendering at interactive frame rates.
-  However, those frame rates could be achieved with the most advanced GPU units
-  available at that time.
-  As we see the potential in 3DGS to be a viable canonical representation for 3D
-  data, akin to 3D meshes, a need for its adaptability to different
+  However, those frame rates could be achieved with the most advanced GPU
+  units available at that time.
+  As we see the potential in 3DGS to be a viable canonical representation for
+  3D data, akin to 3D meshes, a need for its adaptability to different
   computational resources exists.
   Meshes can be adapted easily with levels of detail (LoD) approaches that
   remove detail from meshes that do not affect the general object's perception
@@ -174,25 +177,25 @@ and address their fundamental problem---lack of controllability.
   With this goal in mind, we aim at answering the following research questions:
   \begin{enumerate}[label=(\textbf{RQ \arabic*})]
     \item \label{enum:texturing}
-          Can we imbue a Neural Radiance Field (NeRF) with a controllability by
-          providing sparse annotations to the training dataset?
-          How many annotations suffice to learn smooth interpolation capabilities
-          between controlled values?
+          Can we imbue a Neural Radiance Field (NeRF) with a controllability
+          by providing sparse annotations to the training dataset?
+          How many annotations suffice to learn smooth interpolation
+          capabilities between controlled values?
 
     \item \label{enum:movement}
-          Are extreme facial expressions known from the literature sufficient to learn
-          expression-dependent details that extrapolate to expressions unseen at the
-          training time?
+          Are extreme facial expressions known from the literature sufficient
+          to learn expression-dependent details that extrapolate to
+          expressions unseen at the training time?
 
     \item \label{enum:lighting}
-          Is it possible to learn an underlying radiance transfer function of a scene
-          from images taken in ``in-the-wild'' setting?
+          Is it possible to learn an underlying radiance transfer function of
+          a scene from images taken in ``in-the-wild'' setting?
           Can such a transfer function generalize to unknown environment maps?
 
     \item \label{enum:resources}
-          How to learn a single 3D Gaussian Splatting (3DGS) representation that can be
-          adapted to different computational regimes at inference time in a feed-forward
-          mode?
+          How to learn a single 3D Gaussian Splatting (3DGS) representation
+          that can be adapted to different computational regimes at inference
+          time in a feed-forward mode?
   \end{enumerate}
 
   Each of these questions is a representative of possible among many others
@@ -201,15 +204,16 @@ and address their fundamental problem---lack of controllability.
   texture~\cite{kania2022conerf,kania2023blendfields},
   shape~\cite{kania2023blendfields}, lightning~\cite{kaleta2024lumigauss} and
   use of resources~\cite{kania2024clog}.
-  To answer~\ref{enum:texturing}, we describe our CoNeRF~\cite{kania2022conerf}.
+  To answer~\ref{enum:texturing}, we describe our
+  CoNeRF~\cite{kania2022conerf}.
   It is one of the pioneering works that uses sparsely annotated frames to
   continuously control the subject in a post-hoc manner.
   We leverage the fact that MLP used in NeRFs are smooth functions biased
   towards low frequency signals~\cite{tancik2020fourier}.
-  For that reason, NeRF can learn to interpolate smoothly the annotation signal
-  between frames of high similarity.
-  We show that this assumption is sufficient to obtain both novel view synthesis
-  and novel attribute synthesis with a single model.
+  For that reason, NeRF can learn to interpolate smoothly the annotation
+  signal between frames of high similarity.
+  We show that this assumption is sufficient to obtain both novel view
+  synthesis and novel attribute synthesis with a single model.
 
   We further move towards answering~\ref{enum:movement}.
   We introduce BlendFields~\cite{kania2023blendfields}, achieving two primary
@@ -217,8 +221,8 @@ and address their fundamental problem---lack of controllability.
   template, and a mixture model of training expressions that can produce
   spatially coherent, expression-dependent wrinkles on the face from as few as
   three expressions.
-  In our work, we build on VolTeMorph~\cite{garbin2024voltemorph} to achieve to
-  former, and focus on the latter contribution.
+  In our work, we build on VolTeMorph~\cite{garbin2024voltemorph} to achieve
+  to former, and focus on the latter contribution.
   Inspired by texture maps in classical computer graphics
   pipelines~\cite{oat2007animated}, we define a set of learnable radiance
   fields, each being overfit to a particular extreme expression from the
@@ -226,8 +230,8 @@ and address their fundamental problem---lack of controllability.
   We define an extreme expression as one of the possible expressions involving
   the most facial muscles.
   Building on VolTeMorph~\cite{garbin2024voltemorph} allows us to use an
-  underlying tetrahedral mesh to compute physical quantities such as the volume
-  change of tetrahedra under a given expression.
+  underlying tetrahedral mesh to compute physical quantities such as the
+  volume change of tetrahedra under a given expression.
   We use those quantities to linearly interpolate between the pretrained
   radiance fields.
   We mix the tetrahedra independently which makes rendering novel expressions
@@ -251,23 +255,23 @@ and address their fundamental problem---lack of controllability.
   All the contributions so far are affected by a specific disadvantage---a
   single model needs to be trained from scratch and it can be deployed only on
   high-end hardware.
-  We then ask if we can train a single model that is adaptable at inference time
-  to different hardware regimes~\ref{enum:resources}.
+  We then ask if we can train a single model that is adaptable at inference
+  time to different hardware regimes~\ref{enum:resources}.
   We propose CLoG~\cite{kania2024clog} as a potential remedy.
   Our approach uses the fact that one can constrain the number of Gaussians in
-  3DGS~\cite{kerbl20233d} to a specific number, such that it can be formed as a
-  2D grid by simple reshape operation.
-  With a specific training coarse-to-fine training protocol we contributed, the
-  model learns a representation that converges to a high-quality volumetric
-  structure.
+  3DGS~\cite{kerbl20233d} to a specific number, such that it can be formed as
+  a 2D grid by simple reshape operation.
+  With a specific training coarse-to-fine training protocol we contributed,
+  the model learns a representation that converges to a high-quality
+  volumetric structure.
   In the second training stage, we leverage the fact that Gaussians's can be
   spatially sorted in such a manner that their descriptors are placed next to
   each other if they are similar.
-  That forms a low-frequency image which can be modulated with an off-the-shelf
-  continuous upsampling architecture~\cite{vasconcelos2023cuf}.
+  That forms a low-frequency image which can be modulated with an
+  off-the-shelf continuous upsampling architecture~\cite{vasconcelos2023cuf}.
   The architecture outputs a new grid of the given resolution.
-  We show in our work that such an approach achieves remarkable results and can
-  output any number of Gaussians at inference time with high quality.
+  We show in our work that such an approach achieves remarkable results and
+  can output any number of Gaussians at inference time with high quality.
 
 \section{Contributions}
   Building on those questions, we structure this thesis in several chapters
@@ -280,10 +284,132 @@ and address their fundamental problem---lack of controllability.
     \item A novel paradigm for learning Gaussian Splatting models as 2D grids to achieve flexibility to adapt the model to different computational regimes at inference time.
   \end{itemize}
 
-  \subsection{Controllability of Texture from Partial Information}
-  \subsection{Controllability of Expression from Few-Shot Learning}
-  \subsection{LumiGauss}
-  \subsection{CLoG}
+  \input{fig/1_introduction/conerf_teaser.tex}
+  \subsection{Texture from Partial Information}
+    Existing NeRF-based approaches in 2021 were simple models---they were
+    overfit to a single subject, for a new subject the model needed to be
+    retrained from scratch, and the editability capabilities were
+    limited~\cite{liu2021editing}.
+    NeRFactor~\cite{zhang2021nerfactor} could be considered a more
+    sophisticated model.
+    However, it worked only for simple scene with calibrated scenes and could
+    not handle any motion.
+
+    We approach those issues in our CoNeRF~\cite{kania2022conerf} published at
+    the CVPR 2021 conference.
+    Inspired by HyperNeRF~\cite{park2021hypernerf}, we propose to revisit the
+    weak supervision in the context of radiance fields.
+    Specifically, under an assumption that one can provide a few of sparse
+    annotations to the dataset, we can leverage the smoothness of the neural
+    networks to propagate the annotation across the dataset.
+    The annotations also consist of what regions in the image space it refers
+    to and hence we can train a semantic segmentation radiance fields that
+    decouples attribute controls.
+    We show an example in~\cref{fig:conerf-teaser} where the left side
+    represents the annotations present in the data and the right one possible
+    manipulations at the inference time.
+    We note that those annotations are easy to make in a matter of a few
+    minutes for a single dataset.
+    However, the complexity of the annotations grows with the number of
+    attributes to control.
+
+  \subsection{Expression from Few-Shot Learning}
+    \conerf~\cite{kania2022conerf} is capable of rendering complex motions
+    given sufficient amount of data and provided annotations.
+    However, motions as the ones a person performs daily when speaking are
+    infeasible in practice.
+    We propose a solution to target that issue.
+    We introduce \blendfields~\cite{kania2023blendfields} from the CVPR 2023
+    proceedings which learns motion-dependent face deformation from data.
+    We build on VolTeMorph~\cite{garbin2024voltemorph} which uses existing
+    face template models, such as FLAME~\cite{li2017flame}, to learn a single
+    canonical representation, akin to the canonicalization module in CoNeRF.
+    Internally, \blendfields creates a tetrahedral cage around the face model.
+    For each sample along the ray in NeRF, it moves the points to a ``neutral
+    position'', chosen once prior to the training procedure.
+    Such a procedure comes insufficient to model realistic facial features,
+    such as wrinkles.
+    We contribute a novel approach to modeling those deformations.
+    We compute a deformation gradient of each tetrahedra for a given
+    expression which is a physically-based and easy to interpret quantity.
+    The value serves us to smoothly transition face regions textures to
+    appropriate colors.
+    We obtain the colors from NeRFs branches, each overfit to particular
+    expression.
+    In principle, \blendfields predicts face bases which are conditioned on
+    the face expression vector to output the final point color.
+    Our framework works well even when only a few ``extreme'' expressions are
+    provided such as grinning face with closed eyes and wide open mouth with
+    open eyes.
+
+  \subsection{Light from Unconstrained Images}
+    In both approaches above, we tackle the problem of texture
+    controllability.
+    They assume an ideal case scenario where a capture can be taken in an
+    idealized environment with constant camera exposure and lighting.
+    Moreover, the produced colors are blended together, making the change of
+    light impossible in practice.
+    We then ask the questions if we can decouple an intrinsic color of the
+    subject and change of that color stemming from the environment light.
+    We answer that question with our \lumigauss~\cite{kaleta2024lumigauss}
+    published at the WACV 2025 conference that, indeed, we can achieve that by
+    learning the radiance transfer function directly from data.
+    For that end, we train a 2DGS~\cite{huang20242d} model to obtain a smooth
+    and spatially coherent surface of objects.
+    On top of the other attributes known from 3DGS~\cite{kerbl20233d}, we
+    imbue our Gaussians with additional features corresponding to the radiance
+    transfer, expressed as Spherical Harmonics~\cite{green2003grittydetail}.
+    We show in our experiments that such a formulation is sufficient to train
+    a model that reacts to changing environment maps in a realistic manner and
+    renders images of higher fidelity than prior approaches.
+
+  \subsection{Levels of Detail in One Model}
+    All the contributions above require considerable computation hardware to
+    be trained on and then run inference in near real-time frame rates.
+    Drawing an inspiration from the gaming industry where Levels of Details
+    (LoD) for meshes is used heavily, we introduce \clog~\cite{kania2024clog}.
+    Our approach trains a single Gaussian Splatting model such that it can be
+    modulated at inference time and adapted to the target computational
+    requirements with a minimal loss on the rendering quality.
+    That allows us to democratize the use of 3DGS and deploy a single model
+    even on handheld devices.
+    We show later that even under a strict case where only 2,000
+    Gaussians\footnote{Common 3DGS models can achieve from $10^5$ to even
+    $10^6$ Gaussians.
+    } can be used, the object is still recognizable.
+    The most important contribution of our model is that it is continuous by
+    design while the existing baselines assume prior the training the model
+    how many LoD the model should comprise at inference.
+    To change the size of particular LoD in those baselines requires training
+    the whole model from scratch, imposing a significant computational burden.
+
 \section{Thesis outline}
+  This thesis is structured as follows.
+  We start by introducing the preliminaries related to the Neural Radiance
+  Fields and Gaussian Splatting in~\cref{chap:background}---a common theme in
+  all works that appear later.
+  We then move towards describing CoNeRF~\cite{kania2022conerf}
+  in~\cref{chap:conerf}, our approach to control trained neural radiance
+  fields by using sparse annotations.
+  In~\cref{chap:blenfields}, we describe
+  BlendFields~\cite{kania2023blendfields} that can produce realistic
+  expression-dependent texture from just a few multi-view frames of the
+  subjects.
+  \cref{chap:lumigauss} introduces the LumiGauss~\cite{kaleta2024lumigauss}, a Gaussian Splatting model that learns a radiance transfer function for novel lighting rendering capabilities.
+  Finally, we bring a general method, CLoG~\cite{kania2024clog}, that uses
+  Gaussian Splatting to learn continuous levels of detail while training only
+  a single model.
+  We conclude the thesis in~\cref{chap:final} where we also explore possible
+  future avenues that can be undertaken.
 
 \section{Publications not included in the thesis}
+  We attach a list of articles that are related to and can be used to in neural rendering approaches:
+  \begin{itemize}
+    \item\!\!\!\fullciteallauthors{kania2020ucsg},
+    \item\!\!\!\fullciteallauthors{kania2021trajevae},
+    \item\!\!\!\!\!\fullciteallauthors{stypulkowski2021representing},
+    \item\!\!\!\!\fullciteallauthors{xia2023densify},
+    \item\!\!\!\fullciteallauthors{esposito2024geogen},
+    \item\!\!\!\!\fullciteallauthors{spurek2024modeling}.
+  \end{itemize}
+
