@@ -1,0 +1,126 @@
+\section{Related Works}
+  \label{sec:blendfields-related}
+  Neural Radiance Fields (NeRF)~\cite{mildenhall2020nerf} is a method for
+  generating 3D content from images taken with commodity cameras.
+  It has prompted many follow-up works
+  \cite{kaizhang2020nerfpp,park2021nerfies,martin2021nerf,barron2021mip,barron2022mip,verbin2022ref,tancik2022block,huang2022hdr,suhail2022light,xiangli2021citynerf,mildenhall2022nerf,rematas2022urban}
+  and a major change in the field for its photorealism.
+  The main limitations of NeRF are its rendering speed, being constrained to
+  static scenes, and lack of ways to control the scene.
+  Rendering speed has been successfully addressed by multiple follow-up
+  works~\cite{hedman2021baking,garbin2021fastnerf,plenoctrees}.
+  Works solving the limitation to static
+  scenes\cite{xian2021space,athar2022rignerf,noguchi2022watch,wang2022fourier,attal2021torf,weng2022humannerf,zhao2022humannerf,jiang2022neuman}
+  and adding explicit
+  control~\cite{kania2022conerf,wang2022clip,kim2022ae,cheng2022cross,yuan2022nerf,sun2022fenerf,yang2022neumesh}
+  have limited resolution or require large amounts of training data because
+  they rely on controllable coarse models of the scene (\eg, 3DMM face
+  model~\cite{blanz1999morphable}) or a conditioning
+  signal~\cite{park2021hypernerf}.
+  Methods built on an explicit model are more accessible because they require
+  less training data but are limited by the model's resolution.
+  Our technique finds a sweet spot between these two regimes by using a
+  limited amount of data to learn details missing in the controlled model and
+  combining them together.
+  Our experiments focus on faces because high-quality data and 3DMM face
+  models are publicly available, which are the key component for creating
+  digital humans.
+
+  \subsection{Radiance Fields}
+    Volumetric representations~\cite{vicini2021nonexponential} have grown in
+    popularity because they can represent complex geometries like hair more
+    accurately than mesh-based ones.
+    Neural Radiance Fields (NeRFs)~\cite{mildenhall2020nerf} model a radiance
+    volume with a coordinate-based MLP learned from posed images.
+    The MLP predicts density~$\density(\pos)$ and color~$\outputcolor(\pos,
+    \viewdirection)$ for each point $\pos$ in the volume and view
+    direction~$\viewdirection$ of a given camera.
+    % \mkc{the colour as defined here is not a function of view direction, is
+    % this deliberate? In our implementation its a function of both view
+    % direction and position.}. 
+    To supervise the radiance volume with the input images, each image pixel is associated with a ray $\ray(t)$ cast from the camera center to the pixel, and samples along the ray are accumulated to determine the value of the image pixel $\pixelcolor(\ray)$:
+    % follows: 
+    \begin{equation}
+      \label{eq:rendering-equation}
+      \pixelcolor(\ray)=\int^{t_f}_{t_n}T(t)\:\density(\ray(t))\:\outputcolor(\ray(t), \viewdirection)dt,
+    \end{equation}
+    where $t_n$ and $t_f$ are near and far planes, and
+    \begin{equation}
+      T(t) = \exp\left(-\int^t_{t_n}\density(\ray(s))ds\right) ,
+      \end{equation} is the transmittance
+      function~\cite{tagliasacchi2022volume}.
+    The weights of the MLP are optimized to minimize the mean squared
+    reconstruction error between the target pixel and the output pixel.
+    % \kk{% Note that we deliberately avoid mentioning view directions
+    % \cite{mildenhall2020nerf} as some of the recent
+    % approaches~\cite{nerfstudio} treat both 3D coordinates and view
+    % directions as the same entity, without impairing the performance. } 
+    Several methods have shown that replacing the implicit functions
+    approximated with an MLP for a function discretized on an explicit voxel
+    grid results in a significant rendering and training
+    speed-up~\cite{garbin2021fastnerf, hedman2021baking, plenoctrees,
+    directVoxelOptimisation, neuralSparseVoxelFields}.
+
+  \subsection{Animating Radiance Fields}
+    Several works exist to animate the scene represented as a NeRF.
+    D-NeRF uses an implicit deformation model that maps sample positions back
+    to a canonical space~\cite{pumarola2021d}, but it cannot generalize to
+    unseen deformations.
+    Several works \cite{park2021nerfies, park2021hypernerf, gafni2021dynamic,
+    tretschk2021non} additionally account for changes in the observed scenes
+    with a per-image latent code to model changes in color as well as shape,
+    but it is unclear how to generalize the latents when animating a sequence
+    without input images.
+    Similarly, works focusing on faces
+    \cite{gafni2021dynamic,athar2022rignerf,zhuang2021mofanerf,gao2022reconstructing}
+    use parameters of a face model to condition NeRF's MLP, or learn a latent
+    space of images and
+    geometry~\cite{cao2022authentic,wang2022morf,lombardi2019neural,mihajlovic2022keypointnerf,ma2021pixel,lombardi2021mixture}
+    that does not extrapolate beyond expressions seen during training.
+
+    In contrast to these approaches, we focus on using as little temporal
+    training data as possible (\ie five frames) while ensuring generalization.
+    For this reason, we build our method on top of
+    VolTeMorph~\cite{garbin2024voltemorph}, that uses a parametric model of
+    the face to track the deformation of points in a volume around the face
+    and builds a radiance field controlled by the parameters of a 3DMM.
+    After training, the user can render an image for any expression of the
+    face model.
+    However, the approach cannot generate expression-dependent high-frequency
+    details; see~\cref{fig:blendfields-teaser}.
+
+    Similarly, NeRF-Editing~\cite{yuan2022nerf} and NeRF
+    Cages~\cite{xu2022deforming} propose to use tetrahedral meshes to deform a
+    single-frame NeRF reconstruction.
+    % \ve{This sentence is incomplete :-)} predicts the deformation of a coarse
+    % geometric cage and computes the displacement of contained geometry using
+    % mean value coordinates~\cite{meanValueCoordinatesPaper}. 
+    The resolution of the rendered scenes in these methods is limited by the
+    resolution of the tetrahedral cage, which is constrained to a few thousand
+    elements.
+
+    We discuss additional concurrent works in \supplementary{}.
+
+  \subsection{Tetrahedral Cages}
+    To apply parametric mesh models, it is necessary to extend them to the
+    volume to support the volumetric representation of NeRF.
+    Tetrahedral cages are a common choice for their simplicity and ubiquity in
+    computer
+    graphics~\cite{garbin2024voltemorph,yang2022neumesh,xu2022deforming}.
+    For example, VolTeMorph uses dense landmarks~\cite{wood2022dense} to fit a
+    parametric face model whose blendshapes have been extended to a
+    tetrahedral cage with finite elements method~\cite{clough1960thefe}.
+    These cages can be quickly deformed and
+    raytraced~\cite{molino2003tetrahedral} using parallel computation on
+    GPUs~\cite{cook2012cuda} while driving the volume into the target pose and
+    allowing early ray termination for fast rendering.
+    We further leverage the tetrahedral cage and use its differential
+    properties~\cite{irving2004invertible}, such as a local volume change, to
+    model high-frequency details.
+    For example, a change from one expression to another changes the volume of
+    tetrahedra in regions where wrinkle formation takes place while it remains
+    unchanged in flat areas.
+    We can use this change in volume to select which of the trained NeRF
+    expressions should be used for each tetrahedron to render high-frequency
+    details.
+    \vspace{-0.175em}

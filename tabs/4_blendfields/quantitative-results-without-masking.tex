@@ -1,0 +1,38 @@
+\begin{table}[!t]
+  \centering
+  \resizebox{\linewidth}{!}{
+    \begin{tabular}{lcccccc}
+      \toprule
+      \multirow{2}[2]{*}{Method}                         & \multicolumn{3}{c}{Casual Expressions} & \multicolumn{3}{c}{Novel Pose Synthesis}                                                                                                                                                  \\
+      \cmidrule(lr){2-4}\cmidrule(lr){5-7}
+                                                         & PSNR $\uparrow$                        & SSIM $\uparrow$                          & LPIPS $\downarrow$                & PSNR $\uparrow$                    & SSIM $\uparrow$                   & LPIPS $\downarrow$                \\
+      \midrule
+      NeRF \cite{mildenhall2020nerf}                     & 22.0060                                & 0.6556                                   & 0.3222                            & 23.8077                            & 0.7448                            & 0.2779                            \\
+      Conditioned NeRF \cite{mildenhall2020nerf}         & 21.0846                                & 0.6280                                   & 0.3042                            & 22.9991                            & 0.7261                            & 0.2362                            \\
+      NeRFies \cite{park2021nerfies}                     & 20.7004                                & 0.6076                                   & 0.3579                            & 23.0123                            & 0.7253                            & 0.2840                            \\
+      HyperNeRF-AP \cite{park2021hypernerf}              & 20.8105                                & 0.6214                                   & 0.3504                            & 22.8193                            & 0.7185                            & 0.2689                            \\
+      HyperNeRF-DS \cite{park2021hypernerf}              & 20.8847                                & 0.6111                                   & 0.3656                            & 23.0075                            & 0.7259                            & 0.2729                            \\
+      \midrule
+      VolTeMorph$_1$ \cite{garbin2024voltemorph}         & 21.3265                                & 0.7091                                   & 0.2706                            & 22.3007                            & 0.7795                            & \cellcolor{secondbestcolor}0.2281 \\
+      VolTeMorph$_\text{avg}$\cite{garbin2022voltemorph} & \cellcolor{secondbestcolor}22.0759     & \cellcolor{secondbestcolor}0.7755        & \cellcolor{secondbestcolor}0.2615 & \cellcolor{secondbestcolor}23.8974 & \cellcolor{secondbestcolor}0.8458 & 0.2302                            \\
+      \midrule
+      \textbf{\methodname{}}                             & \cellcolor{firstbestcolor}22.8982      & \cellcolor{firstbestcolor}0.7954         & \cellcolor{firstbestcolor}0.2256  & \cellcolor{firstbestcolor}24.4432  & \cellcolor{firstbestcolor}0.8477  & \cellcolor{firstbestcolor}0.2052  \\
+      \bottomrule
+    \end{tabular}
+  }
+  \caption{\textbf{Quantitative results without masking} --
+    Similarly to \cref{tab:blendfields-quantitative-results}, we compare \blendfields to other related approaches.
+    However, we calculate the results over the whole image space, without
+    removing the background.
+    \blendfields and VolTeMorph~\cite{garbin2024voltemorph} model the background as a separate NeRF-based~\cite{mildenhall2020nerf} network.
+    The points that do not fall into the tetrahedral mesh are assigned to the
+    background.
+    As the network overfits to sparse training views, it poorly extrapolates
+    to novel expressions (as the new head pose or expression may reveal some
+    unknown parts of the background) and views.
+    At the same time, all other baselines do not have any mechanism to
+    disambiguate the background and the foreground.
+  }
+  % }
+  \label{tab:blendfields-quantitative-results-without-masking}
+\end{table}

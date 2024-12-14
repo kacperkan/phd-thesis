@@ -1,0 +1,90 @@
+\section{Introduction}
+  \label{sec:blendfields-intro}
+
+  \input{tabs/\blendfieldsdirname/ava-ours-comparison-v2}
+
+  % --- neural rendering and importance in digital doubles
+
+  Recent advances in neural rendering of 3D scenes~\cite{tewari2022advances}
+  offer 3D reconstructions of unprecedented quality~\cite{mildenhall2020nerf}
+  with an ever-increasing degree of control ~\cite{kania2022conerf,
+  liu2021editing}.
+  Human faces are of particular interest to the research
+  community~\cite{athar2022rignerf, gafni2021dynamic, garbin2024voltemorph,
+  gao2022reconstructing} due to their application in creating realistic
+  digital doubles~\cite{ma2021pixel, tewari2022advances, zhang2022avatargen,
+  zhi2022dualspace}.
+
+  % --- parametric models cause lack of details
+  To render facial expressions not observed during training, current
+  solutions~\cite{athar2022rignerf, gafni2021dynamic, garbin2024voltemorph,
+  gao2022reconstructing} rely on \textit{parametric} face
+  models~\cite{blanz1999morphable}.
+  These allow radiance fields~\cite{mildenhall2020nerf} to be controlled by
+  facial parameters estimated by off-the-shelf face
+  trackers~\cite{li2017flame}.
+  However, parametric models primarily capture smooth deformations and lead to
+  digital doubles that lack realism because fine-grained and
+  expression-dependent phenomena like wrinkles are not faithfully reproduced.
+  % \mkc{while this is true, even if wrinkles were modelled by the 3dmm, they
+  % would not appear,as nerfs do not model illumination and wrinkles are only
+  % visible thanis to shadows} --- how this problem is addressed for now (DATA)
+  % \at{
+
+  Authentic Volumetric Avatars (AVA)~\cite{cao2022authentic} overcomes this
+  issue by learning from a large multi-view dataset of synchronized and
+  calibrated images captured under controlled lighting.
+  Their dataset covers a series of dynamic facial expressions and multiple
+  subjects.
+  However, this dataset remains unavailable to the public and is expensive to
+  reproduce.
+  Additionally, training models from such a large amount of data requires
+  significant compute resources.
+  To democratize digital face avatars, more efficient solutions in terms of
+  hardware, data, and compute are necessary.
+
+  % --- What we do (high level) \at{
+  We address the efficiency concerns by building on the recent works in Neural
+  Radiance Fields~\cite{ggarbin2024voltemorphxu2022deforming,yuan2022nerf}.
+  % VolTeMorph~\cite{garbin2022voltemorph}.
+  In particular, we extend VolTeMorph~\cite{garbin2024voltemorph} to render
+  facial details learned from images of a sparse set of expressions.
+  To achieve this, we draw inspiration from blend-shape
+  correctives~\cite{lewis2014practice}, which are often used in computer
+  graphics as a data-driven way to correct potential mismatches between a
+  simplified model and the complex phenomena it aims to represent.
+  In our setting, this mismatch is caused by the low-frequency deformations
+  that the tetrahedral mesh from VolTeMorph~\cite{garbin2024voltemorph},
+  designed for real-time performance, can capture, and the high-frequency
+  nature of expression \mbox{wrinkles}.
+
+  % --- what we do (low level) \at{
+  We train multiple radiance fields, one for each of the $\nExpr$ sparse
+  expressions present in the input data, and blend them to correct the
+  low-frequency estimate provided by VolTeMorph~\cite{garbin2024voltemorph};
+  see \cref{fig:teaser}.
+  % Hence, 
+  We call our method \textit{\methodname{}} since it resembles the way blend
+  shapes are employed in 3DMMs~\cite{blanz1999morphable}.
+  To keep $\nExpr$ small (\ie, to maintain a few-shot regime), we perform
+  local blending to exploit the known correlation between wrinkles and changes
+  in local differential properties~\cite{irving2004invertible, raman2022mesh}.
+  Using the dynamic geometry of~\cite{garbin2024voltemorph}, local changes in
+  differential properties can be easily extracted by analyzing the tetrahedral
+  representation underlying the corrective blendfields of our model.
+  % underlying used to train and drive the }
+
+  % --- contributions \at{
+  \paragraph{Contributions}
+    We outline the main qualitative differences between our approach and
+    related works in \cref{tab:ava-ours-comparison}, and our empirical
+    evaluations confirm these advantages.
+    In summary, we:
+    \begin{itemize}
+      \item extend VolTeMorph~\cite{garbin2024voltemorph} to enable modeling of high-frequency information, such as expression wrinkles in a few-shot setting;
+      \item introduce correctives~\cite{blanz1999morphable} to neural field representations and activate them according to local deformations~\cite{raman2022mesh};
+      \item
+            make this topic more accessible
+            with an alternative to techniques that are data and compute-intensive~\cite{cao2022authentic};
+      \item show that our model generalizes beyond facial modeling, for example, in the modeling of wrinkles on a deformable object made of rubber.
+    \end{itemize}

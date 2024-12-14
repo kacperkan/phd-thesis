@@ -1,0 +1,24 @@
+\begin{table*}[!t]
+  \centering
+  \resizebox{\linewidth}{!}{
+    \begin{tabular}{lccccccc|c}
+      \toprule
+                                 & NeRF~\cite{mildenhall2020nerf} & NeRFies~\cite{park2021nerfies} & HyperNeRF~\cite{park2021hypernerf} & NeRFace~\cite{gafni2021dynamic} & NHA~\cite{neural_head_avatars} & AVA \cite{cao2022authentic} & VolTeMorph~\cite{garbin2024voltemorph} & \textbf{Ours} \\
+      \midrule
+      Applicability beyond faces & \cmark                         & \cmark                         & \cmark                             & \xmark                          & \xmark                         & \xmark                      & \cmark                                 & \cmark        \\
+      Interpretable control      & \xmark                         & \xmark                         & \xmark                             & \cmark                          & \cmark                         &
+      \xmark                     & \cmark                         & \cmark                                                                                                                                                                                                                        \\ Data efficiency & \xmark & \cmark & \cmark &
+      \xmark                     & \cmark                         & \xmark                         & \cmark                             & \cmark                                                                                                                                                  \\ Expression-dependent
+      changes                    & \xmark                         & \xmark                         & \cmark                             & \cmark                          & \cmark                         & \cmark                      & \xmark                                 &
+      \cmark                                                                                                                                                                                                                                                                                      \\ Generalizability to unknown expressions & \xmark & \xmark &
+      \xmark                     & \cmark                         & \cmark                         & \xmark                             & \cmark                          & \cmark                                                                                                                \\
+      \bottomrule\end{tabular} }
+  \caption{\textbf{Comparison} -- We compare
+    several methods to our approach.
+    Other methods fall short in data efficiency and applicability.
+    For example, AVA~\cite{cao2022authentic} requires 3.1 million training
+    images while VolTeMorph \cite{garbin2024voltemorph} cannot model
+    expression-dependent wrinkles realistically.
+  }
+  \label{tab:blendfields-ava-ours-comparison}
+\end{table*}

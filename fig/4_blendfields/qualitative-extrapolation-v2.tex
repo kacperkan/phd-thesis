@@ -1,0 +1,160 @@
+
+\renewcommand{\imagewidth}{2.3cm}
+\renewcommand{\imageheight}{4.0263671874999996cm}
+\renewcommand{\smallimagewidth}{0.8cm}
+\newcommand{\expressionsep}{0em}
+
+\newcommand{\imageoneindex}[2]{
+  \includegraphics[height=\imageheight, trim={0 0 0 0}, clip]{assets/\blendfieldsdirname/qualitative/main_v2/#1_6795937_extrapolation_#2.png}
+}
+\newcommand{\imagetwoindex}[2]{
+  \includegraphics[height=\imageheight, trim={0 0 0 0}, clip]{assets/\blendfieldsdirname/qualitative/main_v2/#1_7889059_extrapolation_#2.png}
+}
+\renewcommand{\versionone}{
+  \begin{tikzpicture}[
+      >=stealth',
+      overlay/.style={
+          anchor=south west,
+          draw=black,
+          rectangle,
+          line width=0.8pt,
+          outer sep=0,
+          inner sep=0,
+        },
+    ]
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0,
+    ] (voltemorphstaticone) {
+      \imageoneindex{voltemorph_static}{0000} \&
+      \imageoneindex{voltemorph_static}{0002} \\
+    };
+
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0,
+      right=\expressionsep of voltemorphstaticone
+    ] (voltemorphstatictwo) {
+      \imagetwoindex{voltemorph_static}{0000} \&
+      \imagetwoindex{voltemorph_static}{0002} \\
+    };
+
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0,
+      below=0pt of voltemorphstaticone
+    ] (voltemorphone) {
+      \imageoneindex{voltemorph}{0000} \&
+      \imageoneindex{voltemorph}{0002} \\
+    };
+
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0,
+      right=\expressionsep of voltemorphone
+    ] (voltemorphtwo) {
+      \imagetwoindex{voltemorph}{0000} \&
+      \imagetwoindex{voltemorph}{0002} \\
+    };
+
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0,
+      below=0pt of voltemorphone
+    ] (oursone) {
+      \imageoneindex{blendvolumes_aux}{0000} \&
+      \imageoneindex{blendvolumes_aux}{0002} \\
+    };
+
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0,
+      right=\expressionsep of oursone
+    ] (ourstwo) {
+      \imagetwoindex{blendvolumes_aux}{0000} \&
+      \imagetwoindex{blendvolumes_aux}{0002} \\
+    };
+    \node[above=0.0em of voltemorphstaticone-1-1.north, align=center, anchor=south]{Neutral};
+    \node[above=0.0em of voltemorphstaticone-1-2.north, align=center, anchor=south]{Frowned and Smiled};
+
+    \node[above=0.0em of voltemorphstatictwo-1-1.north, align=center, anchor=south]{Neutral};
+    \node[above=0.0em of voltemorphstatictwo-1-2.north, align=center, anchor=south]{Eyes Squint, Lips Moved Left};
+
+    % \node[above=0.0em of voltemorphone-1-1.north, align=center,
+    % anchor=south]{Neutral}; \node[above=0.0em of voltemorphone-1-2.north,
+    % align=center, anchor=south]{Eyes Squint, Lips Moved Left};
+
+    % \node[above=0.0em of hypernerfstatic-1-1.north, align=center,
+    % anchor=south]{HyperNeRF-AP}; \node[above=0.0em of
+    % hypernerfdynamic-1-1.north, align=center, anchor=south]{HyperNeRF-DS};
+    % \node[above=0.0em of voltemorphstatic-1-1.north, align=center,
+    % anchor=south]{VolTeMorph$^\dagger$}; \node[above=0.0em of
+    % voltemorph-1-1.north, align=center, anchor=south]{VolTeMorph};
+    % \node[above=0.2em of ours-1-1.north, align=center,
+    % anchor=south]{\textbf{Ours}};
+
+    % \node[left=0em of voltemorphstaticone-1-1.west, align=center,
+    % anchor=east]{\rotatebox{90}{Neutral}}; \node[left=0em of nerf-3-1.west,
+    % align=center, anchor=east]{\rotatebox{90}{Neutral}};
+
+    % \node[left=0em of nerf-2-1.west, align=center,
+    % anchor=east]{\rotatebox{90}{Frowned and Smile}}; \node[left=0em of
+    % nerf-4-1.west, align=center, anchor=east]{\rotatebox{90}{Eyes Squint,
+    % Lips Moved Left}};
+
+    \node[left=0em of voltemorphstaticone-1-1.west, align=center, anchor=east]{\rotatebox{90}{VolTeMorph$_1$}};
+    \node[left=0em of voltemorphone-1-1.west, align=center, anchor=east]{\rotatebox{90}{VolTeMorph$_\text{avg}$}};
+    \node[left=0em of oursone-1-1.west, align=center, anchor=east]{\rotatebox{90}{\textbf{Ours}}};
+
+    % \node[left=0em of nerf-2-1.west, align=center,
+    % anchor=east]{\rotatebox{90}{Frowned and Smile}}; \node[left=0em of
+    % nerf-4-1.west, align=center, anchor=east]{\rotatebox{90}{Eyes Squint,
+    % Lips Moved Left}};
+  \end{tikzpicture}
+}
+
+\begin{figure*}[htb]
+  \centering
+  \resizebox{\linewidth}{!}{
+    \versionone
+  }
+  \caption{\textbf{Novel expression synthesis} -- {
+      We compare qualitatively \blendfields with selected baselines (vertical)
+      across two selected subjects (horizontal).
+      To our surprise, VolTeMorph$_\text{avg}$ trained on multiple frames
+      renders some details too but with much lower fidelity.
+      We argue that VolTeMorph considers rendering wrinkles as artifacts that
+      depend on the view direction
+      (see~\cref{eq:blendfields-rendering-equation}).
+      VolTeMorph$_1$ is limited to producing wrinkles it was trained for.
+      In contrast to those baselines, \textbf{\blendfields} captures the
+      details and generalizes outside of the distribution.
+      Please refer to the \supplementary{} for animated sequences and results
+      for other methods.
+    }}
+  \label{fig:blendfields-qualitative-comparison}
+\end{figure*}

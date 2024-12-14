@@ -1,0 +1,114 @@
+
+\renewcommand{\imagewidth}{2.3cm}
+\renewcommand{\imageheight}{4.0263671874999996cm}
+\renewcommand{\smallimagewidth}{0.8cm}
+\newcommand{\expressionsep}{0em}
+
+\newcommand{\imageoneindex}[2]{
+  \includegraphics[height=\imageheight, trim={0 0 0 0}, clip]{assets/\blendfieldsdirname/qualitative/main_v2/#1_6795937_extrapolation_#2.png}
+}
+\newcommand{\imagetwoindex}[2]{
+  \includegraphics[height=\imageheight, trim={0 0 0 0}, clip]{assets/\blendfieldsdirname/qualitative/main_v2/#1_7889059_extrapolation_#2.png}
+}
+\newcommand{\versionone}{
+  \begin{tikzpicture}[
+      >=stealth',
+      overlay/.style={
+          anchor=south west,
+          draw=black,
+          rectangle,
+          line width=0.8pt,
+          outer sep=0,
+          inner sep=0,
+        },
+    ]
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0
+    ] (gt) {
+      \imageoneindex{gt}{0505} \&
+      \imageoneindex{gt}{0000} \&
+      \imagetwoindex{gt}{0000} \&
+      \imagetwoindex{gt}{0852} \\
+    };
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0,
+      below=0pt of gt,
+    ] (voltemorphstatic) {
+      \imageoneindex{voltemorph_static}{0505} \&
+      \imageoneindex{voltemorph_static}{0000} \&
+      \imagetwoindex{voltemorph_static}{0000} \&
+      \imagetwoindex{voltemorph_static}{0852} \\
+    };
+
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0,
+      below=0pt of voltemorphstatic
+    ] (voltemorph) {
+      \imageoneindex{voltemorph}{0505} \&
+      \imageoneindex{voltemorph}{0000} \&
+      \imagetwoindex{voltemorph}{0000} \&
+      \imagetwoindex{voltemorph}{0852} \\
+    };
+
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0,
+      below=0pt of voltemorph
+    ] (ours) {
+      \imageoneindex{bv_aux}{0505} \&
+      \imageoneindex{bv_aux}{0000} \&
+      \imagetwoindex{bv_aux}{0000} \&
+      \imagetwoindex{bv_aux}{0852} \\
+    };
+
+    \node[left=0em of gt-1-1.west, align=center, anchor=east]{\rotatebox{90}{Ground Truth}};
+    \node[left=0em of voltemorphstatic-1-1.west, align=center, anchor=east]{\rotatebox{90}{VolTeMorph$_1$}};
+    \node[left=0em of voltemorph-1-1.west, align=center, anchor=east]{\rotatebox{90}{VolTeMorph$_\text{avg}$}};
+    \node[left=0em of ours-1-1.west, align=center, anchor=east]{\rotatebox{90}{\textbf{Ours}}};
+
+    \node[above=0em of gt-1-1.north, align=center, anchor=south]{Neutral};
+    \node[above=0em of gt-1-2.north, align=center, anchor=south]{Posed};
+    \node[above=0em of gt-1-3.north, align=center, anchor=south]{Neutral};
+    \node[above=0em of gt-1-4.north, align=center, anchor=south]{Posed};
+  \end{tikzpicture}
+}
+
+\begin{figure*}[htb]
+  \centering
+  \resizebox{\linewidth}{!}{\versionone}
+  \caption{\textbf{Novel expression synthesis} --
+    We compare qualitatively \blendfields with selected baselines (vertical) across two selected subjects (horizontal).
+    Firstly, we show a neutral pose of the subject and then any of the
+    available expressions.
+    To our surprise, VolTeMorph$_\text{avg}$ trained on multiple frames
+    renders some details but with much lower fidelity.
+    We argue that VolTeMorph$_\text{arg}$ considers rendering wrinkles as
+    artifacts that depend on the view direction
+    (see~\cref{eq:blendfields-rendering-equation}).
+    VolTeMorph$_1$ is limited to producing the wrinkles it was trained for.
+    In contrast to those baselines, \textbf{\blendfields} captures the details
+    and generalizes outside of the distribution.
+    Please refer to the \supplementary{} for animated sequences and results
+    for other methods.
+  }
+  \label{fig:blendfields-qualitative-comparison}
+\end{figure*}

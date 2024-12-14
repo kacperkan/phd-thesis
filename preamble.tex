@@ -15,6 +15,9 @@
 \definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
 % \usepackage[pagebackref,breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
 \usepackage{tikz}
+\usepackage{silence}
+\usepackage{bbm}
+\usepackage{pifont}
 
 \def\mathdefault#1{#1}
 \everymath=\expandafter{\the\everymath\displaystyle}
@@ -97,7 +100,7 @@
 
 % % % basic math symbols %
 \usepackage{dsfont}
-\newcommand{\loss}[1]{\mathcal{L}_\text{#1}}
+\newcommand{\loss}[1]{\ell_\text{#1}}
 \newcommand{\calL}{\mathcal{L}}
 \newcommand{\calN}{\mathcal{N}}
 \newcommand{\calF}{\mathcal{F}}
@@ -149,7 +152,6 @@
 \newcommand{\attributes}{\boldsymbol\alpha}
 \newcommand{\Mask}{\mathbf{M}}
 \newcommand{\mask}{\mathbf{m}}
-\newcommand{\indicator}{\delta}
 \newcommand{\gt}{\text{gt}}
 \newcommand{\AttributeNet}{\mathcal{A}}
 \newcommand{\point}{\mathbf{x}}
@@ -157,7 +159,140 @@
 \newcommand{\stopgrad}{\xcancel{\nabla}}
 \newcommand{\field}{\mathbf{f}}
 \newcommand{\VolRend}{\mathcal{V}}
-\newcommand{\ray}{\br}
 
 \newcommand{\CIRCLE}[1]{\raisebox{.5pt}{\footnotesize \textcircled{\raisebox{-.6pt}{#1}}}}
 \newcommand{\SupplementaryMaterial}{\texttt{Supplementary}\xspace}
+
+% ======== BlendFields ======= %
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+
+\usetikzlibrary{matrix, positioning,arrows,arrows.meta,calc,decorations.pathreplacing,decorations.text,spy}
+
+\tikzset{
+  % style for inserting images as nodes
+  img/.style={
+      % text width=2cm, %% don't use this text height=2cm, %% don't use this
+      inner sep=0pt,     % % use this
+      outer sep=0pt,     % % and this
+      rectangle,
+      align=center} % only for debugging..
+}
+
+\definecolor{turquoise}{cmyk}{0.65,0,0.1,0.3}
+\definecolor{purple}{rgb}{0.65,0,0.65}
+\definecolor{dark_green}{rgb}{0, 0.5, 0}
+\definecolor{orange}{rgb}{0.8, 0.6, 0.2}
+\definecolor{red}{rgb}{0.8, 0.2, 0.2}
+\definecolor{darkred}{rgb}{0.6, 0.1, 0.05}
+\definecolor{blueish}{rgb}{0.0, 0.3, .6}
+\definecolor{light_gray}{rgb}{0.7, 0.7, .7}
+\definecolor{pink}{rgb}{0.8, 0, 0.8}
+\definecolor{greyblue}{rgb}{0.25, 0.25, 1}
+
+\definecolor{thirdbestcolor}{rgb}{1,1, 0.6}
+\definecolor{secondbestcolor}{rgb}{1, 0.9, 0.6}
+\definecolor{firstbestcolor}{rgb}{1, 0.6, 0.6}
+
+\definecolor{seismicblue}{rgb}{0.0,0.0,0.75}
+\definecolor{seismicred}{rgb}{0.62,0.03,0.0}
+\definecolor{seismicgray}{rgb}{0.9,0.9,0.9}
+
+% % % misc %
+\newcommand{\cmark}{\textcolor{green}{\ding{51}}}
+\newcommand{\xmark}{\textcolor{red}{\ding{55}}}
+\newcommand{\supplementary}{\texttt{Supplementary}}
+
+% % % math %
+\newcommand{\VolTeMorph}{VolTeMorph~\cite{garbin2022voltemorph}\xspace}
+\newcommand{\methodname}{BlendFields}
+\newcommand{\iExpr}{k}
+\newcommand{\nExpr}{K}
+\newcommand{\expression}{\mathbf{e}}
+\newcommand{\pixelcolor}{C}
+\newcommand{\blendfield}{\boldsymbol{\alpha}}
+\newcommand{\blendingweight}{\alpha}
+\newcommand{\vertex}{\mathbf{v}}
+\newcommand{\indicator}{\mathbbm{1}}
+\renewcommand{\temp}{\tau}
+\newcommand{\pos}{\mathbf{x}}
+\newcommand{\dir}{\mathbf{d}}
+\newcommand{\map}{\mathcal{T}}
+\newcommand{\render}{\mathcal{R}}
+\newcommand{\density}{\ensuremath{\sigma}}
+\newcommand{\radiance}{\mathbf{c}}
+\newcommand{\ray}{\ensuremath{\mathbf{r}}}
+\newcommand{\template}[1]{\bar{#1}}
+\newcommand{\aux}[1]{\tilde{#1}}
+\newcommand{\lossweight}{\lambda}
+\newcommand{\tet}{\mathbf{T}}
+\newcommand{\edgematrix}{\mathbf{D}}
+\newcommand{\mesh}{\mathcal{M}}
+\newcommand{\meshVertices}{\mathbf{V}}
+\newcommand{\meshTets}{\mathbf{T}}
+\newcommand{\tetgeometry}{\mathcal{G}}
+\newcommand{\laplacian}{\ensuremath{\mathbf{L}}}
+\newcommand{\hyperparam}{\lambda}
+
+% % % OBSOLETE % 
+\newcommand{\numberofexprs}{\nExpr}
+\newcommand{\outputcolor}{\ensuremath{\mathbf{c}}}
+\newcommand{\coordinate}{\ensuremath{\mathbf{x}}}
+\newcommand{\viewdirection}{\ensuremath{\mathbf{v}}}
+\newcommand{\auxcolor}{\ensuremath{\tilde{\outputcolor}}}
+\newcommand{\numberofneighboursparameter}{\ensuremath{k}}
+\newcommand{\tetrahedronfeatures}{\ensuremath{\mathbf{f}}}
+
+% % % macros % 
+\newcommand{\numcomponents}{\ensuremath{D}}
+\newcommand{\viewcomponents}{\ensuremath{\left\{\left(u_i, v_i, w_i\right)\right\}_{i=1}^\numcomponents}}
+\newcommand{\mixingcoefficients}{\ensuremath{\bm{\beta}}}
+\newcommand{\viewcomponentsvectorized}{\left(\mathbf{u}, \mathbf{v}, \mathbf{w}\right)}
+\newcommand{\colorsetslong}{\ensuremath{\left\{\auxcolor\right\}_{i=1}^\numberofexprs}}
+\newcommand{\colorsetsshort}{\ensuremath{\mathcal{C}}}
+\newcommand{\templatecolor}{\ensuremath{\bar{\outputcolor}}}
+\newcommand{\basefunction}{\ensuremath{F}}
+\newcommand{\realset}{\ensuremath{\mathbb{R}}}
+\newcommand{\numexpressioncoords}{\ensuremath{E}}
+\newcommand{\volumechange}{\ensuremath{V}}
+\newcommand{\numtetrahedra}{\ensuremath{T}}
+\newcommand{\edgevector}{\ensuremath{\mathbf{d}}}
+\newcommand{\vertices}{\ensuremath{\mathbf{v}}}
+\newcommand{\deformed}[1]{\ensuremath{\tilde{#1}}}
+\newcommand{\canonical}[1]{\ensuremath{\bar{#1}}}
+\newcommand{\deformationmatrix}{\ensuremath{\mathbf{F}}}
+\newcommand{\scalevector}{\ensuremath{\mathbf{s}}}
+\newcommand{\dataset}{\ensuremath{\mathcal{D}}}
+\newcommand{\expressionsset}{\ensuremath{\left\{\expression\right\}_{i=1}^{\numberofexprs+1}}}
+\newcommand{\temperature}{\ensuremath{\tau}}
+\newcommand{\templateviewcomponentsvectorized}{\left(\bar{\mathbf{u}}, \bar{\mathbf{v}}, \bar{\mathbf{w}}\right)}
+\newcommand{\auxviewcomponentsvectorized}[1]{\left(\tilde{\mathbf{u}}(#1), \tilde{\mathbf{v}}(#1), \tilde{\mathbf{w}}(#1)\right)}
+\newcommand{\barycentric}[1]{\ensuremath{\hat{#1}}}
+\newcommand{\tetravertices}{\ensuremath{\left\{\vertex_1, \vertex_2, \vertex_3, \vertex_4\right\}}}
+\newcommand{\barycentricweight}[1]{\ensuremath{\lambda_{#1}(\coordinate)}}
+\newcommand{\barycentrics}{\ensuremath{\left\{\barycentricweight{1}, \barycentricweight{2}, \barycentricweight{3}, \barycentricweight{4}\right\}}}
+\newcommand{\neighbourhood}{\ensuremath{\mathcal{N}}}
+\newcommand{\allvertices}{\mathcal{V}}
+\newcommand{\identitymatrix}{\ensuremath{I}}
+\newcommand{\weightdiffusion}{\ensuremath{\lambda_\text{diff}}}
+\newcommand{\blendingweightmatrix}{\ensuremath{\mathbf{A}}}
+\newcommand{\lossformatting}[1]{\ensuremath{\text{#1}}}
+\newcommand{\photometricloss}{\loss_\lossformatting{mse}}
+\newcommand{\sparsitymouthloss}{\loss_\lossformatting{sp-mouth}}
+\newcommand{\sparsityprimitivesloss}{\loss_\lossformatting{sp-primitives}}
+\newcommand{\weightphotometricloss}{\lossweight_\lossformatting{mse}}
+\newcommand{\weightsparsitymouthloss}{\lossweight_\lossformatting{sp-mouth}}
+\newcommand{\weightsparsityprimitivesloss}{\lossweight_\lossformatting{sp-primitives}}
+\newcommand{\tablethirdbest}[0]{\cellcolor{thirdbestcolor}}
+\newcommand{\indicatorfunction}{\ensuremath{\mathbf{1}}}
+\newcommand{\numberofsamples}{\ensuremath{N}}
+\newcommand{\coarsesamples}{\ensuremath{N_\text{coarse}}}
+\newcommand{\importancesamples}{\ensuremath{N_\text{importance}}}
+\newcommand{\numberofbases}{\ensuremath{L}}
+
+% \setlength{\aboverulesep}{1pt} \setlength{\belowrulesep}{2pt}
+% \setlength{\extrarowheight}{.0ex} \extrarowheight=\aboverulesep
+% \addtolength{\extrarowheight}{\belowrulesep} \aboverulesep=0pt
+% \belowrulesep=0pt
+
+\newcommand{\volume}{\mathcal{V}}

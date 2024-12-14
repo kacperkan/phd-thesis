@@ -1,0 +1,124 @@
+% \input{fig/qualitative-comparison-extrapolation}
+\input{tabs/\blendfieldsdirname/main}
+\input{tabs/\blendfieldsdirname/ablation}
+\input{fig/\blendfieldsdirname/synthetic-qualitative}
+
+\section{Experiments}
+  \label{sec:blendfields-experiments}
+
+  We evaluate all methods on data of four subjects from the publicly available
+  Multiface dataset~\cite{wuu2022multiface}.
+  We track the face for eight manually-selected ''extreme'' expressions.
+  We then select $\nExpr{=}5$ expressions the combinations of which show as
+  many wrinkles as possible.
+  Each subject was captured with $\approx\!
+    \!38$ cameras which gives~$\approx\!\!190$ training images per subject
+  \footnote{To train \blendfields for a single subject we use $\approx0.006\%$ of the dataset used by AVA~\cite{cao2022authentic}.}.
+  We use Peak Signal To Noise Ratio (PSNR)~\cite{avcibas2002statistical},
+  Structural Similarity Index (SSIM)~\cite{wang2003multiscale} and Learned
+  Perceptual Image Patch Similarity (LPIPS)~\cite{zhang2018perceptual} to
+  measure the performance of the models.
+  Each of the rendered images has a resolution of $334{\times}512$ pixels.
+
+  As baselines, we use the following approaches: the original, static
+  NeRF~\cite{mildenhall2020nerf}, NeRF conditioned on an expression code
+  concatenated with input points~$\pos$, NeRFies~\cite{park2021nerfies},
+  HyperNeRF\footnote{We use two architectures proposed by
+  Park~\etal~\cite{park2021hypernerf}.
+  }~\cite{park2021hypernerf}, and VolTeMorph~\cite{garbin2024voltemorph}.
+  We replace the learnable code in NeRFies and HyperNeRF with the expression
+  code $\expression$ from the parametric model.
+  Since VolTeMorph can be trained on multiple frames, which should lead to
+  averaging of the output colors, we split it into two regimes: one trained on
+  the most extreme expression\footnote{We manually select one frame that has
+  the most visible wrinkles.
+  } (VolTeMorph$_1$) and the another trained on all available expressions (VolTeMorph$_\text{avg}$)\footnote{We do not compare to NeRFace~\cite{gafni2021dynamic} and NHA~\cite{neural_head_avatars} as VolTeMorph~\cite{garbin2024voltemorph} performs better quantitatively than these methods.}.
+  We use both of these baselines as VolTeMorph was originally designed for a
+  single-frame scenario.
+  By using two versions, we show that it is not trivial to extend it to
+  multiple expressions.
+
+  \subsection{Realistic Human Captures}
+    \label{subsec:blendfields-realistic-human-captures}
+    \noindent\textbf{Novel expression synthesis.}
+    We extract eight multi-view frames from the Multiface
+    dataset~\cite{wuu2022multiface}, each of a different expression.
+    Five of these expressions serve as training data, and the rest are used
+    for evaluation.
+    After training, we can extrapolate from the training expressions by
+    modifying the expression vector~$\expression$.
+    We use the remaining three expressions: moving mouth left and right, and
+    puffing cheeks, to evaluate the capability of the models to reconstruct
+    other expressions.
+    % the sentence below was originally before the one above
+    In~\cref{fig:blendfields-qualitative-comparison} we show that \blendfields
+    is the only method capable of rendering convincing wrinkles dynamically,
+    depending on the input expression.
+    % In that scenario, 
+    \blendfields performs favorably compared to the baselines~(see \cref{tab:blendfields-quantitative-results}).
+
+    \noindent\textbf{Casual expressions.}
+    The Multiface dataset contains sequences where the subject follows a
+    script of expressions to show during the capture.
+    Each of these captures contains between 1000 and 2000 frames.
+    This experiment tests whether a model can interpolate between the training
+    expressions smoothly and generalize beyond the training data.
+    Quantitative results are shown in
+    \cref{tab:blendfields-quantitative-results}.
+    Our approach performs best all the settings.
+    See animations in the \supplementary{} for a comparison of rendered frames
+    across all methods.
+
+  \subsection{Modeling Objects Beyond Faces}
+    We show that our method can be applied beyond face modeling.
+    We prepare two datasets containing 96 views per frame of bending and
+    twisting cylinders made of a rubber-like material (24 and 72 temporal
+    frames, respectively).
+    When bent or twisted, the cylinders reveal pose-dependent details.
+    The expression vector $\expression$ now encodes time: 0 if the cylinder is
+    in the canonical pose, 1 if it is posed, and any values between $[0, 1]$
+    for the transitioning stage.
+    We select expressions $\{0, 0.5, 1.0\}$ as a training set (for
+    VolTeMorph$_1$ we use $1.0$ only).
+    For evaluation, we take every fourth frame from the full sequence using
+    cameras from the bottom and both sides of the object.
+    We take the mesh directly from Houdini~\cite{xu2014houdini}, which we use
+    for wrinkle simulation, and render the images in
+    Blender~\cite{blender2022}.
+    We show quantitative results
+    in~\cref{tab:blendfields-quantitative-results} for the bending cylinder,
+    and a comparison of the inferred images
+    in~\cref{fig:blendfields-synthetic-qualitative} for the twisted
+    one\footnote{Our motivation is that it is easier to show pose-dependent
+    deformations on twisting as it affects the object globally, while the
+    bending cannot be modeled by all the baselines due to the non-stationary
+    effects.
+    }. \blendfields accurately captures the transition from the rest configuration to the deformed state of the cylinder, rendering high-frequency details where required.
+    All other approaches struggle with interpolation between states.
+    VolTeMorph$_1$ (trained on a single extreme pose) renders wrinkles even
+    when the cylinder is not twisted.
+
+  \subsection{Ablations}
+    We check how the neighborhood size~$|\neighbourhood(\vertex)|$ and the
+    application of the smoothing influence the performance of our method.
+    We show the results in~\cref{tab:ablation-study}.
+    \blendfields works best in most cases when considering a relatively wide neighborhood for the tetrahedral features\footnote{Larger neighborhood sizes caused out-of-memory errors on our NVIDIA 2080Ti GPU.}.
+    Laplacian smoothing consistently improves the quality across all the
+    datasets~(see~\cref{fig:blendfields-laplacian-smoothing}).
+    We additionally present in the \supplementary{} how the number of
+    expressions used for training affects the results.
+
+  \subsection{Failure Cases}
+    \label{subsec:blendfields-failures}
+    \input{fig/\blendfieldsdirname/failures}
+    While \blendfields offers significant advantages for rendering realistic
+    and dynamic high-frequency details, it falls short in some scenarios
+    (see~\cref{fig:blendfields-failure-cases}).
+    One of the issues arises when the contrast between wrinkles and the
+    subject's skin color is low.
+    In those instances, we observe a much longer time to convergence.
+    Moreover, as we build \blendfields on VolTeMorph, we also inherit some of
+    its problems.
+    Namely, the method heavily relies on the initial fit of the parametric
+    model---any inaccuracy leads to ghosting artifacts or details on the face
+    that jump between frames.

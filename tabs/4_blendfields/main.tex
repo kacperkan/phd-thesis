@@ -1,0 +1,51 @@
+\begin{table*}[!t]
+  \centering
+  \resizebox{\linewidth}{!}{
+    \begin{tabular}{lccccccccc}
+      \toprule
+      \multirow{3}[3]{*}{Method}                         & \multicolumn{6}{c}{Real Data}          & \multicolumn{3}{c}{Synthetic Data}                                                                                                                                                                                                                                                                            \\
+      \cmidrule(lr){2-7}\cmidrule(lr){8-10}
+                                                         & \multicolumn{3}{c}{Casual Expressions} & \multicolumn{3}{c}{Novel Pose Synthesis} & \multicolumn{3}{c}{Novel Pose Synthesis}                                                                                                                                                                                                                           \\
+      \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+                                                         & PSNR $\uparrow$                        & SSIM $\uparrow$                          & LPIPS $\downarrow$                       & PSNR $\uparrow$                    & SSIM $\uparrow$                   & LPIPS $\downarrow$                & PSNR $\uparrow$                    & SSIM $\uparrow$                   & LPIPS $\downarrow$                \\
+      \midrule
+      NeRF \cite{mildenhall2020nerf}                     & 23.6465                                & 0.7384                                   & 0.2209                                   & 25.6696                            & 0.8127                            & 0.1861                            & 13.7210                            & 0.6868                            & 0.3113                            \\
+      Conditioned NeRF \cite{mildenhall2020nerf}         & 22.9106                                & 0.7162                                   & 0.2029                                   & 24.7283                            & 0.7927                            & 0.1682                            & 19.5971                            & 0.8138                            & 0.1545                            \\
+      NeRFies \cite{park2021nerfies}                     & 22.6571                                & 0.7105                                   & 0.2271                                   & 24.8376                            & 0.7990                            & 0.1884                            & 19.3042                            & 0.8081                            & 0.1591                            \\
+      HyperNeRF-AP \cite{park2021hypernerf}              & 22.6219                                & 0.7087                                   & 0.2236                                   & 24.7119                            & 0.7931                            & 0.1848                            & 19.3557                            & 0.8132                            & 0.1563                            \\
+      HyperNeRF-DS \cite{park2021hypernerf}              & 22.9299                                & 0.7182                                   & 0.2241                                   & 24.9909                            & 0.8007                            & 0.1860                            & 19.4637                            & 0.8159                            & 0.1526                            \\
+      \midrule
+      VolTeMorph$_1$ \cite{garbin2024voltemorph}         & 24.9939                                & 0.8358                                   & 0.1164                                   & 26.7526                            & 0.8749                            & \cellcolor{secondbestcolor}0.0954 & 26.7033                            & 0.9500                            & 0.0394                            \\
+      VolTeMorph$_\text{avg}$\cite{garbin2024voltemorph} & \cellcolor{secondbestcolor}26.9209     & \cellcolor{secondbestcolor}0.8912        & \cellcolor{secondbestcolor}0.1105        & \cellcolor{secondbestcolor}28.6866 & \cellcolor{secondbestcolor}0.9176 & 0.0982                            & \cellcolor{secondbestcolor}30.2107 & \cellcolor{secondbestcolor}0.9815 & \cellcolor{secondbestcolor}0.0387 \\
+      \midrule
+      \textbf{\methodname{}}                             & \cellcolor{firstbestcolor}27.5977      & \cellcolor{firstbestcolor}0.9056         & \cellcolor{firstbestcolor}0.0854         & \cellcolor{firstbestcolor}29.7372  & \cellcolor{firstbestcolor}0.9311  & \cellcolor{firstbestcolor}0.0782  & \cellcolor{firstbestcolor}32.7949  & \cellcolor{firstbestcolor}0.9882  & \cellcolor{firstbestcolor}0.0221  \\
+      \bottomrule
+    \end{tabular}
+  }
+  \caption{\textbf{Quantitative results} --
+    We compare \blendfields to other related approaches.
+    We split the real data into two settings: one with casual expressions of
+    subjects and the other with novel, static expressions.
+    For the real data, we only compute metrics on the face region, which we
+    separate using an off-the-shelf face segmentation
+    network~\cite{wood2021fake}.
+    % we keep only face regions 
+    Please refer to the \supplementary{} for the results that include the
+    background in the metrics as well.
+    We average results across frames and subjects.
+    VolTeMorph$_{\text{avg}}$~\cite{garbin2024voltemorph} is trained on all
+    frames, while VolTeMorph$_1$ is trained on a single frame.
+    HyperNeRF-AP/-DS follows the design principles from
+    Park~\etal~\cite{park2021hypernerf}.
+    The best results are colored in \mycoloredbox{firstbestcolor} and second
+    best results in \mycoloredbox{secondbestcolor}.
+    \blendfields performs best in most of the datasets and metrics.
+    Please note that HyperNeRF-AP/DS and NeRFies predict a dense deformation
+    field designed for dense data.
+    However, our input data consists of a few static frames only where the
+    deformation field leads to severe overfitting.
+  }
+  % }
+  \label{tab:blendfields-quantitative-results}
+\end{table*}
+

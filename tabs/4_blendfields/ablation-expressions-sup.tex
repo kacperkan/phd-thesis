@@ -1,0 +1,43 @@
+\begin{table}[!t]
+  \centering
+  \resizebox{\linewidth}{!}{
+    \begin{tabular}{ccccccc}
+      \toprule
+      \multirow{2}[2]{*}{\# expr.} & \multicolumn{3}{c}{Casual Expressions} & \multicolumn{3}{c}{Novel Pose Synthesis}                                                                                                                                                  \\
+      \cmidrule{2-7}
+                                   & PSNR $\uparrow$                        & SSIM $\uparrow$                          & LPIPS $\downarrow$                & PSNR $\uparrow$                    & SSIM $\uparrow$                   & LPIPS $\downarrow$                \\
+      \midrule
+      $\nExpr{=}1$                 & 27.5834                                & 0.9028                                   & 0.0834                            & 28.7589                            & 0.9147                            & 0.0806                            \\
+      $\nExpr{=}2$                 & 27.6783                                & 0.9026                                   & 0.0856                            & 29.2859                            & 0.9186                            & 0.0803                            \\
+      $\nExpr{=}3$                 & 27.9137                                & 0.9054                                   & 0.0819                            & 29.8551                            & 0.9279                            & 0.0728                            \\
+      $\nExpr{=}4$                 & 27.8140                                & 0.9055                                   & 0.0815                            & \cellcolor{secondbestcolor}30.1543 & \cellcolor{secondbestcolor}0.9336 & \cellcolor{secondbestcolor}0.0701 \\
+      $\nExpr{=}5$                 & 28.0254                                & 0.9110                                   & \cellcolor{firstbestcolor}0.0778  & \cellcolor{firstbestcolor}30.4721  & \cellcolor{firstbestcolor}0.9372  & \cellcolor{firstbestcolor}0.0688  \\
+      \midrule
+      $\nExpr{=}6$                 & 28.0517                                & 0.9091                                   & \cellcolor{secondbestcolor}0.0813 & --                                 & --                                & --                                \\
+      $\nExpr{=}7$                 & \cellcolor{secondbestcolor}28.2004     & \cellcolor{secondbestcolor}0.9115        & 0.0823                            & --                                 & --                                & --                                \\
+      $\nExpr{=}8$                 & \cellcolor{firstbestcolor}28.2542      & \cellcolor{firstbestcolor}0.9124         & 0.0830                            & --                                 & --                                & --                                \\
+      \bottomrule
+    \end{tabular}
+  }
+  \caption{\textbf{Number of training expressions} -- {
+      We ablate over the number of training expressions.
+      We evaluate the model on the captures from the Multiface
+      dataset~\cite{wuu2022multiface}.
+      We run the model for each possible expression combination for a given
+      $\nExpr$ and average the results.
+      The best results are colored in \mycoloredbox{firstbestcolor} and the
+      second best in \mycoloredbox{secondbestcolor}.
+      Increasing the number of available training expressions consistently
+      improves the results.
+      However, using $\nExpr{=}5$ expressions saturates the quality and using
+      $\nExpr{>}5$ brings diminishing improvements.
+      We do not report ``Novel Pose Synthesis'' for $\nExpr{>}5$ as we use
+      validation expressions and poses to train those models (refer
+      to~\cref{subsec:blendfields-realistic-human-captures} for more details).
+      % As $\nExpr{=}5$ already consists of extreme expressions, increasing its
+      % number further does not improve the results consistently. 
+    }
+  }
+  \label{tab:blendfields-ablation-num-expressions-fix}
+
+\end{table}

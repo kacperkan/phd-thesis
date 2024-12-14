@@ -1,0 +1,240 @@
+\input{fig/\blendfieldsdirname/pipeline}
+\section{Method}
+  \label{sec:blendifleds-method}
+  % \TODO{smoother intro, describing the input data, the desired output, and
+  % the meta-data the expert systems provide... tet-mesh, expression
+  % parameters, etc...}
+
+  % \ky{%
+  We introduce a volumetric model that can be driven by input expressions and
+  visualize it in in~\cref{fig:blendfields-pipeline}.
+  We start this section by explaining our model and how we train and drive it
+  with novel expressions utilizing parametric face models
+  (\cref{sec:blendfields-model}).
+  We then discuss how to compute measures of volume expansion and compression
+  in the tetrahedra to combine volumetric models of different expressions
+  (\cref{sec:blendfields-similarity}) and how we remove artifacts in
+  out-of-distribution settings (\cref{sec:blendfields-smoothness}).
+  We conclude this section with implementation details
+  (\cref{sec:blendfields-implementation}).
+
+  % \ve{I rewrote the previous paragraph as it did not match the rest of the
+  % section after all the rewrites} }%
+
+  \subsection{Our model}
+    \label{sec:blendfields-model}
+    % --- VolTeMorph
+    Given a neutral expression $\template\expression$, and a collection of
+    posed images $\{\pixelcolor_c\}$ of this expression from multiple views,
+    \VolTeMorph employs a map~$\map$ to fetch the density and
+    radiance\footnote{We omit view-dependent effects to simplify notation but
+    include them in our implementation.
+    } for a new expression $\expression$ from the \textit{canonical} frame defined by expression $\template\expression$:
+    \begin{align}
+      \radiance(\pos; \expression) & = \template\radiance(\bar\pos), \quad \bar\pos = \map(\pos; \expression \rightarrow \template\expression)
+      \\
+      \density(\pos; \expression)  & = \template\density(\bar\pos), \quad \bar\pos = \map(\pos; \expression \rightarrow \template\expression)
+      \label{eq:blendfields-densityVoltemorph}
+      \\
+      \loss{rgb}                   & =
+      \expect_{\pixelcolor \sim \{\pixelcolor_c\}} \:
+      \expect_{\ray \sim \pixelcolor} \:
+      \loss{rgb}^\ray
+      \\
+      \loss{rgb}^\ray              & = \| \pixelcolor(\ray; \expression) - \pixelcolor(\ray) \|_2^2,
+    \end{align}
+    where $\pixelcolor(\ray; \expression)$ is a pixel color produced by our model conditioned on the input expression $\expression$, $\pixelcolor(\ray)$ is the ground-truth pixel color, and the mapping~$\map$ is computed from smooth deformations of a tetrahedral mesh to render unseen expressions~$\expression$.
+    % \mkc{C(r) is previously defined as color of rendered pixel, C(r,e) on the
+    % other hand is not defined. Also eq. 5 is unclear to me. } \AT{(5) first
+    % expectation is take a random image from the set of train images; second
+    % is take a random pixel from such image (ray-pixel is 1:1)} \kk{
+    We use expression vectors $\expression$ from parametric face models, such
+    as FLAME~\cite{li2017flame,fakeItTillYouMakeIt}.
+    % } \AT{move up to 3.0, see note} \AT{quickly mention where $\expression$
+    % comes from.}
+    However, as neither density nor radiance change with $\expression$,
+    changes in appearance are limited to the low-frequency deformations that
+    $\map$ can express.
+    For example, this model cannot capture high-frequency dynamic features
+    like expression wrinkles.
+    We overcome this limitation by conditioning radiance on expression.
+    For this purpose, we assume radiance to be the sum of a template radiance (\ie rest pose appearance of a subject) and $\nExpr$ residual radiances (\ie details belonging to corresponding facial expressions):
+    \begin{equation}
+      \outputcolor(\pos; \expression) = \bar\radiance(\pos) + \sum_{k=\iExpr}^\nExpr
+      \blendingweight_\iExpr(\pos; \expression)
+      \cdot
+      \aux\radiance_\iExpr(\pos),
+      \label{eq:blendfields-multiheadradiance}
+    \end{equation}
+    % --- \JV{here we could draw a parallel with how blendshapes activate e.g.
+    % wrinkle maps in traditional graphics pipelines}
+    We call our model \textit{blend fields}, as it resembles the way in which
+    blending is employed in 3D morphable models~\cite{blanz1999morphable} or
+    in wrinkle maps~\cite{oat2007animated}.
+    Note that we assume that pose-dependent geometry can be effectively
+    modeled as {a convex combination of colors
+    $[\aux\radiance(\pos)]_{\iExpr=1}^{\nExpr}$}, since we employ the same
+    density fields as in~\cref{eq:blendfields-densityVoltemorph}.
+    % \mkc{This comes off a little confusing as up to this point we do not
+    % mention view dependent effects}
+    In what follows, for convenience, we denote the vector field of blending
+    coefficients as $\blendfield(\pos) {=}
+    [\blendingweight_\iExpr(\pos)]_{\iExpr=1}^{\nExpr}$.
+    % \ve{braces $\{\cdot \}$ are used for sets, once a set of weights are used
+    % as a vector it is confusing to keep the set notation as it has no
+    % ordering and algebra would not work. The text mixed the notation for sets
+    % and vectors. I changed it where necessary for instance $\blendfield(\pos)
+    % {=} \{\blendingweight_\iExpr(\pos)\}$ into $\blendfield(\pos) {=}
+    % [\blendingweight_\iExpr(\pos)]_{\iExpr=1}^{\nExpr}$ or Equation 11.}
+
+    % --- how we get it
+    \input{fig/\blendfieldsdirname/data-representations}
+    \noindent\textbf{Training the model}
+    We train our model by assuming that we have access to a small set of $\nExpr$ images~$\{\image_\iExpr\}$ (example in \cref{fig:blendfields-data-representation}), each corresponding to an ``extreme'' expression $\{\expression_\iExpr\}$, and minimize the loss:
+    \begin{align}
+      \label{eq:blendfields-loss}
+      \loss{rgb} & =
+      \expect_{\iExpr} \:
+      \expect_{\ray} \:
+      \| \pixelcolor_\nExpr(\ray; \expression_\iExpr) - \pixelcolor_\iExpr(\ray) \|_2^2
+      \\
+                 & \text{where} \quad \forall \pos,\:\: \blendfield(\pos) = \indicator_\iExpr,
+    \end{align}
+    where $\indicator_\iExpr$ is the indicator vector, which has value one at the $k$-th position and zeroes elsewhere, and $\pixelcolor_\nExpr$ represents the output of integrating the radiances in~\cref{eq:blendfields-multiheadradiance} along a ray.
+    % \AT{and what about the map function? I assume the expressions are stored
+    % in canonical space too? Adjust the math to match}.\KK{Essentially yes.
+    % Each of \auxcolor come from a mapping where points are first
+    % canonicalized and then the branch \texttt{auxiliary} predicts set of
+    % \auxcolor}/images
+
+    % --- how we use it
+    \noindent\textbf{Driving the model}
+    To control our model given a novel expression $\expression$, we need to
+    map the input expression code to the corresponding
+    blendfield~$\blendfield(\pos)$.
+    We parameterize the blend field as a vector field discretized on the
+    vertices $\meshVertices(\expression)$ of our tetrahedral mesh, where the
+    vertices deform according to the given expression.
+    The field is discretized on vertices, but it can be queried within
+    tetrahedra using linear FEM bases~\cite{monk2003finite}.
+    % --- geometry 
+    Our core intuition is that when the~(local) geometry of the mesh matches
+    the local geometry in one of the input expressions, the corresponding
+    expression blend weight should be locally activated.
+    More formally, let $\vertex{\in} \meshVertices$ be a vertex in the tetrahedra and $\tetgeometry(\vertex)$ a local measure of volume on the vertex described in~\cref{sec:blendfields-similarity}, then
+    \begin{align}
+      \tetgeometry(\vertex(\expression)) {\approx} \tetgeometry(\vertex(\expression_\iExpr))
+      \Longrightarrow
+      \blendfield(\vertex(\expression)) \approx \indicator_\iExpr.
+      \label{eq:blendfields-coreidea}
+    \end{align}
+    % \ve{I changed the order of the previous sentences to start with the
+    % intuition in the first sentence and introduce notation in the second one.
+    % } 
+    To achieve this we first define a \textit{local} similarity measure:
+    \begin{equation}
+      \label{eq:blendfields-local-similarity}
+      [ \Delta\tetgeometry_k(\vertex(\expression))] = [ \| \tetgeometry(\vertex(\expression)) {-} \tetgeometry(\vertex(\expression_\iExpr))\|_2^2 ] \in \real^{\nExpr}
+    \end{equation}
+    and then gate it with softmax (with temperature $\temp{=}10^6$) to obtain vertex blend weights:
+    \begin{align}
+      \label{eq:blendfields-blendfield}
+      \blendfield(\vertex(\expression)) = \text{softmax}_\temp \{ \Delta\tetgeometry_k(\vertex(\expression)) \} \in [0,1]^{\nExpr}
+    \end{align}
+    which realizes~\cref{eq:blendfields-coreidea}, as well as preserves the typically desirable characteristics of blend weights:
+    \begin{itemize}
+      \item \textit{partition of unity}: $\forall\pos \:\: \blendfield(\pos) \in [0,1]^\nExpr$ and $\| \blendfield(\pos) \|_1{=}1$
+      \item \textit{activations sparsity}: minimizers of $\|\blendfield(\pos)\|_0$
+    \end{itemize}
+    where the former ensures any reconstructed result is a~\textit{convex} combination of input data, and the latter prevents destructive interference~\cite{ichim2015dynamic}.
+
+  \subsection{Local geometry descriptor}
+    \label{sec:blendfields-similarity}
+    Let us consider a tetrahedron as the matrix formed by its vertices~$\tet
+    {=} \{\vertex_i\} \in \real^{3 \times 4}$, and its edge matrix as
+    $\edgematrix = [\vertex_3-\vertex_0, \vertex_2-\vertex_0,
+    \vertex_1-\vertex_0]$.
+    Let us denote $\template\edgematrix$ as the edge matrix in rest pose and
+    $\edgematrix$ as one of the deformed tetrahedra (\ie, due to expression).
+    From classical FEM literature, we can then compute the change in volume of the tetrahedra from the determinant of its deformation gradient~\cite{irving2004invertible}:
+    \begin{equation}
+      \label{eq:blendfields-volume}
+      \Delta \volume(\tet) = \text{det}(\edgematrix \cdot \template\edgematrix^{-1})
+    \end{equation}
+    We then build a local volumetric descriptor for a specific (deformed) vertex $\vertex(\expression)$ by concatenating the changes in volumes of neighboring (deformed) tetrahedra:
+    \begin{align}
+      \label{eq:blendfields-local-descriptor}
+      \tetgeometry(\vertex(\expression)) =
+      \bigoplus_{\tet \in \neighbourhood(\vertex)}
+      \Delta \volume(\tet(\expression)),
+    \end{align}
+    where $\bigoplus$ denotes concatenation and $\neighbourhood(\vertex)$ topological neighborhood of a vertex $\vertex$.
+    % \ve{I added the sentence after the equation to explain notation, Kacper
+    % can you confirm that we use topological neighbours. This is what we did
+    % last time I checked.}
+
+    \input{fig/\blendfieldsdirname/laplacian_smoothing}
+    % \input{fig/qualitative-extrapolation-v2}
+    \input{fig/\blendfieldsdirname/qualitative-comparison-v2}
+    % \input{fig/qualitative-comparison}
+  \subsection{Blend-field smoothness}
+    \label{sec:blendfields-smoothness}
+    \newcommand{\blendfieldVertices}{\mathbf{A}}
+    High-frequency spatial changes in blendfields can cause visual artifacts,
+    see~\cref{fig:blendfields-laplacian-smoothing}.
+    We overcome this issue by applying a small amount of smoothing to the
+    blendfield.
+    Let us denote with $\blendfieldVertices{=}\{\blendfield(\vertex_v)\}$ the
+    matrix of blend fields defined on all mesh vertices, and with $\mathbf{L}$
+    the Laplace-Beltrami operator for the tetrahedral mesh induced by linear
+    bases~\cite{irving2004invertible}.
+    % \AT{wrong reference, this is linear bases on tri-meshes, not tet-meshes!}
+    We exploit the fact that at test-time, the field is discretized on the mesh vertices, execute a diffusion process on the tetrahedral manifold, and, to avoid instability problems, implement it via backward Euler~\cite{desbrun1999implicit}:
+    \begin{equation}
+      \blendfieldVertices^\text{diff} = (\mathbf{I} - \hyperparam_\text{diff} \laplacian)^{-1} \blendfieldVertices^n.
+    \end{equation}
+
+  \subsection{Implementation details}
+    \label{sec:blendfields-implementation}
+    We build on VolTeMorph~\cite{garbin2024voltemorph} and use its volumetric
+    3DMM face model.
+    However, the same methodology can be used with other tetrahedral cages
+    built on top of 3DMM face models.
+    The face model is created by extending the blendshapes of the parametric
+    3DMM face model~\cite{fakeItTillYouMakeIt} to a tetrahedral cage that
+    defines the support in the neural radiance field.
+    It has four bones controlling global rotation, the neck and the eyes with
+    linear blend skinning, 224 expression blendshapes, and 256 identity
+    blendshapes.
+    Our face radiance fields are thus controlled and posed with the identity,
+    expression, and pose parameters of the 3DMM face
+    model~\cite{fakeItTillYouMakeIt}, can be estimated by a real-time face
+    tracking system like~\cite{wft}, and generalize convincingly to
+    expressions representable by the face model.
+
+    \noindent\textbf{Training.}
+    During training, we sample rays from a single frame to avoid out-of-memory
+    issues when evaluating the tetrahedral mesh for multiple frames.
+    Each batch contains~1024 rays.
+    We sample $\coarsesamples{=}128$ points along a single ray during the
+    coarse sampling and $\importancesamples{=}64$ for the importance sampling.
+    We train the network to minimize the loss in~\cref{eq:blendfields-loss}
+    and sparsity losses with standard weights used in
+    VolTeMorph~\cite{garbin2024voltemorph,hedman2021baking}.
+    We train the methods for~$5{\times}10^5$ steps using
+    Adam~\cite{kingma2014adam} optimizer with learning rate~$5{\times}10^{-4}$
+    decaying exponentially by factor of~$0.1$ every~$5{\times}10^5$ steps.
+
+    \noindent\textbf{Inference.}
+    During inference, we leverage the underlying mesh to sample points around
+    tetrahedra hit by a single ray.
+    Therefore, we perform a single-stage sampling with
+    $\numberofsamples{=}\coarsesamples{+}\importancesamples$ samples along the
+    ray.
+    When extracting the features~(\cref{eq:local-descriptor}), we consider
+    $|\neighbourhood(\vertex)|{=}20$ neighbors.
+    For the Laplacian smoothing, we set $\weightdiffusion{=}0.1$ and perform a
+    single iteration step.
+    Geometric-related operations impose negligible computational overhead.
+    % These steps require two evaluations of NeRF networks
+    % (see~\cref{fig:pipeline}), 

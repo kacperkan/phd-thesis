@@ -1,0 +1,81 @@
+\renewcommand{\imagewidth}{2.3cm}
+\renewcommand{\imageheight}{4.0cm}
+\renewcommand{\smallimagewidth}{0.8cm}
+\newcommand{\borderwidth}{2.0pt}
+\newcommand{\spacingbetweencols}{2.0pt}
+
+\newcommand{\imageindex}[2]{
+  \includegraphics[height=\imageheight, trim={4.6cm 1.5cm 4.6cm 1.5cm}, clip]{assets/\blendfieldsdirname/synthetics/#1_synthetic_#2}
+}
+\renewcommand{\versionone}{
+  \begin{tikzpicture}[
+      >=stealth',
+      overlay/.style={
+          anchor=south west,
+          draw=black,
+          rectangle,
+          line width=0.8pt,
+          outer sep=0,
+          inner sep=0,
+        },
+    ]
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0,
+      % draw=black, rectangle, line width=\borderwidth
+    ] (main) {
+      \imageindex{gt}{0000} \\
+      \imageindex{gt}{0002} \\
+    };
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0,
+      % draw=red, rectangle, line width=\borderwidth,
+      right=\spacingbetweencols of main
+    ] (voltemorph) {
+      \imageindex{voltemorph_static}{0000} \&
+      \imageindex{voltemorph}{0000} \\
+      \imageindex{voltemorph_static}{0002} \&
+      \imageindex{voltemorph}{0002} \\
+    };
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0,
+      % draw=OliveGreen, rectangle, line width=\borderwidth,
+      right=\spacingbetweencols of voltemorph
+    ] (blendvolumes) {
+      \imageindex{blendvolumes_aux}{0000} \\
+      \imageindex{blendvolumes_aux}{0002} \\
+    };
+
+    \node[above=0.2em of main-1-1.north, align=center, anchor=south]{Ground Truth};
+    \node[above=0.0em of voltemorph-1-1.north, align=center, anchor=south]{VolTeMorph$_1$};
+    \node[above=0.0em of voltemorph-1-2.north, align=center, anchor=south]{VolTeMorph$_\text{avg}$};
+    \node[above=0.1em of blendvolumes-1-1.north, align=center, anchor=south]{\textbf{Ours}};
+
+    \node[left=0.1em of main-1-1.west, align=center, anchor=east]{\rotatebox{90}{Canonical}};
+    \node[left=0.1em of main-2-1.west, align=center, anchor=east]{\rotatebox{90}{Twisted}};
+  \end{tikzpicture}
+}
+\begin{figure}[t]
+  \centering
+  \resizebox{\linewidth}{!}{\versionone}
+  \caption{\textbf{Qualitative results on synthetic dataset} --  For a simple dataset, baselines cannot model high-frequency, pose-dependent details.
+    VolTeMorph$_1$ renders wrinkles for the straight pose as well, as it is
+    trained for the twisted cylinder only, while VolTeMorph$_\text{avg}$
+    averages out the texture.
+  }
+  \label{fig:blendfields-synthetic-qualitative}
+\end{figure}

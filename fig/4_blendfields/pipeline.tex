@@ -1,0 +1,26 @@
+\begin{figure}[t]
+  \centering
+  \begin{overpic}[width=\linewidth]{assets/\blendfieldsdirname/blendvolumes2_no_borders.pdf}
+    \put (26.9, 1.4) {
+      \scalebox{0.65}{Eq.~\ref{eq:blendfields-local-descriptor}}
+    }
+    \put (41.8, 1.4) {
+      \scalebox{0.65}{Eq.~\ref{eq:blendfields-local-similarity}}
+    }
+    \put (56.7, 1.4) {
+      \scalebox{0.65}{Eq.~\ref{eq:blendfields-blendfield}}
+    }
+  \end{overpic}
+
+  \caption{
+    \textbf{\blendfields } --
+    We implement
+      {our approach as a volumetric model},
+    % our volumetric model as a blendshape corrective model
+    where the \textit{appearance} (\ie radiance) is the sum of the main appearance corrected by blending a small set of $\nExpr$ expression-specific appearances.
+    These appearances are learnt from extreme expressions, and then blended at
+    test-time according to blend weights computed as a function of the input
+    expression~$\expression$.
+  }
+  \label{fig:blendfields-pipeline}
+\end{figure}

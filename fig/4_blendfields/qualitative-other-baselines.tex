@@ -1,0 +1,162 @@
+
+\renewcommand{\imagewidth}{2.7cm}
+\renewcommand{\imageheight}{4.0263671874999996cm}
+\renewcommand{\smallimagewidth}{0.8cm}
+\renewcommand{\expressionsep}{0em}
+
+\renewcommand{\firstindex}{0580}
+\renewcommand{\secondindex}{0378}
+\renewcommand{\thirdindex}{0226}
+\renewcommand{\fourthindex}{0720}
+
+\renewcommand{\supimageoneindex}[1]{
+  \includegraphics[width=\imagewidth, trim={0 0 0 0}, clip]{assets/\blendfieldsdirname/supplementary/baselines/#1_2183941_selected_rom_\firstindex.png}
+}
+\renewcommand{\supimagetwoindex}[1]{
+  \includegraphics[width=\imagewidth, trim={0 0 0 0}, clip]{assets/\blendfieldsdirname/supplementary/baselines/#1_5372021_selected_rom_\secondindex.png}
+}
+\renewcommand{\supimagethreeindex}[1]{
+  \includegraphics[width=\imagewidth, trim={0 0 0 0}, clip]{assets/\blendfieldsdirname/supplementary/baselines/#1_6795937_selected_rom_\thirdindex.png}
+}
+\renewcommand{\supimagefourindex}[1]{
+  \includegraphics[width=\imagewidth, trim={0 0 0 0}, clip]{assets/\blendfieldsdirname/supplementary/baselines/#1_7889059_selected_rom_\fourthindex.png}
+}
+
+\renewcommand{\versionone}{
+  \begin{tikzpicture}[
+      >=stealth',
+      overlay/.style={
+          anchor=south west,
+          draw=black,
+          rectangle,
+          line width=0.8pt,
+          outer sep=0,
+          inner sep=0,
+        },
+    ]
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0,
+      draw=black,
+      rectangle,
+      line width=0.5pt
+    ] (gt) {
+      \supimageoneindex{gt}   \\
+      \supimagetwoindex{gt}   \\
+      \supimagethreeindex{gt} \\
+      \supimagefourindex{gt}  \\
+    };
+
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0,
+      right=0pt of gt-1-1.east,
+      draw=black,
+      rectangle,
+      line width=0.5pt
+    ] (k1) {
+      \supimageoneindex{bv_aux} \&
+      \supimageoneindex{nerf}   \&
+      \supimageoneindex{dnerf} \&
+      \supimageoneindex{nerfies} \&
+      \supimageoneindex{hypernerf_static}    \&
+      \supimageoneindex{hypernerf_dynamic} \\
+    };
+
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0,
+      right=0pt of gt-2-1.east,
+      draw=black,
+      rectangle,
+      line width=0.5pt
+    ] (k2) {
+      \supimagetwoindex{bv_aux} \&
+      \supimagetwoindex{nerf}   \&
+      \supimagetwoindex{dnerf} \&
+      \supimagetwoindex{nerfies} \&
+      \supimagetwoindex{hypernerf_static}    \&
+      \supimagetwoindex{hypernerf_dynamic} \\
+    };
+
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0,
+      right=0pt of gt-3-1.east,
+      draw=black,
+      rectangle,
+      line width=0.5pt
+    ] (k3) {
+      \supimagethreeindex{bv_aux} \&
+      \supimagethreeindex{nerf}   \&
+      \supimagethreeindex{dnerf} \&
+      \supimagethreeindex{nerfies} \&
+      \supimagethreeindex{hypernerf_static}    \&
+      \supimagethreeindex{hypernerf_dynamic} \\
+    };
+
+    \matrix[
+      matrix of nodes,
+      column sep=0pt,
+      row sep=0pt,
+      ampersand replacement=\&,
+      inner sep=0,
+      outer sep=0,
+      right=0pt of gt-4-1.east,
+      draw=black,
+      rectangle,
+      line width=0.5pt
+    ] (k4) {
+      \supimagefourindex{bv_aux} \&
+      \supimagefourindex{nerf}   \&
+      \supimagefourindex{dnerf} \&
+      \supimagefourindex{nerfies} \&
+      \supimagefourindex{hypernerf_static}    \&
+      \supimagefourindex{hypernerf_dynamic} \\
+    };
+
+    \node[above=0em of gt-1-1.north, align=center, anchor=south]{Ground Truth};
+    \node[above=0em of k1-1-1.north, align=center, anchor=south]{\textbf{\methodname{}}};
+    \node[above=0em of k1-1-2.north, align=center, anchor=south]{NeRF};
+    \node[above=0em of k1-1-3.north, align=center, anchor=south]{NeRF+expr};
+    \node[above=0em of k1-1-4.north, align=center, anchor=south]{NeRFies};
+    \node[above=0em of k1-1-5.north, align=center, anchor=south]{HyperNeRF-AP};
+    \node[above=0em of k1-1-6.north, align=center, anchor=south]{HyperNeRF-DS};
+
+    \node[left=0em of gt-1-1.west, align=center, anchor=east]{\rotatebox{90}{\textsc{Subject} 2183941}};
+    \node[above=0em of gt-2-1.west, align=center, anchor=east]{\rotatebox{90}{\textsc{Subject} 5372021}};
+    \node[above=0em of gt-3-1.west, align=center, anchor=east]{\rotatebox{90}{\textsc{Subject} 6795937}};
+    \node[above=0em of gt-4-1.west, align=center, anchor=east]{\rotatebox{90}{\textsc{Subject} 7889059}};
+  \end{tikzpicture}
+}
+
+\begin{figure*}[htb]
+  \centering
+  \resizebox{\linewidth}{!}{\versionone}
+  \caption{\textbf{Comparison to strictly data-driven approaches} --
+    We compare \blendfields to other baselines that do not rely on mesh-driven rendering: NeRF~\cite{mildenhall2020nerf}, NeRF conditioned on the expression code (NeRF+expr)~\cite{mildenhall2020nerf}, NeRFies~\cite{park2021nerfies}, and HyperNeRF-AP/DS~\cite{park2021hypernerf}.
+    As a static model, NeRF converges to an average face from available
+    ($\nExpr{=}5$) expressions.
+    All other baselines exhibit severe artifacts compared to \blendfields.
+    Those baselines rely on the data continuity in the training set (\eg, from
+    a video), and cannot generalize to any other expression.
+  }
+  \label{fig:blendfields-qualitative-other-baselines}
+\end{figure*}
+

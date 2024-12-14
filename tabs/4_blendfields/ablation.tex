@@ -1,0 +1,40 @@
+
+\begin{table*}[!t]
+  \centering
+  % \resizebox{\linewidth}{!}{
+  \begin{tabular}{lccccccccc}
+    \toprule
+    \multirow{3}[3]{*}{Parameter}    & \multicolumn{6}{c}{Real Data}          & \multicolumn{3}{c}{Synthetic Data}                                                                                                                                                                                                                                                                            \\
+    \cmidrule(lr){2-7}\cmidrule(lr){8-10}
+                                     & \multicolumn{3}{c}{Casual Expressions} & \multicolumn{3}{c}{Novel Pose Synthesis} & \multicolumn{3}{c}{Novel Pose Synthesis}                                                                                                                                                                                                                           \\
+    \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+                                     & PSNR $\uparrow$                        & SSIM $\uparrow$                          & LPIPS $\downarrow$                       & PSNR $\uparrow$                    & SSIM $\uparrow$                   & LPIPS $\downarrow$                & PSNR $\uparrow$                    & SSIM $\uparrow$                   & LPIPS $\downarrow$                \\
+    \midrule
+    $|\neighbourhood(\vertex)| = 1$  & 27.5620                                & 0.9043                                   & 0.0893                                   & 29.7269                            & 0.9306                            & 0.0815                            & 32.2371                            & \cellcolor{secondbestcolor}0.9882 & 0.0234                            \\
+    $|\neighbourhood(\vertex)| = 5$  & 27.5880                                & \cellcolor{secondbestcolor}0.9054        & 0.0864                                   & \cellcolor{firstbestcolor}29.7548  & \cellcolor{secondbestcolor}0.9312 & 0.0789                            & 32.2900                            & \cellcolor{secondbestcolor}0.9882 & 0.0231                            \\
+    $|\neighbourhood(\vertex)| = 10$ & \cellcolor{secondbestcolor}27.5933     & \cellcolor{secondbestcolor}0.9054        & \cellcolor{secondbestcolor}0.0859        & \cellcolor{secondbestcolor}29.7456 & \cellcolor{secondbestcolor}0.9312 & \cellcolor{secondbestcolor}0.0785 & \cellcolor{secondbestcolor}32.3324 & \cellcolor{secondbestcolor}0.9882 & \cellcolor{secondbestcolor}0.0230 \\
+    $|\neighbourhood(\vertex)| = 20$ & \cellcolor{firstbestcolor}27.5977      & \cellcolor{firstbestcolor}0.9056         & \cellcolor{firstbestcolor}0.0854         & 29.7372                            & 0.9311                            & \cellcolor{firstbestcolor}0.0782  & \cellcolor{firstbestcolor}32.7949  & \cellcolor{firstbestcolor}0.9887  & \cellcolor{firstbestcolor}0.0221  \\
+    \midrule
+    Without smoothing                & \cellcolor{secondbestcolor}27.2535     & \cellcolor{secondbestcolor}0.8959        & \cellcolor{secondbestcolor}0.0939        & \cellcolor{secondbestcolor}29.3726 & \cellcolor{secondbestcolor}0.9233 & \cellcolor{secondbestcolor}0.0846 & \cellcolor{secondbestcolor}32.2452 & \cellcolor{secondbestcolor}0.9876 & \cellcolor{secondbestcolor}0.0238 \\
+    With smoothing                   & \cellcolor{firstbestcolor}27.5977      & \cellcolor{firstbestcolor}0.9056         & \cellcolor{firstbestcolor}0.0854         & \cellcolor{firstbestcolor}29.7372  & \cellcolor{firstbestcolor}0.9311  & \cellcolor{firstbestcolor}0.0782  & \cellcolor{firstbestcolor}32.7949  & \cellcolor{firstbestcolor}0.9887  & \cellcolor{firstbestcolor}0.0221  \\
+    \bottomrule
+  \end{tabular}
+  % }
+  \caption{\textbf{Ablation study} -- {
+  First, we check the effect of the neighborhood size $|\neighbourhood(\vertex)|$ on the results.
+  Below that, we compare the effect of smoothing.
+  % We highlight ablations results as its the only benchmark where the
+  % deformable model is fit reliably. 
+  The best results are colored in \mycoloredbox{firstbestcolor} and the second
+  best in \mycoloredbox{secondbestcolor}.
+  For the real dataset, changing the neighborhood size gives inconsistent
+  results, while smoothing improves the rendering quality.
+  In the synthetic scenario, setting $|\neighbourhood(\vertex)|{=}20$ and the
+  Laplacian smoothing consistently gives the best results.
+  The discrepancy between real and synthetic datasets is caused by inaccurate
+  face tracking for the former.
+  We describe this issue in detail in~\cref{subsec:blendfields-failures}.
+  }
+  }
+  \label{tab:blendfields-ablation-study}
+\end{table*}
