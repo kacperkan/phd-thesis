@@ -29,7 +29,7 @@
   potential misuses.
 
 \section{Concurrent Works}
-  Gao~\etal~\cite{gao2022reconstructing} and Xu~\etal~\cite{xu2022manvatar}
+  Gao~\etal~\cite{gao2022reconstructing} and Xu~\etal~\cite{xu2023avatarmav}
   also use an interpolation between known expressions to combine multiple
   neural radiance fields trained for those expressions.
   However, their approach interpolates between grids of latent
@@ -54,7 +54,8 @@
     training set has $\iExpr{<}\nExpr$ expressions.
     We train \blendfields for such a set for each subject separately.
     We then average the results for a given $\iExpr$ across subjects.
-    We present the results in~\cref{tab:ablation-num-expressions-fix}.
+    We present the results
+    in~\cref{tab:blendfields-ablation-num-expressions-fix}.
     When selecting the training expressions, we aim to choose those that show
     all wrinkles when combined.
     We can see from~\cref{fig:blendfields-qualitative-ablation-expressions}
@@ -77,7 +78,7 @@
     \input{tabs/\blendfieldsdirname/quantitative-results-without-masking}
   \subsection{Quantitative results with background}
     We compare \blendfields and the baselines similarly
-    to~\cref{subsec:realistic-human-captures}.
+    to~\cref{subsec:blendfields-realistic-human-captures}.
     However, in this experiment, we deliberately include the background in
     metric calculation.
     We show the results in
@@ -91,8 +92,9 @@
 
   \subsection{Additional qualitative results}
 
-    We show in~\cref{fig:qualitative-other-baselines} results of baselines
-    that do not rely on parametric models of the face~\cite{li2017flame}.
+    We show in~\cref{fig:blendfields-qualitative-other-baselines} results of
+    baselines that do not rely on parametric models of the
+    face~\cite{li2017flame}.
     Compared to \blendfields, they cannot render high-fidelity faces.
     The issue comes from the assumed data sparsity---those approaches rely on
     the interpolation in the training data.

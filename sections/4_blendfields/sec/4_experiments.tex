@@ -32,7 +32,7 @@
   averaging of the output colors, we split it into two regimes: one trained on
   the most extreme expression\footnote{We manually select one frame that has
   the most visible wrinkles.
-  } (VolTeMorph$_1$) and the another trained on all available expressions (VolTeMorph$_\text{avg}$)\footnote{We do not compare to NeRFace~\cite{gafni2021dynamic} and NHA~\cite{neural_head_avatars} as VolTeMorph~\cite{garbin2024voltemorph} performs better quantitatively than these methods.}.
+  } (VolTeMorph$_1$) and the another trained on all available expressions (VolTeMorph$_\text{avg}$)\footnote{We do not compare to NeRFace~\cite{gafni2021dynamic} and NHA~\cite{grassal2022neural} as VolTeMorph~\cite{garbin2024voltemorph} performs better quantitatively than these methods.}.
   We use both of these baselines as VolTeMorph was originally designed for a
   single-frame scenario.
   By using two versions, we show that it is not trivial to extend it to
@@ -101,7 +101,7 @@
   \subsection{Ablations}
     We check how the neighborhood size~$|\neighbourhood(\vertex)|$ and the
     application of the smoothing influence the performance of our method.
-    We show the results in~\cref{tab:ablation-study}.
+    We show the results in~\cref{tab:blendfields-ablation-study}.
     \blendfields works best in most cases when considering a relatively wide neighborhood for the tetrahedral features\footnote{Larger neighborhood sizes caused out-of-memory errors on our NVIDIA 2080Ti GPU.}.
     Laplacian smoothing consistently improves the quality across all the
     datasets~(see~\cref{fig:blendfields-laplacian-smoothing}).

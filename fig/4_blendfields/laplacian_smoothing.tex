@@ -1,13 +1,12 @@
 \begin{figure}[t]
   \centering
-  \begin{overpic}[width=\linewidth, trim=0 0 -1.3em -1em, clip]{assets/\blendfieldsdirname/laplacian.png}
+  \begin{overpic}[width=0.5\linewidth, trim=0 0 -1.3em -1em, clip]{assets/\blendfieldsdirname/laplacian.png}
     \put(11,98) {GT image}
     \put(37,98) {No smoothing}
     \put(65,98) {With smoothing}
     \put(95,79) {\rotatebox{-90}{RGB}}
     \put(95,46) {\rotatebox{-90}{$\blendfield(\pos)$ space (\cref{eq:blendfields-blendfield})}}
   \end{overpic}
-  \vspace{-2em}
   \caption{\textbf{Laplacian smoothing} -- To combat artifacts stemming from calculating weights $\blendingweight$ across multiple expressions, which may assign different expressions to neighboring tetrahedra, we apply Laplacian smoothing~\cite{desbrun1999implicit}.
     As seen in the bottom row, smoothing gives a more consistent expression
     assignment.

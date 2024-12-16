@@ -49,7 +49,7 @@
     % expectation is take a random image from the set of train images; second
     % is take a random pixel from such image (ray-pixel is 1:1)} \kk{
     We use expression vectors $\expression$ from parametric face models, such
-    as FLAME~\cite{li2017flame,fakeItTillYouMakeIt}.
+    as FLAME~\cite{li2017flame,wood2021fake}.
     % } \AT{move up to 3.0, see note} \AT{quickly mention where $\expression$
     % comes from.}
     However, as neither density nor radiance change with $\expression$,
@@ -201,16 +201,16 @@
     However, the same methodology can be used with other tetrahedral cages
     built on top of 3DMM face models.
     The face model is created by extending the blendshapes of the parametric
-    3DMM face model~\cite{fakeItTillYouMakeIt} to a tetrahedral cage that
-    defines the support in the neural radiance field.
+    3DMM face model~\cite{wood2021fake} to a tetrahedral cage that defines the
+    support in the neural radiance field.
     It has four bones controlling global rotation, the neck and the eyes with
     linear blend skinning, 224 expression blendshapes, and 256 identity
     blendshapes.
     Our face radiance fields are thus controlled and posed with the identity,
     expression, and pose parameters of the 3DMM face
-    model~\cite{fakeItTillYouMakeIt}, can be estimated by a real-time face
-    tracking system like~\cite{wft}, and generalize convincingly to
-    expressions representable by the face model.
+    model~\cite{wood2021fake}, can be estimated by a real-time face tracking
+    system like~\cite{wood20223d}, and generalize convincingly to expressions
+    representable by the face model.
 
     \noindent\textbf{Training.}
     During training, we sample rays from a single frame to avoid out-of-memory
@@ -231,8 +231,8 @@
     Therefore, we perform a single-stage sampling with
     $\numberofsamples{=}\coarsesamples{+}\importancesamples$ samples along the
     ray.
-    When extracting the features~(\cref{eq:local-descriptor}), we consider
-    $|\neighbourhood(\vertex)|{=}20$ neighbors.
+    When extracting the features~(\cref{eq:blendfields-local-descriptor}), we
+    consider $|\neighbourhood(\vertex)|{=}20$ neighbors.
     For the Laplacian smoothing, we set $\weightdiffusion{=}0.1$ and perform a
     single iteration step.
     Geometric-related operations impose negligible computational overhead.

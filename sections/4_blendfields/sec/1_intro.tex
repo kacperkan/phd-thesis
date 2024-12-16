@@ -1,8 +1,6 @@
 \section{Introduction}
   \label{sec:blendfields-intro}
 
-  \input{tabs/\blendfieldsdirname/ava-ours-comparison-v2}
-
   % --- neural rendering and importance in digital doubles
 
   Recent advances in neural rendering of 3D scenes~\cite{tewari2022advances}
@@ -45,7 +43,7 @@
 
   % --- What we do (high level) \at{
   We address the efficiency concerns by building on the recent works in Neural
-  Radiance Fields~\cite{ggarbin2024voltemorphxu2022deforming,yuan2022nerf}.
+  Radiance Fields~\cite{garbin2024voltemorph,xu2022deforming,yuan2022nerf}.
   % VolTeMorph~\cite{garbin2022voltemorph}.
   In particular, we extend VolTeMorph~\cite{garbin2024voltemorph} to render
   facial details learned from images of a sparse set of expressions.
@@ -62,10 +60,10 @@
   We train multiple radiance fields, one for each of the $\nExpr$ sparse
   expressions present in the input data, and blend them to correct the
   low-frequency estimate provided by VolTeMorph~\cite{garbin2024voltemorph};
-  see \cref{fig:teaser}.
+  see \cref{fig:blendfields-teaser}.
   % Hence, 
-  We call our method \textit{\methodname{}} since it resembles the way blend
-  shapes are employed in 3DMMs~\cite{blanz1999morphable}.
+  We call our method \blendfields since it resembles the way blend shapes are
+  employed in 3DMMs~\cite{blanz1999morphable}.
   To keep $\nExpr$ small (\ie, to maintain a few-shot regime), we perform
   local blending to exploit the known correlation between wrinkles and changes
   in local differential properties~\cite{irving2004invertible, raman2022mesh}.
@@ -77,8 +75,8 @@
   % --- contributions \at{
   \paragraph{Contributions}
     We outline the main qualitative differences between our approach and
-    related works in \cref{tab:ava-ours-comparison}, and our empirical
-    evaluations confirm these advantages.
+    related works in \cref{tab:blendfields-ava-ours-comparison}, and our
+    empirical evaluations confirm these advantages.
     In summary, we:
     \begin{itemize}
       \item extend VolTeMorph~\cite{garbin2024voltemorph} to enable modeling of high-frequency information, such as expression wrinkles in a few-shot setting;
@@ -88,3 +86,4 @@
             with an alternative to techniques that are data and compute-intensive~\cite{cao2022authentic};
       \item show that our model generalizes beyond facial modeling, for example, in the modeling of wrinkles on a deformable object made of rubber.
     \end{itemize}
+    \input{tabs/\blendfieldsdirname/ava-ours-comparison-v2}

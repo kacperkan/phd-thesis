@@ -164,7 +164,7 @@ number = {4},
 issn = {0730-0301},
 abstract = {We present a complete pipeline for creating fully rigged, personalized 3D facial avatars from hand-held video. Our system faithfully recovers facial expression dynamics of the user by adapting a blendshape template to an image sequence of recorded expressions using an optimization that integrates feature tracking, optical flow, and shape from shading. Fine-scale details such as wrinkles are captured separately in normal maps and ambient occlusion maps. From this user- and expression-specific data, we learn a regressor for on-the-fly detail synthesis during animation to enhance the perceptual realism of the avatars. Our system demonstrates that the use of appropriate reconstruction priors yields compelling face rigs even with a minimalistic acquisition system and limited user assistance. This facilitates a range of new applications in computer animation and consumer-level online communication based on personalized avatars. We present realtime application demos to validate our method.},
 journal = {ACM Trans. Graph.},
-month = {jul},
+month = 7,
 articleno = {45},
 numpages = {14},
 keywords = {3D avatar creation, blendshapes, face animation, rigging}
@@ -280,7 +280,7 @@ keywords = {3D avatar creation, blendshapes, face animation, rigging}
 @inproceedings{cheng2022cross,
   title={{Cross-Modal 3D Shape Generation and Manipulation}},
   author={Cheng, Zezhou and Chai, Menglei and Ren, Jian and Lee, Hsin-Ying and Olszewski, Kyle and Huang, Zeng and Maji, Subhransu and Tulyakov, Sergey},
-  booktitle={ECCV},
+  booktitle=ECCV,
   pages={303--321},
   year={2022},
   organization={Springer}
@@ -587,335 +587,6 @@ ISSN = {1017-4656}
 }
 
 
-@inproceedings {rtxTetLookupNvidia,
-booktitle = {High-Performance Graphics - Short Papers},
-editor = {Steinberger, Markus and Foley, Tim},
-title = {{RTX Beyond Ray Tracing: Exploring the Use of Hardware Ray Tracing Cores for Tet-Mesh Point Location}},
-author = {Wald, Ingo and Usher, Will and Morrical, Nathan and Lediaev, Laura and Pascucci, Valerio},
-year = {2019},
-publisher = {The Eurographics Association},
-ISSN = {2079-8687},
-ISBN = {978-3-03868-092-5},
-}
-
-
-
-
-@inproceedings{pumarola2021d,
-  title={{D-NeRF: Neural Radiance Fields for Dynamic Scenes}},
-  author={Pumarola, Albert and Corona, Enric and Pons-Moll, Gerard and Moreno-Noguer, Francesc},
-  booktitle={CVPR},
-  pages={10318--10327},
-  year={2021}
-}
-
-
-
-
-@inproceedings{neural_head_avatars,
-  title={{Neural Head Avatars from Monocular RGB Videos}},
-  author={Grassal, Philip-William and Prinzler, Malte and Leistner, Titus and Rother, Carsten and Nie{\ss}ner, Matthias and Thies, Justus},
-  booktitle={CVPR},
-  pages={18653--18664},
-  year={2022}
-}
-
-@inproceedings{tretschk2021non,
-    title = {{Non-Rigid Neural Radiance Fields: Reconstruction and Novel View Synthesis of a Dynamic Scene From Monocular Video}},
-    author = {Tretschk, Edgar and Tewari, Ayush and Golyanik, Vladislav and Zollh\"{o}fer, Michael and Lassner, Christoph and Theobalt, Christian},
-    booktitle = {ICCV},
-     pages={12959--12970},
-    year = {2021},
-}
-
-@inproceedings{raj2021pva,
-  title={{PVA: Pixel-aligned Volumetric Avatars}},
-  author={Raj, Amit and Zollhoefer, Michael and Simon, Tomas and Saragih, Jason and Saito, Shunsuke and Hays, James and Lombardi, Stephen},
-  booktitle={arXiv:2101.02697},
-  year={2020}
-}
-
-@inproceedings{NaRF,
-  author    = {Noguchi, Atsuhiro and Sun, Xiao and Lin, Stephen and Harada, Tatsuya},
-  title     = {{Neural Articulated Radiance Field}},
-  booktitle = {ICCV},
-  pages={5762--5772},
-  year={2021}
-}
-
-@inproceedings{plenoctrees,
-      title={{PlenOctrees for Real-time Rendering of Neural Radiance Fields}},
-      author={Alex Yu and Ruilong Li and Matthew Tancik and Hao Li and Ren Ng and Angjoo Kanazawa},
-      year={2021},
-      booktitle={ICCV},
-      pages={5752--5761},
-}
-
-
-@article{neuralSparseVoxelFields,
-  title={{Neural Sparse Voxel Fields}},
-  author={Liu, Lingjie and Gu, Jiatao and Zaw Lin, Kyaw and Chua, Tat-Seng and Theobalt, Christian},
-  journal={Advances in Neural Information Processing Systems},
-  volume={33},
-  pages={15651--15663},
-  year={2020}
-}
-
-
-@inproceedings{tetDeformationMedical,
-  author       = "Gascón, Jorge and Espadero, José Miguel and Perez, Alvaro G. and Torres, Rosell and Otaduy, Miguel A.",
-  title        = "Fast Deformation of Volume Data Using Tetrahedral Mesh Rasterization",
-  booktitle    = "SIGGRAPH",
-  year         = "2013",
-}
-
-
-@article{tetDefNvidia,
-  title={{Learning Deformable Tetrahedral Meshes for 3D Reconstruction}},
-  author={Gao, Jun and Chen, Wenzheng and Xiang, Tommy and Jacobson, Alec and McGuire, Morgan and Fidler, Sanja},
-  journal={Advances In Neural Information Processing Systems},
-  volume={33},
-  pages={9936--9947},
-  year={2020}
-}
-
-@inproceedings{deepMarchingTetrahedra,
- author = {Shen, Tianchang and Gao, Jun and Yin, Kangxue and Liu, Ming-Yu and Fidler, Sanja},
- booktitle = {NeurIPS},
- editor = {M. Ranzato and A. Beygelzimer and Y. Dauphin and P.S. Liang and J. Wortman Vaughan},
- pages = {6087--6101},
- publisher = {Curran Associates, Inc.},
- title = {{Deep Marching Tetrahedra: a Hybrid Representation for High-Resolution 3D Shape Synthesis}},
- volume = {34},
- year = {2021}
-}
-
-@incollection{meanValueCoordinatesPaper,
-  title={{Mean Value Coordinates for Closed Triangular Meshes}},
-  author={Ju, Tao and Schaefer, Scott and Warren, Joe},
-  booktitle={ACM SIGGRAPH},
-  pages={561--566},
-  year={2005}
-}
-
-@article{10.1145/964965.808594,
-author = {Kajiya, James T. and Von Herzen, Brian P},
-title = {{Ray Tracing Volume Densities}},
-year = {1984},
-issue_date = {July 1984},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-volume = {18},
-number = {3},
-issn = {0097-8930},
-abstract = {This paper presents new algorithms to trace objects represented by densities within a volume grid, e.g. clouds, fog, flames, dust, particle systems. We develop the light scattering equations, discuss previous methods of solution, and present a new approximate solution to the full three-dimensional radiative scattering problem suitable for use in computer graphics. Additionally we review dynamical models for clouds used to make an animated movie.},
-journal = {SIGGRAPH Comput. Graph.},
-month = {jan},
-pages = {165–174},
-numpages = {10},
-keywords = {Radiative transport, Clouds, Raster graphics, Ray tracing, Particle systems, Computer graphics, Simulation of natural phenomena, Stochastic modeling, Light scattering}
-}
-
-@inproceedings{volumeRenderingEquation,
-author = {Kajiya, James T. and Von Herzen, Brian P},
-title = {{Ray Tracing Volume Densities}},
-year = {1984},
-isbn = {0897911385},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-abstract = {This paper presents new algorithms to trace objects represented by densities within a volume grid, e.g. clouds, fog, flames, dust, particle systems. We develop the light scattering equations, discuss previous methods of solution, and present a new approximate solution to the full three-dimensional radiative scattering problem suitable for use in computer graphics. Additionally we review dynamical models for clouds used to make an animated movie.},
-booktitle = {Proceedings of the 11th Annual Conference on Computer Graphics and Interactive Techniques},
-pages = {165–174},
-numpages = {10},
-keywords = {Raster graphics, Particle systems, Light scattering, Radiative transport, Simulation of natural phenomena, Clouds, Stochastic modeling, Computer graphics, Ray tracing},
-series = {SIGGRAPH '84}
-}
-
-@article{vicini2021nonexponential,
-author = {Vicini, Delio and Jakob, Wenzel and Kaplanyan, Anton},
-title = {Non-Exponential Transmittance Model for Volumetric Scene Representations},
-year = {2021},
-issue_date = {August 2021},
-volume = {40},
-number = {4},
-issn = {0730-0301},
-journal = {ToG},
-month = {7},
-articleno = {136},
-numpages = {16},
-keywords = {level of detail, volume rendering, ray marching, differentiable rendering, transmittance, non-exponential media}
-}
-
-@inproceedings{femSimReference,
-author = {Sifakis, Eftychios and Barbic, Jernej},
-title = {{FEM Simulation of 3D Deformable Solids: A Practitioner's Guide to Theory, Discretization and Model Reduction}},
-year = {2012},
-isbn = {9781450316781},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-abstract = {A practical guide to finite-element-method (FEM) simulation of 3D deformable solids reviews essential offline FEM simulation techniques: complex nonlinear materials, invertible treatment of elasticity, and model-reduction techniques for real-time simulation.Simulations of deformable solids are important in many applications in computer graphics, including film special effects, computer games, and virtual surgery. FEM has become a popular method in many applications. Both offline simulation and real-time techniques have matured in computer graphics literature.This course is designed for attendees familiar with numerical simulation in computer graphics who would like to obtain a cohesive picture of the various FEM simulation methods available, their strengths and weaknesses, and their applicability in various simulation scenarios. The course is also a practical implementation guide for the visual-effects developer, offering a very lean yet adequate synopsis of the underlying mathematical theory. The first section introduces FEM deformable-object simulation and its fundamental concepts, such as deformation gradient, strain, stress, and elastic energy, discusses corotational FEM models, isotropic hyperelasticity, and numerical methods such as conjugate gradients and multigrid. The second section presents the state of the art in model reduction techniques for real-time FEM solid simulation. Topics include linear modal analysis, modal warping, subspace simulation, domain decomposition, and which techniques are suitable for which application.},
-booktitle = {ACM SIGGRAPH},
-articleno = {20},
-numpages = {50},
-location = {Los Angeles, California},
-series = {SIGGRAPH '12}
-}
-
-@article{optixMainPaper,
-author = {Parker, Steven G. and Bigler, James and Dietrich, Andreas and Friedrich, Heiko and Hoberock, Jared and Luebke, David and McAllister, David and McGuire, Morgan and Morley, Keith and Robison, Austin and Stich, Martin},
-title = {{OptiX: A General Purpose Ray Tracing Engine}},
-year = {2010},
-issue_date = {July 2010},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-volume = {29},
-number = {4},
-issn = {0730-0301},
-abstract = {The NVIDIA® OptiX™ ray tracing engine is a programmable system designed for NVIDIA GPUs and other highly parallel architectures. The OptiX engine builds on the key observation that most ray tracing algorithms can be implemented using a small set of programmable operations. Consequently, the core of OptiX is a domain-specific just-in-time compiler that generates custom ray tracing kernels by combining user-supplied programs for ray generation, material shading, object intersection, and scene traversal. This enables the implementation of a highly diverse set of ray tracing-based algorithms and applications, including interactive rendering, offline rendering, collision detection systems, artificial intelligence queries, and scientific simulations such as sound propagation. OptiX achieves high performance through a compact object model and application of several ray tracing-specific compiler optimizations. For ease of use it exposes a single-ray programming model with full support for recursion and a dynamic dispatch mechanism similar to virtual function calls.},
-journal = {ACM Transactions on Graphics},
-month = {jul},
-articleno = {66},
-numpages = {13},
-keywords = {ray tracing, graphics systems, graphics hardware}
-}
-
-@INPROCEEDINGS{7504761,
-  author={Roth, Daniel and Lugrin, Jean-Luc and Galakhov, Dmitri and Hofmann, Arvid and Bente, Gary and Latoschik, Marc Erich and Fuhrmann, Arnulph},
-  booktitle={Virtual Reality}, 
-  title={{Avatar Realism and Social Interaction Quality in Virtual Reality}}, 
-  year={2016},
-  volume={},
-  number={},
-  pages={277-278},
-}
-
-@article{faceAvatarRealism,
-author = {Fysh, Matt and Trifonova, Iliyana and Allen, John and McCall, Cade and Burton, A. and Bindemann, Markus},
-year = {2021},
-month = {09},
-pages = {},
-title = {{Avatars with Faces of Real Reople: A Construction Method for Scientific Experiments in Virtual Reality}},
-journal = {Behavior Research Methods},
-}
-
-@article{originalCodecAvatarsPaper,
-  title={{Deep Appearance Models for Face Rendering}},
-  author={Lombardi, Stephen and Saragih, Jason and Simon, Tomas and Sheikh, Yaser},
-  journal={ToG},
-  volume={37},
-  number={4},
-  pages={1--13},
-  year={2018},
-  publisher={ACM New York, NY, USA}
-}
-@inproceedings{fakeItTillYouMakeIt,
-  title={{Fake It Till You Make It: Face analysis in the wild using synthetic data alone}},
-  author={Wood, Erroll and Baltru\v{s}aitis, Tadas and Hewitt, Charlie and Dziadzio, Sebastian and Cashman, Thomas J and Shotton, Jamie},
-  booktitle={ICCV},
-  pages={3681--3691},
-  year={2021}
-}
-
-
-@article{SMPL:2015,
-      author = {Loper, Matthew and Mahmood, Naureen and Romero, Javier and Pons-Moll, Gerard and Black, Michael J.},
-      title = {{SMPL: A Skinned Multi-Person Linear Model}},
-      journal = {ACM Transactions on Graphics (ToG)},
-      month = oct,
-      number = {6},
-      pages = {248:1--248:16},
-      publisher = {ACM},
-      volume = {34},
-      year = {2015}
-    }
-
-
-@inproceedings{convSequence2Sequence,
-  title={{Convolutional Sequence to Sequence Learning}},
-  author={Gehring, Jonas and Auli, Michael and Grangier, David and Yarats, Denis and Dauphin, Yann N},
-  booktitle={ICML},
-  pages={1243--1252},
-  year={2017},
-  organization={PMLR}
-}
-
-
-@article{fourierFeatNetworks,
-  title={{Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains}},
-  author={Tancik, Matthew and Srinivasan, Pratul and Mildenhall, Ben and Fridovich-Keil, Sara and Raghavan, Nithin and Singhal, Utkarsh and Ramamoorthi, Ravi and Barron, Jonathan and Ng, Ren},
-  journal={Advances in Neural Information Processing Systems},
-  volume={33},
-  pages={7537--7547},
-  year={2020}
-}
-
-@article{mipNeRF,
-  author    = {Jonathan T. Barron and
-               Ben Mildenhall and
-               Matthew Tancik and
-               Peter Hedman and
-               Ricardo Martin{-}Brualla and
-               Pratul P. Srinivasan},
-  title     = {{Mip-NeRF: A Multiscale Representation for Anti-Aliasing Neural Radiance
-               Fields}},
-  pages={5855--5864},
-  journal={International Conference in Computer Vision},
-  year={2021},
-  eprinttype = {arXiv},
-  eprint    = {2103.13415},
-  timestamp = {Wed, 07 Apr 2021 15:31:46 +0200},
-  bibsource = {dblp computer science bibliography, https://dblp.org}
-}
-
-
-@article{attentionIsAllYouNeed,
-  title={{Attention is all you need}},
-  author={Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, {\L}ukasz and Polosukhin, Illia},
-  journal={Advances in Neural Information Processing Systems},
-  volume={30},
-  year={2017}
-}
-
-@article{neuralImportanceSampling,
-author = {M\"{u}ller, Thomas and Mcwilliams, Brian and Rousselle, Fabrice and Gross, Markus and Nov\'{a}k, Jan},
-title = {{Neural Importance Sampling}},
-year = {2019},
-issue_date = {October 2019},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-volume = {38},
-number = {5},
-issn = {0730-0301},
-abstract = {We propose to use deep neural networks for generating samples in Monte Carlo integration. Our work is based on non-linear independent components estimation (NICE), which we extend in numerous ways to improve performance and enable its application to integration problems. First, we introduce piecewise-polynomial coupling transforms that greatly increase the modeling power of individual coupling layers. Second, we propose to preprocess the inputs of neural networks using one-blob encoding, which stimulates localization of computation and improves inference. Third, we derive a gradient-descent-based optimization for the Kullback-Leibler and the χ2 divergence for the specific application of Monte Carlo integration with unnormalized stochastic estimates of the target distribution. Our approach enables fast and accurate inference and efficient sample generation independently of the dimensionality of the integration domain. We show its benefits on generating natural images and in two applications to light-transport simulation: first, we demonstrate learning of joint path-sampling densities in the primary sample space and importance sampling of multi-dimensional path prefixes thereof. Second, we use our technique to extract conditional directional densities driven by the product of incident illumination and the BSDF in the rendering equation, and we leverage the densities for path guiding. In all applications, our approach yields on-par or higher performance than competing techniques at equal sample count.},
-journal = {ACM Transactions on Graphics},
-month = {oct},
-articleno = {145},
-numpages = {19},
-keywords = {normalizing flows, path guiding, rendering, Monte Carlo, deep learning, importance sampling}
-}
-
-
-
-@inproceedings{nvdiffrec2021,
-  title={{Extracting Triangular 3D Models, Materials, and Lighting From Images}},
-  author={Munkberg, Jacob and Hasselgren, Jon and Shen, Tianchang and Gao, Jun and Chen, Wenzheng and Evans, Alex and M{\"u}ller, Thomas and Fidler, Sanja},
-  booktitle={CVPR},
-  pages={8280--8290},
-  year={2022}
-}
-
-@article{nerfid,
-  author    = {Relja Arandjelovic and
-               Andrew Zisserman},
-  title     = {{NeRF in detail: Learning to sample for view synthesis}},
-  journal   = {CoRR},
-  volume    = {abs/2106.05264},
-  year      = {2021},
-  eprinttype = {arXiv},
-  eprint    = {2106.05264},
-  timestamp = {Tue, 15 Jun 2021 16:35:15 +0200},
-  bibsource = {dblp computer science bibliography, https://dblp.org}
-}
 
 @article{lorensen1987marching,
 author = {Lorensen, William E. and Cline, Harvey E.},
@@ -934,6 +605,7 @@ numpages = {7}
 }
 
 
+
 @inproceedings{yifan2020neural,
   author={Wang Yifan and Noam Aigerman and Vladimir G. Kim and Siddhartha Chaudhuri and Olga Sorkine-Hornung},
   title={{Neural Cages for Detail-Preserving 3D Deformations}},
@@ -941,51 +613,6 @@ numpages = {7}
   year = {2020},
 }
 
-@inproceedings{morf,
-  author={Daoye Wang and Prashanth Chandran and Gaspard Zoss and Derek Bradley and Paulo Gotardo},
-  title={},
-  booktitle = {SIGGRAPH},
-  year = {2022},
-}
-
-@article{flame_citation, 
-  title = {{Learning a Model of Facial Shape and Expression from 4D Scans}}, 
-  author = {Li, Tianye and Bolkart, Timo and Black, Michael. J. and Li, Hao and Romero, Javier}, 
-  journal = {ACM Transactions on Graphics}, 
-  volume = {36}, 
-  number = {6}, 
-  year = {2017}, 
-  pages = {194:1--194:17},
-}
-
-
-@article{deferredNeuralRendering,
-author = {Thies, Justus and Zollh\"{o}fer, Michael and Nie\ss{}ner, Matthias},
-title = {{Deferred Neural Rendering: Image Synthesis Using Neural Textures}},
-year = {2019},
-issue_date = {August 2019},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-volume = {38},
-number = {4},
-issn = {0730-0301},
-journal = {ACM Transactions on Graphics},
-month = {jul},
-articleno = {66},
-numpages = {12},
-keywords = {facial reenactment, neural rendering, neural texture, novel view synthesis}
-}
-
-@article{kim2018deepVideoPortraits,
-  title     = {{Deep Video Portraits}},
-  author    = {Kim, Hyeongwoo and Garrido, Pablo and Tewari, Ayush and Xu, Weipeng and Thies, Justus and 
-               Nie{\ss}ner, Matthias and P{\'e}rez, Patrick and Richardt, Christian and Zoll{\"o}fer, Michael and Theobalt, Christian},
-  journal   = {ACM Transactions on Graphics},
-  volume    = {37},
-  number    = {4},
-  pages     = {163},
-  year      = {2018}
-}
 
 
 @inproceedings{zollhoefer2018facestar,
@@ -1053,16 +680,17 @@ series = {SIGGRAPH '07}
   year={2022}
 }
 
-@article{asnani2021reverse,
-  title={{Reverse Engineering of Generative Models: Inferring Model Hyperparameters from Generated Images}},
+@article{asnani2023reverse,
+  title={Reverse engineering of generative models: Inferring model hyperparameters from generated images},
   author={Asnani, Vishal and Yin, Xi and Hassner, Tal and Liu, Xiaoming},
-  journal=ARXIV,
-  year={2021}
+  journal=PAMI,
+  year={2023},
+  publisher={IEEE}
 }
 @inproceedings{rombach2022high,
   title={{High-Resolution Image Synthesis with Latent Diffusion Models}},
   author={Rombach, Robin and Blattmann, Andreas and Lorenz, Dominik and Esser, Patrick and Ommer, Bj{\"o}rn},
-  booktitle={CVPR},
+  booktitle=CVPR,
   pages={10684--10695},
   year={2022}
 }
@@ -1105,6 +733,14 @@ series = {SIGGRAPH '07}
   booktitle={CVPR},
   pages={3681--3691},
   year={2021}
+}
+@inproceedings{wood20223d,
+  title={{3D Face Reconstruction with Dense Landmarks}},
+  author={Wood, Erroll and Baltru{\v{s}}aitis, Tadas and Hewitt, Charlie and Johnson, Matthew and Shen, Jingjing and Milosavljevi{\'c}, Nikola and Wilde, Daniel and Garbin, Stephan and Sharp, Toby and Stojiljkovi{\'c}, Ivan and others},
+  booktitle=ECCV,
+  pages={160--177},
+  year={2022},
+  organization={Springer}
 }
 
 @inproceedings{sun2021direct,
@@ -3030,4 +2666,67 @@ author+an={2=highlight},
   pages={8776--8786},
   year={2020},
   author+an={1=highlight},
+}
+@article{vicini2021nonexponential,
+author = {Vicini, Delio and Jakob, Wenzel and Kaplanyan, Anton},
+title = {Non-Exponential Transmittance Model for Volumetric Scene Representations},
+year = {2021},
+issue_date = {August 2021},
+volume = {40},
+number = {4},
+issn = {0730-0301},
+journal = {ToG},
+month = {7},
+articleno = {136},
+numpages = {16},
+keywords = {level of detail, volume rendering, ray marching, differentiable rendering, transmittance, non-exponential media}
+}
+
+@article{liu2020neural,
+  title={{Neural Sparse Voxel Fields}},
+  author={Liu, Lingjie and Gu, Jiatao and Zaw Lin, Kyaw and Chua, Tat-Seng and Theobalt, Christian},
+  journal={Advances in Neural Information Processing Systems},
+  volume={33},
+  pages={15651--15663},
+  year={2020}
+}
+
+@inproceedings{raj2021pva,
+  title={{PVA: Pixel-aligned Volumetric Avatars}},
+  author={Raj, Amit and Zollhoefer, Michael and Simon, Tomas and Saragih, Jason and Saito, Shunsuke and Hays, James and Lombardi, Stephen},
+  booktitle={arXiv:2101.02697},
+  year={2020}
+}
+
+@inproceedings{tretschk2021non,
+    title = {{Non-Rigid Neural Radiance Fields: Reconstruction and Novel View Synthesis of a Dynamic Scene From Monocular Video}},
+    author = {Tretschk, Edgar and Tewari, Ayush and Golyanik, Vladislav and Zollh\"{o}fer, Michael and Lassner, Christoph and Theobalt, Christian},
+    booktitle = {ICCV},
+     pages={12959--12970},
+    year = {2021},
+}
+@inproceedings{pumarola2021d,
+  title={{D-NeRF: Neural Radiance Fields for Dynamic Scenes}},
+  author={Pumarola, Albert and Corona, Enric and Pons-Moll, Gerard and Moreno-Noguer, Francesc},
+  booktitle={CVPR},
+  pages={10318--10327},
+  year={2021}
+}
+
+@article{gao2022reconstructing,
+ author = {Xuan Gao and Chenglai Zhong and Jun Xiang and Yang Hong and Yudong Guo and Juyong Zhang}, 
+ title = {{Reconstructing Personalized Semantic Facial NeRF Models From Monocular Video}}, 
+ journal = {ACM Transactions on Graphics (Proceedings of SIGGRAPH Asia)}, 
+ volume = {41}, 
+ number = {6}, 
+ year = {2022}, 
+ doi = {10.1145/3550454.3555501} }
+
+
+@inproceedings{xu2023avatarmav,
+  title={{ManVatar: Fast 3D Head Avatar Reconstruction Using Motion-Aware Neural Voxels}},
+  author={Xu, Yuelang and Wang, Lizhen and Zhao, Xiaochen and Zhang, Hongwen and Liu, Yebin},
+  booktitle={ACM SIGGRAPH 2023 Conference Proceedings},
+  pages={1--10},
+  year={2023}
 }

@@ -8,7 +8,7 @@
   The main limitations of NeRF are its rendering speed, being constrained to
   static scenes, and lack of ways to control the scene.
   Rendering speed has been successfully addressed by multiple follow-up
-  works~\cite{hedman2021baking,garbin2021fastnerf,plenoctrees}.
+  works~\cite{hedman2021baking,garbin2021fastnerf,yu2021plenoctrees}.
   Works solving the limitation to static
   scenes\cite{xian2021space,athar2022rignerf,noguchi2022watch,wang2022fourier,attal2021torf,weng2022humannerf,zhao2022humannerf,jiang2022neuman}
   and adding explicit
@@ -41,7 +41,7 @@
     To supervise the radiance volume with the input images, each image pixel is associated with a ray $\ray(t)$ cast from the camera center to the pixel, and samples along the ray are accumulated to determine the value of the image pixel $\pixelcolor(\ray)$:
     % follows: 
     \begin{equation}
-      \label{eq:rendering-equation}
+      \label{eq:blendfields-rendering-equation}
       \pixelcolor(\ray)=\int^{t_f}_{t_n}T(t)\:\density(\ray(t))\:\outputcolor(\ray(t), \viewdirection)dt,
     \end{equation}
     where $t_n$ and $t_f$ are near and far planes, and
@@ -58,8 +58,8 @@
     Several methods have shown that replacing the implicit functions
     approximated with an MLP for a function discretized on an explicit voxel
     grid results in a significant rendering and training
-    speed-up~\cite{garbin2021fastnerf, hedman2021baking, plenoctrees,
-    directVoxelOptimisation, neuralSparseVoxelFields}.
+    speed-up~\cite{garbin2021fastnerf, hedman2021baking, yu2021plenoctrees,
+    sun2021direct, liu2020neural}.
 
   \subsection{Animating Radiance Fields}
     Several works exist to animate the scene represented as a NeRF.
@@ -123,4 +123,3 @@
     We can use this change in volume to select which of the trained NeRF
     expressions should be used for each tetrahedron to render high-frequency
     details.
-    \vspace{-0.175em}

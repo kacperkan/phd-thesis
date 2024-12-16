@@ -27,9 +27,7 @@
       >=stealth',
       overlay/.style={
           anchor=south west,
-          draw=black,
-          rectangle,
-          line width=0.8pt,
+          line width=0,
           outer sep=0,
           inner sep=0,
         },
@@ -41,8 +39,6 @@
       ampersand replacement=\&,
       inner sep=0,
       outer sep=0,
-      draw=black,
-      rectangle,
       line width=0.5pt
     ] (gt) {
       \supimageoneindex{gt}{0}   \\
@@ -59,9 +55,6 @@
       inner sep=0,
       outer sep=0,
       right=0pt of gt-1-1.east,
-      draw=black,
-      rectangle,
-      line width=0.5pt
     ] (k1) {
       \supimageoneindex{bv_aux}{0} \&
       \supimageoneindex{bv_aux}{0-1} \&
@@ -78,9 +71,6 @@
       inner sep=0,
       outer sep=0,
       right=0pt of gt-2-1.east,
-      draw=black,
-      rectangle,
-      line width=0.5pt
     ] (k2) {
       \supimagetwoindex{bv_aux}{0} \&
       \supimagetwoindex{bv_aux}{0-1} \&
@@ -97,9 +87,6 @@
       inner sep=0,
       outer sep=0,
       right=0pt of gt-3-1.east,
-      draw=black,
-      rectangle,
-      line width=0.5pt
     ] (k3) {
       \supimagethreeindex{bv_aux}{0} \&
       \supimagethreeindex{bv_aux}{0-1} \&
@@ -116,9 +103,6 @@
       inner sep=0,
       outer sep=0,
       right=0pt of gt-4-1.east,
-      draw=black,
-      rectangle,
-      line width=0.5pt
     ] (k4) {
       \supimagefourindex{bv_aux}{0} \&
       \supimagefourindex{bv_aux}{0-1} \&
@@ -143,7 +127,7 @@
 
 \begin{figure*}[htb]
   \centering
-  \resizebox{\linewidth}{!}{
+  \resizebox{0.8\linewidth}{!}{
     \versionone
   }
   \caption{\textbf{Qualitative ablation over the number of training expressions} -- {
