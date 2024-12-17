@@ -1,0 +1,95 @@
+\section{Introduction}
+  \label{sec:lumigauss-introduction}
+
+  % General stuff first, inverse graphics
+  The colors emitted by objects are a combination of a spectrum of the light
+  hitting the object and the material properties of that object.
+  The light hitting the object's surface is a sum of the light scattered in
+  the medium and bounced from neighboring objects \cite{whitted1979improved}.
+  In computer graphics, we often simplify this effect and decouple it into two
+  entities: an intrinsic object's color or \textit{albedo} and an
+  omnidirectional texture representing the illumination
+  \cite{ramamoorthi2001envmap}---\textit{environment map}.
+  Acquiring those assets enables the designing of realistic scenes in games or
+  movies.
+
+  % The in the wild setting
+  In many scenarios, creating realistic albedo textures and environment maps
+  requires skilled technicians and artists to be involved in the process.
+  To democratize it, the previous approaches~\cite{rudnev2022nerfosr,
+  gardner2023neusky, wang2023fegr} tried to use photographs taken with
+  commodity cameras and \textit{invert} the capturing process to recover
+  albedo and an environment map.
+  % However, the quality of such reconstructions falls short compared to scenes
+  % created manually by skilled artists. 
+  Given the abundance of casual, in-the-wild photographs available on the
+  Internet, solving that issue is of high importance.
+
+  % How did people tackle it, splats, nerfs, their problem
+  Recent advancements in reconstruction in-the-wild include
+  NeRF-in-the-Wild~\cite{martin2021nerfw} (NeRF-W).
+  NeRF-W leverages neural radiance fields~\cite{mildenhall2021nerf} which
+  reconstruct a scene given its photos with calibrated cameras.
+  NeRF-W can further work in realistic scenarios where the pictures come from
+  the \textit{in-the-wild} collections---the images in such may differ in the
+  lighting conditions or scene content.
+  However, NeRF-W and its follow-up works, HA-NeRF~\cite{chen2022hallucinated}
+  and CR-NeRF~\cite{yang2023crnerf}, cannot decouple the object's albedo and
+  the environment map, making it difficult to use in practice.
+  NeRF-OSR~\cite{rudnev2022nerfosr} approaches that problem, but its shading
+  model requires neural network execution at runtime, making integration with
+  graphics engines difficult, and the reconstruction quality leaves space for
+  improvement.
+
+  % but but the quality of its output has a great margin to improve on~\KK{I
+  % don't have an idea how to finish it well...}. \asia{Trainig/rendering very
+  % slow. They also use shading model based on MLP (MLP predicts shadows for
+  % the rendered image) which makes it inefficient to integrate with graphic
+  % engines}. \tomek{i like the graphic engine argument. other options: high
+  % number of parameters hence inefficient tuning of those, expert knowledge
+  % required.} \asia{This is very not true. Crnerf and Hanerf do not separate
+  % albedo and env maps! Pls fix it! important especially given limited works
+  % in our results section! there is basically one work NERFOSR doing such
+  % separation in the wild}
+
+  3D Gaussian Splatting~\cite{kerbl20233d} (3DGS) solves one of the main bottlenecks of NeRF - the training speed and output fidelity.
+  In contrast to NeRFs, 3DGS models the scene as a composition of 3D Gaussians
+  attributed with colors and opacity which are rasterized, or
+  \textit{splatted}, to render the output image.
+  Recovering an object's surface from them requires specialized training
+  techniques~\cite{guedon2024sugar}.
+  On the other hand, 2DGS~\cite{huang20242d} proposes reformulating 3D
+  Gaussians as their 2D alternative where one of the axes is collapsed.
+  The final scene representation ends up being composed of 2D \textit{surfels}
+  which provide a flat surface crucial for our relighting approach.
+  % how did we do that 
+
+  In this work, we propose \lumigauss, a method that uses
+  2DGS~\cite{huang20242d} to perform inverse graphics on images taken in the
+  wild.
+  In contrast to past approaches, our method is imbued with fast training and
+  inference speed while maintaining high-quality renderings and being easy to
+  integrate with graphics engines.
+  % We further propose to adopt properties of Spherical Harmonics representing
+  % the color to improve the quality of the shadows induced by environment
+  % maps. 
+  In our method, the light is modeled as a combination of an environment map
+  and a radiance transfer function that represents which parts of the
+  environment map illuminate a given surfel---both are modeled by spherical
+  harmonics~\cite{ramamoorthi2001envmap}.
+  This approach allows for modeling shadows, which is our main goal, but also
+  has the potential to represent light reflected off of other objects.
+  The output from \lumigauss enables both novel view synthesis and relighting
+  using environment maps beyond those available during training.
+  Leveraging the possibilities offered by the precomputed radiance transfer,
+  our representation integrates seamlessly into game engines, enabling fast
+  and efficient relighting.
+
+  Our contributions:
+  \begin{itemize}
+    \item We repurpose 2D Gaussian Splatting for an inverse graphics pipeline in an in-the-wild setting.
+          With our approach, we recover high-quality albedo and environment
+          maps.
+    \item To enable shadows we learn the radiance transfer function for each 2D splat and represent it using spherical harmonics.
+    \item Finally, we demonstrate that our reconstructed environment maps can be effectively used to relight arbitrary objects within graphic engines.
+  \end{itemize}

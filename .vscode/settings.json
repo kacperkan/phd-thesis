@@ -13,6 +13,7 @@
                 "-file-line-error",
                 "-output-directory=./aux",
                 "-aux-directory=./aux",
+                "--shell-escape",
                 "%DOC%"
             ]
         }

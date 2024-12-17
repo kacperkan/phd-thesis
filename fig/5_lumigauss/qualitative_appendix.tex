@@ -1,0 +1,102 @@
+\def\scale{1.0}
+\def\distabove{0.5em}
+\def\height{64bp}
+\def\spysize{24bp}
+\def\offset{36bp}
+\renewcommand{\inputimage}[1]{\includegraphics[height=\height]{\lumigaussassets/folder_for_kacper/qual/#1}}
+
+\newcommand{\qualitative}{
+  \centering
+  \tikzset{external/export next=false}
+  \tikzsetnextfilename{qualitative_appendix}
+  \resizebox{\linewidth}{!}{
+    \begin{tikzpicture}[
+        >=stealth',
+        title/.style={
+            anchor=base,
+            align=center,
+            scale=\scale,
+          },
+        spy using outlines={circle, red, magnification=3, connect spies, size=\spysize}
+      ]
+      \matrix[matrix of nodes, column sep=0pt, row sep=0pt, ampersand replacement=\&, inner sep=0, outer sep=0, font=\Huge] (qualitative) {
+        \inputimage{gt_1.jpg} \&
+        \inputimage{ours_1_relit.png} \&
+        \inputimage{osr_1.jpg} \&
+        \inputimage{srtensor_1.png} \\
+        \inputimage{gt_2.jpg} \&
+        \inputimage{ours_2_relit.png} \&
+        \inputimage{osr_2.jpg} \&
+        \inputimage{srtensor_2.png} \\
+        \inputimage{gt_3.jpg} \&
+        \inputimage{ours_3_relit.png} \&
+        \inputimage{osr_3.jpg} \&
+        \inputimage{srtensor_3.png} \\
+      };
+
+      \matrix[
+        right=16bp of qualitative.east,
+        matrix of nodes,
+        anchor=west,
+        column sep=0pt,
+        row sep=0pt,
+        ampersand replacement=\&,
+        inner sep=0,
+        outer sep=0,
+      ] (ours) {
+        \inputimage{ours_1_albedo.png} \&
+        \inputimage{ours_1_normals.png} \\
+        \inputimage{ours_2_albedo.png} \&
+        \inputimage{ours_2_normals.png} \\
+        \inputimage{ours_3_albedo.png} \&
+        \inputimage{ours_3_normals.png} \\
+      };
+
+      \node[above=\distabove of qualitative-1-1.north, title] {Ground Truth};
+      \node[above=\distabove of qualitative-1-2.north, title] {\textbf{Ours}};
+      \node[above=\distabove of qualitative-1-3.north, title] {NeRF-OSR~\cite{rudnev2022nerfosr}};
+      \node[above=\distabove of qualitative-1-4.north, title] {SRTensoRF~\cite{chang2024srtensorf}};
+
+      \node[above=\distabove of ours-1-1.north, title] {\textbf{Ours} Albedo};
+      \node[above=\distabove of ours-1-2.north, title] {\textbf{Ours} Normals};
+
+      \spy[anchor=center] on ([xshift=1em] qualitative-1-1.center) in node[below left=3.75bp and 3.75bp] at (qualitative-1-1.north east);
+      \spy[anchor=center] on ([xshift=1em] qualitative-1-2.center) in node[below left=3.75bp and 3.75bp] at (qualitative-1-2.north east);
+      \spy[anchor=center] on ([xshift=1em] qualitative-1-3.center) in node[below left=3.75bp and 3.75bp] at (qualitative-1-3.north east);
+      \spy[anchor=center] on ([xshift=1em] qualitative-1-4.center) in node[below left=3.75bp and 3.75bp] at (qualitative-1-4.north east);
+
+      \spy[anchor=center] on ([xshift=-1em] qualitative-2-1.center) in node[below left=3.75bp and 3.75bp] at (qualitative-2-1.north east);
+      \spy[anchor=center] on ([xshift=-1em] qualitative-2-2.center) in node[below left=3.75bp and 3.75bp] at (qualitative-2-2.north east);
+      \spy[anchor=center] on ([xshift=-1em] qualitative-2-3.center) in node[below left=3.75bp and 3.75bp] at (qualitative-2-3.north east);
+      \spy[anchor=center] on ([xshift=-1em] qualitative-2-4.center) in node[below left=3.75bp and 3.75bp] at (qualitative-2-4.north east);
+
+      \spy[anchor=center] on ([xshift=-1em] qualitative-3-1.center) in node[below left=3.75bp and 3.75bp] at (qualitative-3-1.north east);
+      \spy[anchor=center] on ([xshift=-1em] qualitative-3-2.center) in node[below left=3.75bp and 3.75bp] at (qualitative-3-2.north east);
+      \spy[anchor=center] on ([xshift=-1em] qualitative-3-3.center) in node[below left=3.75bp and 3.75bp] at (qualitative-3-3.north east);
+      \spy[anchor=center] on ([xshift=-1em] qualitative-3-4.center) in node[below left=3.75bp and 3.75bp] at (qualitative-3-4.north east);
+    \end{tikzpicture}
+  }
+}
+
+\begin{figure}[!t]
+  \centering
+  \qualitative
+  \caption{
+    \textbf{Qualitative results --}
+    Showcase of novel view synthesis using shadowed radiance transfer.
+    We present albedo and normals produced by our method.
+    Our method generates much sharper renderings.
+    Please see zoom-ins to see details on the quality difference, such as
+    surface smoothness and edge sharpness of small building elements.
+    We use visual results for SR-TensoRF and NeRF-OSR presented originally
+    in~\cite{chang2024srtensorf}.
+    Please note that, in this comparison the environment map used to create
+    renders for NeRF-OSR and \lumigauss \textbf{does not match} the
+    illumination in ground truth.
+    \lumigauss and NeRF-OSR employ the \textbf{default} environment map provided by NeRF-OSR \textbf{for clear visualisation purpose only}.
+    SR-TensoRF do not rely on any environment map, instead it utilizes daytime
+    information.
+  }
+
+  \label{fig:lumigauss-qualitative_appendix}
+\end{figure}

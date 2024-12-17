@@ -1,0 +1,272 @@
+\input{fig/\lumigaussdirname/scheme}
+\section{Method}
+  \label{sec:lumigauss-method}
+
+  \subsection{Preliminaries on Radiance Transfer}
+    \label{subsec:lumigauss-preliminaries}
+    The rendering equation, in its simplified form~\cite{green2003grittydetail}, is an integral function that represents light $L(\mathbf{x}, \direction_o)$ exiting point $\mathbf{x}$ along the vector $\direction_o$:
+    \begin{equation}
+      \label{eq:lumigauss-brdf}
+      L(\bx, \direction_o)\!
+      =\!\int_{s} f_r(x, \direction_o, \direction_i) L_i(\bx, \direction_i) \transferfun(\bx, \direction_i) d\direction_i
+    \end{equation}
+    where $f_r(\cdot)$ is a BRDF function, $L_i(\cdot)$ an incoming light along the vector $\direction_i$, and $\transferfun(\cdot)$ is a radiance transfer function.
+    Intuitively, $f_r(\cdot)$ represents the surface material, $L_i(\cdot)$
+    represents the intensity and color of the illumination, and
+    $\transferfun(\cdot)$ is a term that takes into account shadows or light
+    reflections from other surfaces.
+    Depending on the formulation of those functions, the rendering equation
+    can range from a straightforward and inaccurate light model to a highly
+    complex and accurate one.
+
+    \paragraph{Unshadowed model}
+      One example of a reflection model that can be represented with
+      \cref{eq:lumigauss-brdf} is the diffuse surface reflection model, also
+      known as \textit{dot product lighting}.
+      A diffuse BRDF reflects light uniformly, making the lighting view-independent and simplifying the BRDF as follows:
+      \begin{equation}
+        \label{eq:lumigauss-dotillum}
+        L_{D}(\bx) = \frac{\rho(\bx)}{\pi} \int_{s} L_i(\bx, \direction_i)
+        \max(\mathbf{n}(\bx) \cdot \direction_i, 0) d\direction_i
+        \end{equation} where $\rho(\cdot)$ is the surface albedo,
+        $\mathbf{n}(\bx)$ a surface normal at the point $x$.
+      Shadows are neglected.
+
+      The incoming light $\light_i(\bx, \direction_i)$ can be represented in
+      several ways.
+      In this work, we assume that the scene is illuminated with an
+      \textbf{omnidirectional environment map} that is parametrized using
+      spherical harmonics (SH) of degree $n$ with $(n{+}1)^2$ coefficients.
+      Because the environment map is positioned infinitely far from the scene, the light is position-independent, and thus, the rendering equation is further simplified:
+      \begin{equation}
+        \label{eq:lumigauss-unshadowed}
+        \light_{U}(\bx) = \frac{\rho(\bx)}{\pi} \int_{s} \light_i(\direction_i) \max(\mathbf{n}(\bx) \cdot \direction_i, 0) d\direction_i
+      \end{equation}
+      With illumination parametrized with SH, we can evaluate the integral
+      in~\cref{eq:lumigauss-unshadowed} using a closed-form solution from
+      Eq.~(12) in \cite{ramamoorthi2001envmap}.
+      From this point onward, we refer to rendering with
+      \cref{eq:lumigauss-unshadowed} as \textit{unshadowed}.
+
+    \paragraph{Shadowed model}
+      In addition to the \textit{unshadowed} lighting model, we propose a
+      \textit{shadowed} model, where $\transferfun(\bx, \direction_i)$ is
+      parameterized using spherical harmonics (SH) and learned from training
+      data.
+      In $\transferfun(\bx, \direction_i)$, SH represents a spherical signal
+      that quantifies the light arriving from each direction of the
+      environment map to an associated point in space.
+      The \textit{shadowed} model is derived by replacing the dot product term in~\cref{eq:lumigauss-unshadowed}:
+      \begin{equation}
+        \label{eq:lumigauss-shadowed}
+        L_{S}(\bx) = \frac{\rho(\bx)}{\pi} \int_{s} L_i(\direction_i)
+        \transferfun(\bx, \direction_i) d\direction_i.
+      \end{equation}
+      In addition to modeling shadows, this approach also has the potential to
+      model the interreflection of light between objects in the scene.
+
+      Using SH of the same degree for both the environment map and transfer
+      function allows efficient evaluation of the rendering equation
+      \cref{eq:lumigauss-shadowed}.
+      A key SH property simplifies the integral of two SH-based functions to a
+      dot product of their coefficients, thanks to SH orthogonality.
+      With this property \cref{eq:lumigauss-shadowed} can be re-written as:
+      \begin{equation}
+        \label{eq:lumigauss-shadowed_sh}
+        L_{S}(\bx) = \frac{\rho(\bx)}{\pi} \lightsh \cdot \transferfunsh,
+        \end{equation} where $\lightsh \in R^{(n+1)^2}$ are the SH
+        coefficients of $L_i(\direction_i)$ and $\transferfunsh \in
+        R^{(n+1)^2}$ are the SH coefficients of $D(\bx, \direction_i)$.
+      Please see~\cite{slomp2006gentle, green2003grittydetail} for derivation.
+      This property is commonly used in real-time rendering where the radiance
+      transfer function is pre-computed and
+      only~\cref{eq:lumigauss-shadowed_sh} is evaluated at runtime.
+
+  \subsection{\lumigauss}
+    \lumigauss creates a 3D representation of a relightable model using 2D Gaussians~\cite{huang20242d} from $c\leq C$ images taken \textit{in-the-wild}  $\{\mathcal{I}_c\}_{c=1}^C$ with associated calibrated cameras~$\{\camera_c\}_{c=1}^C$.
+    Our goal is to find Gaussian parameters
+    $\mathcal{G}{=}\{\translation_k,\rotation_k,\scaling_k,\opacity_k,
+    \albedo_k,\transferfunsh_k\}^K_{k=1}$ that after the
+    rasterization~\cite{kerbl20233d} recreate those images.
+    We optimize Gaussians by minimizing the objective:
+    \begin{equation}
+      \argmin_{\gaussians, \latents,\params} \mathbb{E}_{\camera_c\sim \{\camera_c\}} \underbrace{\loss{rgb}\!\left(\splatting(\camera_c\;|\;\gaussians, \latents, \params), \image_c\right)}_{\text{\cref{subsec:lumigauss-reconstruction}}}  + \underbrace{\mathcal{R}(\gaussians)}_{\text{\cref{subsec:lumigauss-constraints}}},
+    \end{equation}
+    where $\latents{=}\{\embedding_c\}_{c=1}^C$ is a set of scene-dependent, learnable environment embeddings, $\loss{rgb}$ is a photometric objective that compares the rendered image from an operator $\mathcal{S}(\cdot)$~(\cref{eq:lumigauss-splatting-op}), and $\mathcal{R}$ are additional regularization terms.
+    In contrast to 2DGS~\cite{huang20242d}, for each Gaussian we model the
+    base color $\albedo$ as diffuse\footnote{As
+    per~\cref{subsec:lumigauss-preliminaries}, view-dependent effects are not
+    modeled in diffuse reflections.
+    }, and introduce SH coefficients for the transfer function $\transferfunsh$\footnote{These coefficients correspond to a single channel in practice.}. 2DGS provides smooth normals that make relighting possible.
+
+    In what follows, we drop the dependence of functional forms on the
+    positions $\bx$ we introduced in~\cref{subsec:lumigauss-preliminaries} for
+    brevity.
+
+    \paragraph{Relighting}
+      To handle the diverse lighting conditions in \textit{in-the-wild}
+      images, we associate each training image with a learnable latent code
+      $\embedding_\sceneindex$ that encodes its lighting conditions.
+      Using this embedding, we predict the environment map coefficients via an MLP:
+
+      \begin{equation} \label{eq:lumigauss-lightsh} \lightsh_\sceneindex = \text{MLP}(\embedding_\sceneindex | \params), \end{equation}
+
+      where $\lightsh_\sceneindex \in \mathbb{R}^{3 \times (n+1)^2}$ represents the SH coefficients of the environment map, and $n{=}2$ is the SH degree.
+      As shown in~\cite{ramamoorthi2001envmap}, second-order SH is sufficient
+      to approximate environment lighting in many scenarios.
+
+      The predicted illumination is used in the rendering process in one of
+      two ways: \textit{unshadowed} and \textit{shadowed}.
+      Those two approaches correspond to~\cref{eq:lumigauss-unshadowed}
+      and~\cref{eq:lumigauss-shadowed_sh} respectively, and are described
+      below.
+
+    \paragraph{Unshadowed model}
+      For the unshadowed scenario, we follow~\cref{eq:lumigauss-unshadowed},
+      which integrates light over the hemisphere in the direction of the
+      surface normal.
+      The color $\radiance_k$, \textit{radiance}, for each Gaussian $\mathcal{G}_k$ given its normal $\normal_k$ and the illumination parameters $\mathbf{l}_\sceneindex$ equates to:
+      % \begin{align} \radiance_k = \albedo_k \cdot \irradiance_k, \quad
+      % \irradiance_k = \mathbf{l}_\sceneindex \cdot \normal_k \end{align}
+      \begin{equation}
+        \label{eq:lumigauss-unshadowed-radiance}
+        \radiance_k = \albedo_k \odot \underbrace{\normal_k^t M(\lightsh_k) \normal_k}_{\text{unshadowed irradiance}},
+      \end{equation}
+      where $M$ is a $4{\times}4$ matrix derived from the SH parameters of the environment map.
+      It is the closed form solution of the integral in
+      \cref{eq:lumigauss-unshadowed}, please see Eq.
+      (12) in \cite{ramamoorthi2001envmap} for details.
+
+      This simple yet effective model already imbues the model with relighting
+      capabilities.
+      However, as described in~\cref{fig:lumigauss-shadowed_unshadowed} it
+      does not capture shadows correctly, limiting the output's fidelity.
+
+      \input{fig/\lumigaussdirname/shadowed_unshadowed}
+    \paragraph{Shadowed model}
+      To effectively capture shadows in the model, we redefine the output
+      color of a Gaussian as $\shadowedradiance_k$, a function of learnable
+      radiance transfer function $\transferfun_k$ parametrized by spherical
+      harmonics $\transferfunsh_k \in \mathbb{R}^{(n+1)^2}$, light
+      $\lightsh_c$ and albedo $\albedo_k$.
+      Using a learned radiance transfer function (instead of fixing it to
+      capture light from the hemisphere above the normal as we do in
+      \textit{unshadowed}) allows for creating shadows, as described in
+      \cref{subsec:lumigauss-preliminaries}.
+      Overall, following \cref{eq:lumigauss-shadowed_sh}, the output shadowed color or \textit{radiance} reduces to:
+      \begin{equation}
+        \label{eq:lumigauss-shadowed-radiance}
+        \shadowedradiance_{k}   = \albedo_k \odot \underbrace{\sum_{i=1}^{(n+1)^2}{\mathbf{l}_c^i \cdot \mathbf{d}_{k}^i}}_{\text{shadowed irradiance}},
+      \end{equation}
+      As we show later in the experiments, the addition of shadows leads to
+      more accurate relighting.
+      Additionally, it does not require learnable MLP to reconstruct shadows
+      at the inference stage, differentiating it from
+      NeRF-OSR~\cite{rudnev2022nerfosr} and making our approach applicable to
+      rendering engines directly.
+
+      % We note that the model can be extended further to include specular
+      % reflections~\tocite{gaussian codec avatars}, which we leave as an
+      % attractive future venue.
+
+      \input{fig/\lumigaussdirname/qualitative_ours}
+      % \subsection{Optimization} \asia{tutaj nie jest to ładnie sformułoane,
+      % ale mam nadzieje ze zrozumiale w miare}
+
+  \subsection{Physical constraints}
+    \label{subsec:lumigauss-constraints}
+    The regularizations proposed in 2DGS~\cite{huang20242d} keep the Gaussians
+    close to the surface and smooth locally, which is crucial in our
+    relighting scenario.
+    Aside from them, we propose new loss terms based on the physical light
+    properties that restrict the optimization from achieving degenerate,
+    \textit{non-relightable} cases.
+    We restrict radiance transfer $\transferfun_k$ function to remain within the range of 0 to 1, where 0 indicates complete shadowing and 1 signifies full exposure~to~lighting:
+    % we retarget $\transferfun_k$ to serve as a mask that attenuates the light
+    % environment's components, creating a shadow \asia{not sure if we can say
+    % we retarget. We use it exactly how it was designed to be used}:
+    \begin{equation}
+      \begin{split}
+        \loss{0-1} & =\mathbb{E}_k\mathbb{E}_{\direction_i} [\|\max(\transferfun_k(\direction_i), 1)-1\|^2_2 \\
+                   & \qquad\quad+ \|\min(\transferfun_k(\direction_i), 0)\|^2_2],
+      \end{split}
+    \end{equation}
+    and allow the environment light to remain in the $\mathbb{R}_{+}$ domain:
+    \begin{equation}
+      \loss{+} = \mathbb{E}_k\mathbb{E}_{\direction_i}\|\min(\light_\sceneindex(\direction_i), 0)\|^2_2,
+    \end{equation}
+    which allows the environment light to brighten the scene arbitrarily.
+
+    The shadowed radiance transfer should remain close to the unshadowed
+    version.
+    If not, the shadowed version might include light from any direction,
+    resulting in degenerate solutions and incorrect relighting.
+    We visualize the shadowed and unshadowed transfer functions in
+    \cref{fig:lumigauss-shadowed_unshadowed}.
+    To address this issue, we propose the following loss function:
+    \begin{equation}
+      \loss{\removespace{\shadowed}$\leftrightarrow$\removespace{\unshadowed}} = \mathbb{E}_k\mathbb{E}_{\direction_i}\|\max(\normal_k \cdot \direction_i, 0) - \transferfun_k(\direction_i)\|^2_2,
+    \end{equation}
+    \input{tabs/\lumigaussdirname/quantitative}
+    \input{tabs/\lumigaussdirname/performance}
+    The applied transfer function inherently accounts for shadows and
+    interreflections.
+    To focus specifically on modeling shadows and restrict the use of~\cref{eq:lumigauss-shadowed-radiance} for other cases, we impose a loss function ensuring that shadowed radiance should not be brighter than unshadowed one:
+    \begin{equation}
+      \loss{\removespace{\shadowed}} = \mathbb{E}_k\mathbb{E}_{\direction_i}\| \max(\transferfun_k(\direction_i) -\max(\normal_k \cdot \direction_i, 0), 0) \|^2_2,
+    \end{equation}
+    Those losses are weighted with scalars $\{\lambda_{1,\dots,4}\}$ fixed across experiments and contribute to our regularization term:
+    \begin{equation}
+      \mathcal{R}(\gaussians) = \lumigausslossweight{0-1}\loss{0-1} + \lumigausslossweight{+}\loss{+} + \lumigausslossweight{\removespace{\shadowed}$\leftrightarrow$\removespace{\unshadowed}}\loss{\removespace{\shadowed}$\leftrightarrow$\removespace{\unshadowed}} +
+      \lumigausslossweight{\removespace{\shadowed}}\loss{\removespace{\shadowed}}
+    \end{equation}
+    Calculating it exactly requires us to compute the expectation over the
+    hemisphere $\mathbb{S}^2$.
+    Instead, we approximate the expectations over directions $\direction_i$
+    with a Monte Carlo estimator by randomly sampling the SH lobe with $N$
+    samples at each training step.
+
+  \subsection{Reconstruction}
+    \label{subsec:lumigauss-reconstruction}
+    We render images using the splatting algorithm $\splatting(\cdot)$
+    proposed in 2DGS~\cite{huang20242d}.
+    We compare the rendered images with ground-truth $\{\image_c\}$ taken with
+    $\{\camera_c\}$ cameras.
+    Our method builds on 2DGS~\cite{huang20242d} and therefore our reconstruction loss $\loss{rgb}$ follows the following term:
+    \begin{align}
+      \loss{rgb}                             & = \lumigausslossweight{rec}(\shadowed)\loss{rec}(\shadowed) + \lumigausslossweight{rec}(\unshadowed)\loss{rec}(\unshadowed), \\
+      \loss{rec}(\{\shadowed, \unshadowed\}) & = \loss{1}(\{\shadowed, \unshadowed\}) + \lumigausslossweight{D-SSIM}\loss{D-SSIM}(\{\shadowed, \unshadowed\}),
+    \end{align}
+    where the $\loss{1}$ is the $L_1$ loss comparing either the image rendered from our shadowed or unshadowed models and $\loss{D-SSIM}$ is a differentiable D-SSIM~\cite{ssim} further improving the quality.
+    We use $\lumigausslossweight{D-SSIM}{=}0.2$ throughout all the
+    experiments.
+    Our proposed $\loss{rec}(\unshadowed)$ resembles a pretraining stage.
+    % Additionally, it keeps the shadowed model from explaining the brighter
+    % regions with the inverse of the shadows (which our formulation does not
+    % forbid). %We set $\lossweight{rec}$ to a small value to not bias the
+    % optimization.
+    As the more complex shadowed model lands in local minima if trained from
+    scratch, we initiate the training with
+    $\lumigausslossweight{rec}(\shadowed){=}0.0$ and
+    $\lumigausslossweight{rec}(\unshadowed){=}1.0$.
+    Once the simpler model converges, we switch
+    $\lumigausslossweight{rec}(\shadowed){=}1.0$ and
+    $\lumigausslossweight{rec}(\unshadowed)$ to a small value so as not to
+    deteriorate the quality of the model.
+    In short, the shadowed model explains the parts of an image with shadows,
+    which the unshadowed could not with its simpler lighting model.
+
+    % \asia{For "consistency" we also add photometric loss for unshadowed
+    % version with very small weight - is there a good place to put it? Maybe
+    % we can skip it? Idk, @KK any idea how to do it nicely?}
+
+    % 4) unshadowed loss - photometric loss comes from simple unshadowed
+    % version (L1 + DSSIM combination)
+
+    % Lshadowed = Ldotproduct + Lphotometric unshadowed
+
+    % \asia{-> not sure if needed. I am still running grid search. At first I
+    % needed it, now I think we can have one stage only:} We train only
+    % unshadowed version as pretraining, then we have combined version. In
+    % first stage we have simpler model... 
+

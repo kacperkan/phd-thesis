@@ -1,0 +1,21 @@
+
+\begin{table}[t]
+  \centering
+  \caption{\textbf{Performance comparison --}
+    Training time and inference speed comparison between the baselines and our
+    \lumigauss.
+  }
+  \vspace{-0.2em}
+  % \setlength{\tabcolsep}{4pt} \resizebox{\linewidth}{!}{
+  \begin{tabular}{lccc}
+    \toprule
+    \textbf{Method}                   & \textbf{Training time} & \textbf{FPS} \\
+    \midrule
+    NeRF-OSR \cite{rudnev2022nerfosr} & 31h                    & 0.003        \\
+    NeuSky \cite{gardner2023neusky}   & 14h                    & 0.004        \\
+    \textbf{Ours}                     & 1h 20min               & 20.7         \\
+    \bottomrule
+  \end{tabular}
+  % }
+  \label{tab:lumigauss-performance}
+\end{table}

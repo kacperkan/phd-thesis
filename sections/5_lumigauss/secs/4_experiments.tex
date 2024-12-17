@@ -1,0 +1,104 @@
+\input{fig/\lumigaussdirname/qual_albedo_normal_relight}
+\input{fig/\lumigaussdirname/shadowd-model-improves-normals}
+
+\section{Experiments}
+  \label{sec:lumigauss-experiments}
+
+  % \input{figs/ablation}
+
+  \subsection{Datasets and baselines}
+    To evaluate our approach, we followed the protocol from
+    NeRF-OSR~\cite{rudnev2022nerfosr} using ground truth environment maps.
+    We use the official data split for Staatstheatert, Landwehrplatz, and
+    Ludwigskirche.
+    We use segmentation masks for test images provided in the OSR dataset and
+    calculate MSE, MAE, SSIM and PSNR on masked regions only.
+    We compare \lumigauss against several NeRF-based baselines\footnote{We
+    include the concurrent NeuSky~\cite{gardner2023neusky} which has been
+    published officially after the WACV deadline.
+    } and TensoRF baseline.
+    We provide the implementation details in~\supplementary{}.
+
+  \subsection{Scene reconstruction and relightning}
+
+    We present the qualitative results
+    in~\cref{tab:lumigauss-results_osr_eval} and quantitative
+    in~\cref{fig:lumigauss-qual_albedo_norm_relight,fig:lumigauss-qualitative_ours}.
+    As Yu~\etal~\cite{yu2020self} evaluates their model on downsampled images,
+    we show the metric values on downsampled (\textit{d/s}), and upsampled
+    (\textit{u/s}) to identify the quality differences.
+    As we can see, \lumigauss performs better or on par with the baselines.
+    NeuSky~\cite{gardner2023neusky} is a concurrent work which models the
+    environment maps and the sky using a prior, pretrained model.
+
+    \input{fig/\lumigaussdirname/rotate-light}
+    % \subsection{Relightning capabilities}
+    As our backbone, 2DGS~\cite{huang20242d} incorporates priors to produce
+    sharp edges and smooth surfaces, our model inherently performs better as
+    expressed by SSIM.
+    Please also see the zoom-ins
+    in~\cref{fig:lumigauss-qual_albedo_norm_relight}.
+    Those shape reconstruction qualities allow us to relight the scene with
+    high fidelity.
+    We demonstrate that in~\cref{fig:lumigauss-rotate_light} where one can see
+    that our method effectively relights landmarks under various lighting
+    conditions.
+    We finally visualize the rendered shadows produced thanks to our proposed
+    physical constraints at training time.
+    Since \lumigauss does not predict shadows explicitly, we visualize them as grayscaled difference of output irradiances between the \textit{unshadowed} (\cref{eq:lumigauss-unshadowed-radiance}) and \textit{shadowed} (\cref{eq:lumigauss-shadowed-radiance}) to approximate shadow effects:
+    \begin{equation}
+      \max(\mathfrak{g}(\radiance_k \oslash \albedo_k - \shadowedradiance_k \oslash \albedo_k), 0),
+    \end{equation}
+    where $\oslash$ is an element-wise division and $\mathfrak{g}(\cdot)$ converts from the RGB space to the grayscale space.
+
+    We also display the illumination in~\cref{fig:lumigauss-rotate_light} to
+    differentiate between shadows and dark illumination from the environment
+    map.
+    Additional detailed results on scene reconstruction, relightning and more
+    comparisons to other works are included in~\supplementary{}.
+
+  \subsection{Ablations}
+
+    We prioritize enhancing relighting capabilities over accurate appearance
+    recreation during the optimization process, contrasting with recent
+    Gaussian splatting methods that target novel view synthesis based on
+    unconstrained photo
+    collections~\cite{xu2024wildgs,dahmani2024swagsplattingwildimages,zhang2024gaussian}.
+    Consequently, our ablation study primarily focuses on the degradation of
+    relighting capabilities when removing any of the proposed components.
+    We compare shadowed and unshadowed modeling and investigate the
+    contributions of each loss term.
+    We present the results in \cref{tab:lumigauss-results_osr_eval}.
+    % We provide additional results in~\supplementary{}.
+
+    Gaussians can optimize to shadowed surfaces and represent shadows as
+    normals and albedo colors (effect known as albedo/illumination ambiguity).
+    Therefore, gains from separating shadows from lightning are not visible in
+    metrics computed on a limited data subset.
+    We noticed that adding a shadowed version can help restore proper albedo
+    and normal vectors of surfaces that during the training were distorted or
+    had low brightness (see \cref{fig:lumigauss-shadowed_fix_normals}).
+
+  \subsection{Performance comparison}
+    We compare \lumigauss' efficiency with two NeRF baselines.
+    Our method achieves plausible relightning results while being orders of
+    magnitudes faster both in terms of training and inference as shown in
+    \cref{tab:lumigauss-performance}.
+    % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \subsection{Limitations}
+    We identify the following limitations of our approach.
+    Notably, surface albedo and normals may attempt to simulate shadows in
+    scenarios with hard and frequent shadows.
+    This can pose challenges for shadow training, especially when shadows are
+    visible in several training images, potentially hindering the accurate
+    representation of surface normals.
+    Incorporating priors for environment light and shadowing could further
+    enhance disentanglement and light transport modeling as presented in the
+    concurrent NeuSky~\cite{gardner2023neusky}.
+    While we assume diffuse albedo, valid for most outdoor cases, shadows can
+    appear unnaturally on reflective surfaces such as windows.
+    Separate background optimization could enhance the synthesis of scenes
+    with extensive sky areas.
+    Finally, our shadow modeling baked-in the spherical harmonics
+    representations is non trivial to extend to dynamic applications, such as
+    autonomous driving.

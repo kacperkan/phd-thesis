@@ -1,0 +1,59 @@
+
+\begin{table}[t]
+  \centering
+  \caption{\textbf{Quantitative results --}
+    Comparison between our \lumigauss and selected baselines for two
+    different.
+    We report the reconstruction quality regarding PSNR, MSE, MAE, SSIM on
+    full and 4x downsampled image resolutions.
+    \textit{u/s} denotes using upsampled, \textit{d/s} downsampled images for the evaluation, and the last delimited area presents the ablation study on downsampled data.
+    We denote NeRF-OSR \cite{rudnev2022nerfosr} results reproduced by
+    FEGR~\cite{wang2023fegr} with *.
+    We use $\dagger$ to further annotate our approach where we remove loss
+    terms
+    $\loss{\removespace{\shadowed}$\leftrightarrow$\removespace{\unshadowed}}$,
+    $\loss{rec}(\unshadowed)$ from the second training stage.
+    In $\ddagger$, we omit the first training stage.
+    Compared to the baselines, \lumigauss achieves reconstructions of high
+    fidelity.
+    It reliably produces smooth surfaces and sharp edges, reflected in its
+    high SSIM values.
+    Additionally, our proposed components either enhance reconstruction or
+    preserve physical accuracy without negatively impacting the results.
+    Please note, that NeuSky~\cite{gardner2023neusky} is a concurrent work,
+    published prior to the WACV's deadline at ECCV 2024.
+  }
+
+  \setlength{\tabcolsep}{4pt}
+  \resizebox{\linewidth}{!}{
+    \begin{tabular}{lcccccccccccc}
+      \toprule
+      \multirow{2}[2]{*}{Method}                    & \multicolumn{4}{c}{Landwehrplatz} & \multicolumn{4}{c}{Ludwigskirche} & \multicolumn{4}{c}{Staatstheater}                                                                                                                                                                       \\
+      \cmidrule(lr){2-5} \cmidrule(lr){6-9} \cmidrule(lr){10-13}
+                                                    & PSNR $\uparrow$                   & MSE $\downarrow$                  & MAE $\downarrow$                  & SSIM $\uparrow$ & PSNR $\uparrow$ & MSE $\downarrow$ & MAE $\downarrow$ & SSIM $\uparrow$ & PSNR $\uparrow$ & MSE $\downarrow$ & MAE $\downarrow$ & SSIM $\uparrow$ \\
+      \midrule
+      Yu et al. $_{u/s}$\cite{yu2020self}           & 15.17                             & 0.033                             & 0.133                             & 0.376           & 17.87           & 0.017            & 0.097            & 0.378           & 15.28           & 0.032            & 0.138            & 0.385           \\
+      Philip et al. \cite{philip2019multi}          & 12.28                             & 0.062                             & 0.179                             & 0.319           & 16.63           & 0.023            & 0.113            & 0.367           & 12.34           & 0.065            & 0.200            & 0.272           \\
+      NeRF-OSR \cite{rudnev2022nerfosr}             & 16.65                             & 0.024                             & 0.114                             & 0.501           & 18.72           & 0.014            & 0.090            & 0.468           & 15.43           & 0.029            & 0.133            & 0.517           \\
+      NeRF-OSR* \cite{rudnev2022nerfosr}            & 15.66                             & 0.029                             & -                                 & -               & 19.34           & 0.012            & -                & -               & 16.35           & 0.027            & -                & -               \\
+      SR-TensoRF \cite{chang2024srtensorf}          & 16.74                             & 0.024                             & 0.093                             & 0.653           & 17.30           & 0.021            & 0.096            & 0.542           & 15.43           & 0.030            & 0.111            & 0.632           \\
+      FEGR \cite{wang2023fegr}                      & 17.57                             & 0.018                             & -                                 & -               & 21.53           & 0.007            & -                & -               & 17.00           & 0.023            & -                & -               \\
+      SOL-NeRF \cite{solnerf}                       & 17.58                             & 0.028                             & -                                 & 0.618           & 21.23           & 0.008            & -                & 0.749           & 18.18           & 0.019            & -                & 0.680           \\
+      NeuSky \cite{gardner2023neusky}               & 18.31                             & 0.016                             & -                                 & -               & 22.50           & 0.005            & -                & -               & 16.66           & 0.023            & -                & -               \\
+      \textbf{Ours}                                 & 18.01                             & 0.017                             & 0.096                             & 0.778           & 19.59           & 0.012            & 0.085            & 0.700           & 17.02           & 0.021            & 0.107            & 0.729           \\
+      \midrule
+      Yu et al. \cite{yu2020self}                   & 15.84                             & 0.028                             & 0.123                             & 0.392           & 18.71           & 0.014            & 0.088            & 0.400           & 15.43           & 0.031            & 0.136            & 0.363           \\
+      Philip et al. $_{d/s}$ \cite{philip2019multi} & 12.85                             & 0.054                             & 0.169                             & 0.164           & 17.37           & 0.019            & 0.105            & 0.429           & 11.85           & 0.070            & 0.210            & 0.184           \\
+      NeRF-OSR $_{d/s}$ \cite{rudnev2022nerfosr}    & 17.38                             & 0.021                             & 0.106                             & 0.576           & 19.86           & 0.011            & 0.080            & 0.626           & 15.83           & 0.026            & 0.128            & 0.556           \\
+      \textbf{Ours}~$_{d/s}$                        & 18.40                             & 0.016                             & 0.094                             & 0.746           & 20.13           & 0.011            & 0.080            & 0.727           & 17.24           & 0.020            & 0.105            & 0.715           \\
+      \midrule
+      $\text{\textbf{Ours}}~\dagger$                & 15.03                             & 0.034                             & 0.139                             & 0.58            & 19.34           & 0.015            & 0.094            & 0.693           & 16.09           & 0.028            & 0.124            & 0.665           \\
+      $\text{\textbf{Ours}}~\ddagger$               & 17.59                             & 0.019                             & 0.100                             & 0.733           & 19.05           & 0.016            & 0.097            & 0.680           & 16.83           & 0.022            & 0.110            & 0.694           \\
+      $\text{\textbf{Ours}}\setminus\loss{0-1}$     & 18.30                             & 0.016                             & 0.095                             & 0.744           & 20.15           & 0.010            & 0.080            & 0.734           & 17.25           & 0.020            & 0.105            & 0.712           \\
+      $\text{\textbf{Ours}}\setminus\loss{+}$       & 17.35                             & 0.020                             & 0.104                             & 0.728           & 20.17           & 0.012            & 0.081            & 0.729           & 17.10           & 0.020            & 0.106            & 0.703           \\
+
+      \bottomrule
+    \end{tabular}
+  }
+  \label{tab:lumigauss-results_osr_eval}
+\end{table}

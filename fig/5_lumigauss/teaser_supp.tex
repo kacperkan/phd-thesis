@@ -1,0 +1,52 @@
+\def\firstrowimageheight{724px}
+\def\secondrowimagewidth{536px}
+\def\imageheight{2cm}
+\newcommand{\teasermanual}{
+  \begin{subfigure}[b]{\linewidth}
+    \centering
+    \resizebox{\linewidth}{!}{
+
+      \includegraphics[width=\linewidth]{images/wild2d-ablation.pdf}
+      \label{fig:lumigauss-ablation_img}
+
+    }
+  \end{subfigure}
+}
+\newcommand{\teaserfigure}{
+  \captionsetup{type=figure}
+
+  \fboxsep=0pt % padding thickness
+  \fboxrule=0.4pt % border thickness
+
+  % \begin{subfigure}[b]{\linewidth} \centering
+  % \includegraphics[width=\linewidth]{images/wild2d-Teaser_v3.pdf}
+  % \end{subfigure}
+  \vspace{-1em}
+  \teasermanual
+  \vspace{-1.6em}
+
+  \setcounter{figure}{0} % Not sure why this is necessary.
+  \captionof{figure}{
+    {
+        \textbf{Ablation study for relightning with external environment map.}
+        The full model results in the clearest render.
+        The strongest quality drop is observed when components restricting
+        $\transferfun_k$ are omitted.
+        % \textbf{Teaser} -- \ours{} reconstructs environment maps and object's
+        % surface from \textit{in-the-wild} images. Our model decouples the
+        % scene color and its normals (\textit{second and fourth column in the
+        % top row}). At inference, it can synthesize novel views
+        % (\textit{bottom row}) and realistic lighting (\textit{first and third
+        % columns in the bottom}) with high-fidelity shadows (\textit{second
+        % and fourth columns in the bottom}).
+      }
+    % \ours~reconstruction and relightning. Top row: Original image,
+    % reconstruction, normals. Bottom rows: New viewpoints relighted with
+    % external environment map from [x-envmap paper]. Unshadowed relightning,
+    % irradiance difference, shadowed relightning. \asia{we have bigger teaser
+    % with illuminance and unshadwoed version, but it was too much info to
+    % process. Unshadowed version moved below}
+  }
+  \vspace{1em}
+  \label{fig:teaser}
+}

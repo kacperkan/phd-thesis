@@ -214,6 +214,7 @@
         natbib=true,
         maxbibnames=99,
         backrefstyle=three,
+        backend=biber,
     ]{biblatex}
 \DeclareNameAlias{default}{family-given} % nazwisko na początku
 \newcommand{\applybibliography}{

@@ -1,0 +1,91 @@
+
+\section{Related Works}
+  \label{sec:lumigauss-related_works}
+
+  \paragraph{Relighting}
+    Relighting outdoor scenes is a key challenge in computer graphics and
+    VR/AR.
+    Early works \cite{lalonde2009webcam, troccoli2005relighting,
+    haber2009relighting, xing2013lighting, sunkavalli2007factored,
+    duchene2015multi, barron2014shape} used training-free methods like
+    statistical inference.
+    Deep learning approaches, such as Yu~\etal~\cite{yu2020self} with a neural
+    renderer, and Philip~\etal~\cite{philip2019multi} with proxy geometry,
+    face limitations in reconstruction quality and viewpoint flexibility.
+
+    NeRF-based methods~\cite{mildenhall2021nerf} enabled simultaneous
+    viewpoint and lighting changes.
+    However, methods like~\cite{zhang2021nerfactor, zeng2023nrhints,
+    srinivasan2021nerv} handle a single illumination only or specific
+    illumination setup during.
+    Others are object-specific, such as for faces \cite{sun2021nelf}.
+    Many unconstrained photo collection methods focus on appearance, not
+    lighting, complicating integration with other graphical
+    components~\cite{martin2021nerfw, chen2022hallucinated, yang2023crnerf,
+    li2023msnerf}.
+
+    NeRF-based approaches, such as \cite{pun2023lightsim} and \cite{urbanir},
+    focus on inverse rendering for outdoor scenes, particularly in
+    applications like autonomous driving.
+    However, these methods are designed for single video sequences rather than
+    unstructured photo collections.
+    Rudnev~\etal~\cite{rudnev2022nerfosr} proposed a method for relighting
+    landmarks from unconstrained photo collections, using NeRF with external
+    lighting extraction.
+    Similarly, \cite{li2022neulighting} compresses the per-image illumination
+    into a disentangled latent vector.
+    Wang~\etal~\cite{wang2023fegr} target static scenes and works with
+    unconstrained photo collections but rely on costly mesh extraction.
+    Some methods incorporate additional priors, environmental assumptions, or
+    regularizations~\cite{solnerf, yang2023complementary}.
+    Gardner~\etal~\cite{gardner2023neusky} leverage externally trained models
+    to provide environmental lighting priors.
+    Despite their potential, these methods cannot be used in real-time
+    applications due to NeRF’s slow training and rendering times.
+
+    In contrast, the TensoRF-based approach by
+    Chang~\etal~\cite{chang2024srtensorf} aligns time information and sun
+    direction with images for relighting, eliminating the need for external
+    lighting models.
+    While this method is faster than NeRF, it still lacks seamless integration
+    with graphics engines and is unsuitable for synthetic light integration.
+
+    Notable Gaussian Splatting works designed for unconstrained photo
+    collections \cite{kerbl20233d, dahmani2024swagsplattingwildimages,
+    zhang2024gaussian, xu2024wildgs, wang2024wegs} focused on appearance
+    editing, not seamless graphical component integration.
+    Relightable Gaussian approaches, like \cite{gao2023relightable,
+    liang2024gs, shi2023gir}, tackle material decomposition but are not
+    adapted to handle varying lighting conditions of \textit{in-the-wild}
+    training setup.
+    Radiance transfer properties, employed in a similar way to \lumigauss, are
+    utilized in \cite{zhang2024prtgaussianefficientrelightingusing,
+    saito2024relightablecodecavatar}.
+    However, these methods rely on a burdensome dataset setup, restricting
+    their applicability to specific use cases.
+
+  \paragraph{Gaussian Splatting}
+    Kerbl~\etal~\cite{kerbl20233d} introduced a notion of using learnable 3D
+    Gaussian primitives from point clouds.
+    Those Gaussians are parametrized with 3D covariance matrix $\Sigma_k$ and their location $\translation_k$:
+    \begin{equation}
+      \gaussians(\translation) = \exp(\frac{1}{2}(\translation - \translation_k)^\top\Sigma_k^{-1}(\translation - \translation_k)),
+    \end{equation}
+    where the covariance matrix is factorized into a scaling diagonal matrix $\scaling_k$ and a rotation matrix $\rotation_k$ as $\Sigma_k{=}\rotation_k\scaling_k\scaling_k^\top\rotation_k^\top$. An image is rendered with a splatting operator $\splatting(\cdot)$ which projects Gaussians into the camera coordinates with a world-to-camera matrix and then to image plane with a local affine transformation~\cite{zwicker2001ewa}:
+    \begin{equation}
+      \label{eq:lumigauss-splatting-op}
+      \splatting(\camera_c\;|\;\gaussians) = \sum_{k=1}^K\radiance_k\opacity_k\gaussians_k\prod^{k-1}_{j=1}(1 - \opacity_j \gaussians_k).
+    \end{equation}
+    The operator produces an RGB image, given a calibrated camera matrix
+    $\camera_c$ and their additional Gaussians' attributes: their colors
+    $\radiance$ and opacities $\opacity$.
+    Attributes are learned using a stochastic gradient descent.
+
+    Huan~\etal~\cite{huang20242d} argues that 3DGS although producing
+    high-quality images, the implicit surface representation is noisy,
+    limiting its applicability in relighting scenarios.
+    They propose using 2D Gaussians instead to create smooth, coherent meshes
+    thanks to their exact 2D surfel projection.
+    We leverage that representation in our \lumigauss---a relightable model
+    that decouples albedo, environment light and shadows thanks to our
+    proposed physical constraints.

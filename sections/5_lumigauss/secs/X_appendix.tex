@@ -1,0 +1,113 @@
+{
+\vspace{2.0em}
+\centering
+\Large
+\textbf{\lumigauss: Relightable Gaussian Splatting in the Wild} \\
+\vspace{0.5em}
+ Supplementary Material \\ \vspace{1.0em} }
+
+ \section{Dataset Processing}
+
+\textbf{Occluders.
+  }
+  To exclude occluders from training images we use masks provided with OSR
+  dataset~\cite{rudnev2022nerfosr}.
+
+  \textbf{Test set.}
+  We test our approach on 5 viewpoints for each scene, as it was originally
+  proposed in \cite{rudnev2022nerfosr}.
+  For testing, we use test masks provided by \cite{rudnev2022nerfosr} and we
+  stricly follow their evaluation protocol.
+  For SSIM, we report the average value over the segmentation mask, utilizing
+  the scikit-image implementation with a window size of 5 and eroding the
+  segmentation mask by the same window size to exclude the influence of pixels
+  outside the mask on the metric value.
+
+  \textbf{Testing with ground truth environment map.}
+  The authors of \cite{gardner2023neusky} made an effort to recover steps for
+  environment map preprocessing and alignment.
+  The preprocessing step is available in their repository, accessible at:
+  \url{https://github.com/JADGardner/neusky/blob/main/notebooks/nerfosr_envmaps.ipynb}.
+  The detailed discussion on SOL-NeRF \cite{solnerf} approach to environment
+  map alignment is included in the NeuSky main paper \cite{gardner2023neusky}
+  and also confirmed with SOL-NeRF authors.
+
+\section{Implementation details}
+
+  The appearance embedding vector is set to a size of 24 dimensions.
+  For predicting the environment map, we use MLP with 3 fully-connected layers
+  of size 64.
+  We trained all models for 40000 iterations, the first training stage is set
+  to 20000 iterations.
+  The learning rate for MLP and embedding is set to 0.002, which after first
+  training stage is reduced to 0.0002.
+  We train gaussian spherical harmonics with a learning rate of 0.002.
+  We set the loss function weights as follows: for
+  $\lumigausslossweight{0-1}=0.001$, for $\lumigausslossweight{+}=0.05$, for
+  $\lumigausslossweight{\removespace{\shadowed}$\leftrightarrow$\removespace{\unshadowed}}
+  \in \{1.0, 10.0\}$, for
+  $\lumigausslossweight{\removespace{\shadowed}}=10.0$.
+  In the second training stage we set
+  $\lumigausslossweight{\removespace{\shadowed}}=0.001$.
+
+  We adhere to the original Gaussian splatting densification and pruning
+  protocols, with a densification interval of 500 iterations and an opacity
+  reset interval of 3000 iterations.
+  We apply regularizations to align Gaussians with surfaces, as originally
+  described in \cite{huang20242d}.
+  Additionally, we utilize the dual visibility concept proposed in
+  \cite{huang20242d}.
+  This ensures that the Gaussians are always correctly oriented towards the
+  camera.
+  Dual visibility effectively produces consistent world normals, with visible
+  normals being consistent and non-visible ones contributing minimally to the
+  rendering.
+  Regularization of Spherical Harmonics $\mathbf{d}_{k}$ is dependent on
+  gaussian normals.
+  Since normals are rotated to always face the camera, to maintain alignment
+  between each Gaussian's normal and its associated \( \mathbf{d}_k \), we
+  also rotate \( \mathbf{d}_k \) accordingly.
+
+  \input{fig/\lumigaussdirname/qual_gt_shadow}
+\section{Qualitative comparison - additional results}
+  In~\cref{fig:lumigauss-qual_gt_shadows} we show the qualitative comparison
+  of our method, NeRF-OSR, and SR-TensoRF.
+  We show the landmark relit with ground truth envoronment map for NeRF-OSR
+  and \lumigauss.
+  SR-TensoRF reconstructs ground truth using only daytime (timestamp).
+
+  In~\cref{fig:lumigauss-qualitative_appendix}, we show the qualitative
+  comparison of our method, NeRF-OSR, and SR-TensoRF.
+  We use the \textit{default synthetic} environment map provided by
+  \cite{rudnev2022nerfosr}.
+  This environment map was used for visualisation purposes in
+  \cite{chang2024srtensorf}.
+  We use it to ensure a fair comparison and consistency with results from
+  concurrent works.
+  We also present albedo and normals extracted from the reconstructed scene.
+  Please note that our model produces much cleaner results.
+  Compared to the baselines, it reconstructs sharp features in small elements
+  of the buildings, which is also reflected in the quantitative
+  results~\cref{tab:lumigauss-results_osr_eval}.
+  \lumigauss also gracefully smooths out the elements of scenes that are variable across the images, such as trees and clouds.
+  On the other hand, NeRF-OSR and SR-TensoRF produce artifacts that negatively
+  impact the output reconstructions.
+
+  In \cref{fig:lumigauss-qual_normal_albedo_appendix} we present additional
+  comparison with concurrent works.
+  We focus on normal and albedo quality.
+  \input{fig/\lumigaussdirname/qual_normal_albedo_appendix}
+
+  In \cref{fig:lumigauss-qual_more_viewpoints_supp_img} we present additional
+  results of novel view synthesis and comparison with concurrent works.
+  Similarly to NeRF-OSR, we relight our scenes with the \textbf{default
+  synthetic} map provided by NeRF-OSR for visualization purposes.
+  This environment map does not correspond to GT images.
+
+\section{Ablation study -- additional results }
+  In \cref{fig:lumigauss-ablation_img} we present renders from training
+  without selected regularization terms.
+
+  \input{fig/\lumigaussdirname/qualitative_appendix}
+  \input{fig/\lumigaussdirname/ablation}
+  \input{fig/\lumigaussdirname/qual_more_viewpoints_appendix}

@@ -1,0 +1,102 @@
+\definecolor{fixedop}{HTML}{6E8DBC}
+\definecolor{learnableop}{HTML}{82B26C}
+\newcommand{\myscheme}{
+  {
+      \tikzset{external/export=false}
+      \tikzsetnextfilename{scheme}
+      \centering
+      \resizebox{\linewidth}{!}{
+        \begin{tikzpicture}[
+            >=stealth',
+            shorten >= 2pt,
+            shorten <= 2pt,
+            thick,
+            align=center,
+            fixed/.style={
+                rectangle,
+                draw=fixedop,
+                thick,
+                line width=0.5mm,
+                rounded corners=4pt
+              },
+            learnable/.style={
+                rectangle,
+                draw=learnableop,
+                thick,
+                line width=0.5mm,
+                rounded corners=4pt
+              },
+          ]
+
+          \node (inputimages) {\includegraphics[width=4cm]{\lumigaussdirname/folder_for_kacper/scheme/input-images.pdf}};
+          \node[fixed, above=0.5cm of inputimages.north, text width=4cm] (cameras) {calibrated\\cameras from SfM\\$\{\camera_c\}$};
+          \node[right=1cm of cameras.east]  (rawgausses) {\includegraphics[trim={2bp 0 0 0}, clip]{\lumigaussdirname/folder_for_kacper/scheme/raw-gausses.pdf}};
+          \node[learnable,above right=1cm and 1cm of rawgausses.east, minimum width=2cm] (normal) {normal $\normal_k$};
+          \node[learnable,above right=0cm and 1cm of rawgausses.east, minimum width=2cm] (albedo) {albedo $\albedo_k$};
+          \node[learnable,above right=-1cm and 1cm of rawgausses.east, minimum width=2cm] (sh) {SH $\transferfunsh_k$};
+
+          \node[fixed, above right=-1cm and 4cm of rawgausses.east, minimum width=3cm, minimum height=1cm] (shadowed) {shadowed\\(\cref{eq:lumigauss-shadowed-radiance})};
+          \node[fixed, above right=0.5cm and 4cm of rawgausses.east, minimum width=3cm, minimum height=1cm] (unshadowed) {unshadowed\\(\cref{eq:lumigauss-unshadowed-radiance})};
+
+          \node[right=8cm of rawgausses.east] (coloredgausses) {\includegraphics{\lumigaussdirname/folder_for_kacper/scheme/colored-gausses.pdf}};
+          \node[below=0.5cm of coloredgausses.south] (rendered) {\includegraphics{\lumigaussdirname/folder_for_kacper/scheme/rendered-image.pdf}};
+
+          \node[below=0em of inputimages.south, text width=5cm, anchor=north] (unconstrained) {Unconstrained photo collection\\$\{\image_c\}$};
+
+          \node[learnable, text width=4cm, right=1cm of inputimages] (envmap) {Environment map embedding \\(\cref{eq:lumigauss-lightsh})};
+          \node[right=2cm of envmap.east] (shball) {\includegraphics[trim={2pt 2pt 2pt 2pt}, clip]{\lumigaussdirname/folder_for_kacper/scheme/sh.pdf}};
+
+          \node[below=-0.5em of rendered.south, text width=4cm,anchor=north] {Render image\\with novel view and light};
+
+          \node[fixed, right=2cm of unconstrained.east, minimum height=0.7cm, minimum width=4cm] (fixedopnode) {fixed operation};
+          \node[learnable, right=0cm of fixedopnode.east, minimum height=0.7cm, minimum width=4cm] (learnableopnode) {learnable operation};
+
+          \draw [->] (inputimages.north) -- (cameras.south);
+          % \draw [->] (unconstrained.north) -- (inputimages.south);
+          \draw [->] (cameras.east) -- (rawgausses.west);
+          \draw [->] (coloredgausses.south) to  node[right] {$\splatting(\cdot)$}  (rendered.north);
+          \draw [->, rounded corners=2pt] (rawgausses.east) |- (normal.west);
+          \draw [->, rounded corners=2pt] (rawgausses.east) |- (albedo.west);
+          \draw [->, rounded corners=2pt] (rawgausses.east) |- (sh.west);
+
+          \draw [->, rounded corners=2pt] (normal.east) -- ($(normal.east)+(12pt, 0)$) |-  (unshadowed.west);
+          \draw [->, rounded corners=2pt] (albedo.east) -- ($(albedo.east)+(12pt, 0)$) |- (unshadowed.west);
+          \draw [->, rounded corners=2pt] (albedo.east) --  ($(albedo.east)+(12pt, 0)$) |- (shadowed.west);
+          \draw [->, rounded corners=2pt] (sh.east) --  ($(sh.east)+(12pt, 0)$) |-  (shadowed.west);
+
+          \draw [->, rounded corners=2pt] (unshadowed.east) -- ($(unshadowed.east)+(12pt, 0)$) |- (coloredgausses.west);
+          \draw [->, rounded corners=2pt] (shadowed.east)-- ($(shadowed.east)+(12pt, 0)$) |- (coloredgausses.west);
+
+          \draw [->] (inputimages.east) -> (envmap.west);
+          \draw [->] (envmap.east) -> (shball.west);
+
+          \draw [->, rounded corners=2pt] (shball.north) |- ([yshift=0.2cm]shadowed.south west);
+          \draw [->, rounded corners=2pt] (shball.north) |- ([yshift=0.2cm]unshadowed.south west);
+
+          \node[above=-1em of rawgausses.north] {{Raw 2D Gaussians} \cite{zhang2024gaussian}};
+          \node[above=-1em of coloredgausses.north] {{Relighted 2D Gaussians} (\textbf{Ours})};
+        \end{tikzpicture}
+      }
+    }
+}
+
+\begin{figure*}[!t]
+  \centering
+  \myscheme
+  \vspace{-2em}
+  \caption{
+    \textbf{Pipeline --}
+    \lumigauss learns the relightable 2D Gaussian~\cite{zhang2024gaussian} representation from unconstrained photo collection with variable camera parameters and lighting conditions.
+    Each of $k$ Gaussians holds: a normal $\normal_k$, albedo $\albedo_k$, and
+    learnable transfer function $\transferfunsh_k$.
+    Our contributed method composes the Gaussians in two
+    modes---\textit{shadowed} and \textit{unshadowed}.
+    The \textit{shadowed} model reconstructs additional shadows
+    (see~\cref{fig:lumigauss-teaser}) on top of the unshadowed model thanks to
+    our proposed use of a radiance transfer function.
+    The Gaussians are splatted~\cite{kerbl20233d,zhang2024gaussian} to render
+    the output image in a novel view and light.
+  }
+  \label{fig:lumigauss-scheme}
+  \vspace{-1.1em}
+\end{figure*}

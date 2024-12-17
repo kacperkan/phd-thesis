@@ -23,7 +23,20 @@
 \everymath=\expandafter{\the\everymath\displaystyle}
 \pgfplotsset{compat=1.18}
 
-\usetikzlibrary{calendar,fpu,matrix, positioning,arrows,arrows.meta,calc,decorations.pathreplacing,decorations.text,spy}
+\usetikzlibrary{
+  calendar,
+  fpu,
+  matrix,
+  positioning,
+  arrows,
+  arrows.meta,
+  calc,
+  decorations.pathreplacing,
+  decorations.text,
+  spy,
+  external,
+}
+
 \tikzset{
   % style for inserting images as nodes
   img/.style={
@@ -33,6 +46,8 @@
       rectangle,
       align=center} % only for debugging..
 }
+\input{tikz_addons.tex}
+\tikzexternalize[shell escape=-enable-write18]
 
 \newcommand{\KK}[1]{\textbf{\color{teal}[KK: #1]}}
 \newcommand{\kk}[1]{{\color{teal}#1}}
@@ -61,8 +76,6 @@
 \definecolor{firstbestcolor}{HTML}{169EE9}
 \newcommand{\tablefirstbest}[0]{\cellcolor{firstbestcolor}}
 \newcommand{\tablesecondbest}[0]{\cellcolor{secondbestcolor}}
-
-\input{tikz_addons.tex}
 
 \newcommand{\real}{\mathbb{R}}
 \newcommand{\latentdimension}{D}
@@ -100,7 +113,7 @@
 
 % % % basic math symbols %
 \usepackage{dsfont}
-\newcommand{\loss}[1]{\ell_\text{#1}}
+\newcommand{\loss}[1]{\ell_{\text{#1}}}
 \newcommand{\calL}{\mathcal{L}}
 \newcommand{\calN}{\mathcal{N}}
 \newcommand{\calF}{\mathcal{F}}
@@ -298,3 +311,31 @@
 \newcommand{\volume}{\mathcal{V}}
 
 \newcommand{\teasernobox}{}
+
+% ============= LumiGauss =========== %
+
+\newcommand{\irradiance}{\bar{\mathbf{c}}}
+\newcommand{\shadowedradiance}{\tilde{\radiance}}
+\newcommand{\albedo}{\bm{\rho}}
+\newcommand{\gaussians}{\mathcal{G}}
+\newcommand{\lumigausslatents}{\mathcal{E}}
+\newcommand{\splatting}{\mathcal{S}}
+\newcommand{\normal}{\mathbf{n}}
+\newcommand{\embedding}{\mathbf{e}}
+\newcommand{\sceneindex}{c}
+\newcommand{\rotation}{\mathbf{R}}
+\newcommand{\translation}{\mathbf{t}}
+\newcommand{\scaling}{\mathbf{s}}
+\newcommand{\opacity}{o}
+\newcommand{\light}{L}
+\newcommand{\lightsh}{\mathbf{l}}
+\newcommand{\transferfun}{D}
+\newcommand{\transferfunsh}{\mathbf{d}}
+\newcommand{\params}{\bm{\theta}}
+\newcommand{\camera}{\mathcal{C}}
+\newcommand{\direction}{\bm{\omega}}
+\newcommand{\nshcoeffs}{n}
+\newcommand{\inputimage}[1]{}
+\newcommand{\inputimageshadows}[1]{}
+
+\newcommand{\lumigausslossweight}[1]{\lambda_\text{#1}}

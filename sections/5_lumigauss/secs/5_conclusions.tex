@@ -1,0 +1,14 @@
+\section{Conclusions}
+  \label{sec:lumigauss-conclusions}
+
+  We present \lumigauss---the method capable of decoupling environment
+  lighting and albedo of objects from images \textit{in-the-wild}.
+  To this end, we apply 2DGS~\cite{huang20242d} to reconstruct the object's
+  surface accurately and then use our proposed training components that
+  correctly disentangle light properties from the rendered colors.
+  As we show in the experiments, our approach achieves better reconstruction
+  results than the baselines.
+  We also present that one of our contributions---modeling shadows via
+  leveraging Spherical Harmonics properties---provides shadows of high
+  fidelity that react appropriately to changing environment light.
+  \lumigauss is a novel approach in the direction of inverting the rendering process from images \textit{in-the-wild}, reconstructing high-quality scene properties without sacrificing the fidelity of the output.
