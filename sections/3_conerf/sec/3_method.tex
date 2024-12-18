@@ -38,7 +38,7 @@
     The primary loss guiding the training of the NeRF model is the
     reconstruction loss, which simply aims to reconstruct observations
     $\images$.
-    As in other neural radiance field models~\cite{mildenhall2020nerf, martin2021nerf, park2020deformable, park2021hypernerf} we simply minimize the L2 photometric reconstruction error with respect to ground truth images:
+    As in other neural radiance field models~\cite{mildenhall2020nerf, martin2021nerfw, park2020deformable, park2021hypernerf} we simply minimize the L2 photometric reconstruction error with respect to ground truth images:
     \begin{equation}
       \loss{recon}(\cdot) = \sum_\iImage \expect_{\ray \sim \image_\iImage} \left[ \left\|\bC(\ray \given \latent_\iImage, \pars)-\bC^\text{gt}(\ray) \right\|_2^2 \right]
       .

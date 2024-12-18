@@ -237,7 +237,7 @@
       \loss{rgb}                             & = \lumigausslossweight{rec}(\shadowed)\loss{rec}(\shadowed) + \lumigausslossweight{rec}(\unshadowed)\loss{rec}(\unshadowed), \\
       \loss{rec}(\{\shadowed, \unshadowed\}) & = \loss{1}(\{\shadowed, \unshadowed\}) + \lumigausslossweight{D-SSIM}\loss{D-SSIM}(\{\shadowed, \unshadowed\}),
     \end{align}
-    where the $\loss{1}$ is the $L_1$ loss comparing either the image rendered from our shadowed or unshadowed models and $\loss{D-SSIM}$ is a differentiable D-SSIM~\cite{ssim} further improving the quality.
+    where the $\loss{1}$ is the $L_1$ loss comparing either the image rendered from our shadowed or unshadowed models and $\loss{D-SSIM}$ is a differentiable D-SSIM~\cite{wang2004image} further improving the quality.
     We use $\lumigausslossweight{D-SSIM}{=}0.2$ throughout all the
     experiments.
     Our proposed $\loss{rec}(\unshadowed)$ resembles a pretraining stage.

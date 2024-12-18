@@ -32,177 +32,10 @@
 \newcommand{\imagefourindex}[2]{
   \includegraphics[height=\imageheight, trim={0.7cm 1.2cm 0 0}, clip]{assets/\blendfieldsdirname/qualitative/main/#1_7889059_rom_#2}
 }
-\newcommand{\versionone}{
-  \begin{tikzpicture}[
-      >=stealth',
-      overlay/.style={
-          anchor=south west,
-          draw=black,
-          rectangle,
-          line width=0.8pt,
-          outer sep=0,
-          inner sep=0,
-        },
-    ]
-    \matrix[
-      matrix of nodes,
-      column sep=0pt,
-      row sep=0pt,
-      ampersand replacement=\&,
-      inner sep=0,
-      outer sep=0,
-      spy using outlines={circle, magnification=3, size=1cm, connect spies}
-    ] (main) {
-      \imageone{gt} \&
-      \imageone{nerf} \&
-      \imageone{dnerf} \&
-      \imageone{nerfies} \&
-      \imageone{hypernerf_static} \&
-      \imageone{hypernerf_dynamic} \&
-      \imageone{voltemorph_static} \&
-      \imageone{voltemorph} \&
-      \imageone{blendvolumes_aux}   \\
-      \imagetwo{gt} \&
-      \imagetwo{nerf} \&
-      \imagetwo{dnerf} \&
-      \imagetwo{nerfies} \&
-      \imagetwo{hypernerf_static} \&
-      \imagetwo{hypernerf_dynamic} \&
-      \imagetwo{voltemorph_static} \&
-      \imagetwo{voltemorph} \&
-      \imagetwo{blendvolumes_aux}   \\
-      \imagethree{gt} \&
-      \imagethree{nerf} \&
-      \imagethree{dnerf} \&
-      \imagethree{nerfies} \&
-      \imagethree{hypernerf_static} \&
-      \imagethree{hypernerf_dynamic} \&
-      \imagethree{voltemorph_static} \&
-      \imagethree{voltemorph} \&
-      \imagethree{blendvolumes_aux} \\
-      \imagefour{gt} \&
-      \imagefour{nerf} \&
-      \imagefour{dnerf} \&
-      \imagefour{nerfies} \&
-      \imagefour{hypernerf_static} \&
-      \imagefour{hypernerf_dynamic} \&
-      \imagefour{voltemorph_static} \&
-      \imagefour{voltemorph} \&
-      \imagefour{blendvolumes_aux}  \\
-      % \includegraphics[height=\imageheight]{assets/} \\
-      % \includegraphics[height=\imageheight]{assets/} \&
-      % \includegraphics[height=\imageheight]{assets/} \&
-      % \includegraphics[height=\imageheight]{assets/} \&
-      % \includegraphics[height=\imageheight]{assets/} \&
-      % \includegraphics[height=\imageheight]{assets/} \\
-    };
-
-    \node[above=0.1em of main-1-1.north, align=center, anchor=south]{GT};
-    \node[above=0.0em of main-1-2.north, align=center, anchor=south]{NeRF~\cite{mildenhall2020nerf}};
-    \node[above=0.0em of main-1-3.north, align=center, anchor=south]{Conditioned NeRF~\cite{mildenhall2020nerf}};
-    \node[above=0.0em of main-1-4.north, align=center, anchor=south]{NeRFies~\cite{park2021nerfies}};
-    \node[above=0.0em of main-1-5.north, align=center, anchor=south]{HyperNeRF-AP~\cite{park2021hypernerf}};
-    \node[above=0.0em of main-1-6.north, align=center, anchor=south]{HyperNeRF-DS~\cite{park2021hypernerf}};
-    \node[above=0.0em of main-1-7.north, align=center, anchor=south]{VolTeMorph$^\dagger$~\cite{garbin2024voltemorph}};
-    \node[above=0.0em of main-1-8.north, align=center, anchor=south]{VolTeMorph~\cite{garbin2024voltemorph}};
-    \node[above=0.1em of main-1-9.north, align=center, anchor=south]{\textbf{Ours}};
-  \end{tikzpicture}
-}
-\newcommand{\versiontwo}{
-  \begin{tikzpicture}[
-      >=stealth',
-      overlay/.style={
-          anchor=south west,
-          draw=black,
-          rectangle,
-          line width=0.8pt,
-          outer sep=0,
-          inner sep=0,
-        },
-    ]
-    \matrix[
-      matrix of nodes,
-      column sep=0pt,
-      row sep=0pt,
-      ampersand replacement=\&,
-      inner sep=0,
-      outer sep=0,
-    ] (gt) {
-      \imageoneindex{gt}{0190} \&
-      \imageoneindex{gt}{0521}   \\
-      \imagetwoindex{gt}{0377} \&
-      \imagetwoindex{gt}{0638}   \\
-      \imagethreeindex{gt}{0453} \&
-      \imagethreeindex{gt}{0735} \\
-      \imagefourindex{gt}{0854} \&
-      \imagefourindex{gt}{1018}  \\
-    };
-
-    \matrix[
-      matrix of nodes,
-      column sep=0pt,
-      row sep=0pt,
-      ampersand replacement=\&,
-      inner sep=0,
-      outer sep=0,
-      right=2pt of gt
-    ] (voltemorphstatic) {
-      \imageoneindex{voltemorph_static}{0190} \&
-      \imageoneindex{voltemorph_static}{0521}   \\
-      \imagetwoindex{voltemorph_static}{0377} \&
-      \imagetwoindex{voltemorph_static}{0638}   \\
-      \imagethreeindex{voltemorph_static}{0453} \&
-      \imagethreeindex{voltemorph_static}{0735} \\
-      \imagefourindex{voltemorph_static}{0854} \&
-      \imagefourindex{voltemorph_static}{1018}  \\
-    };
-
-    \matrix[
-      matrix of nodes,
-      column sep=0pt,
-      row sep=0pt,
-      ampersand replacement=\&,
-      inner sep=0,
-      outer sep=0,
-      right=2pt of voltemorphstatic
-    ] (voltemorph) {
-      \imageoneindex{voltemorph}{0190} \&
-      \imageoneindex{voltemorph}{0521}   \\
-      \imagetwoindex{voltemorph}{0377} \&
-      \imagetwoindex{voltemorph}{0638}   \\
-      \imagethreeindex{voltemorph}{0453} \&
-      \imagethreeindex{voltemorph}{0735} \\
-      \imagefourindex{voltemorph}{0854} \&
-      \imagefourindex{voltemorph}{1018}  \\
-    };
-
-    \matrix[
-      matrix of nodes,
-      column sep=0pt,
-      row sep=0pt,
-      ampersand replacement=\&,
-      inner sep=0,
-      outer sep=0,
-      right=2pt of voltemorph
-    ] (blendvolumes) {
-      \imageoneindex{blendvolumes_aux}{0190} \&
-      \imageoneindex{blendvolumes_aux}{0521}   \\
-      \imagetwoindex{blendvolumes_aux}{0377} \&
-      \imagetwoindex{blendvolumes_aux}{0638}   \\
-      \imagethreeindex{blendvolumes_aux}{0453} \&
-      \imagethreeindex{blendvolumes_aux}{0735} \\
-      \imagefourindex{blendvolumes_aux}{0854} \&
-      \imagefourindex{blendvolumes_aux}{1018}  \\
-    };
-
-    \node[above=0.0em of gt.north, align=center, anchor=south]{GT};
-    \node[above=0.0em of voltemorphstatic.north, align=center, anchor=south]{VolTeMorph$^\dagger$~\cite{garbin2024voltemorph}};
-    \node[above=0.0em of voltemorph.north, align=center, anchor=south]{VolTeMorph~\cite{garbin2024voltemorph}};
-    \node[above=0.1em of blendvolumes.north, align=center, anchor=south]{\textbf{Ours}};
-  \end{tikzpicture}
-}
 
 \newcommand{\versionthree}{
+  \tikzsetnextfilename{blendfields_comparison}
+  \tikzset{external/export next=false}
   \begin{tikzpicture}[
       >=stealth',
       overlay/.style={
@@ -295,10 +128,7 @@
     \node[left=0.1em of blendvolumes.west, align=center, anchor=east]{\rotatebox{90}{\textbf{Ours}}};
   \end{tikzpicture}
 }
-\newcommand{\versionfour}{
-
-}
-\begin{figure*}[t]
+\begin{figure}[t]
   \centering
   \resizebox{\linewidth}{!}{
     \versionthree
@@ -315,4 +145,4 @@
     of the distribution.
   }
   \label{fig:blendfields-qualitative-comparison}
-\end{figure*}
+\end{figure}
