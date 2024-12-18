@@ -1,7 +1,3 @@
-\def\scale{1.0}
-\def\distbelow{2.5em}
-\def\distabove{2.5em}
-\def\height{256bp}
 
 \newcommand{\shadowedoverpicone}{
   \begin{overpic}[abs,height=\height]{\lumigaussdirname/folder_for_kacper/wild2d-shadowed_unshadowed_fig1.pdf}
@@ -28,6 +24,10 @@
 }
 \newcommand{\shadowedunshadowed}{
   {
+      \def\scale{1.0}
+      \def\height{256bp}
+      \def\distbelow{2.5em}
+      \def\distabove{2.5em}
       \tikzset{external/export=false}
       \tikzsetnextfilename{shadowed_unshadowed}
       \resizebox{0.9\linewidth}{!}{

@@ -1,29 +1,6 @@
 
 \begin{table}[t]
   \centering
-  \caption{\textbf{Quantitative results --}
-    Comparison between our \lumigauss and selected baselines for two
-    different.
-    We report the reconstruction quality regarding PSNR, MSE, MAE, SSIM on
-    full and 4x downsampled image resolutions.
-    \textit{u/s} denotes using upsampled, \textit{d/s} downsampled images for the evaluation, and the last delimited area presents the ablation study on downsampled data.
-    We denote NeRF-OSR \cite{rudnev2022nerfosr} results reproduced by
-    FEGR~\cite{wang2023fegr} with *.
-    We use $\dagger$ to further annotate our approach where we remove loss
-    terms
-    $\loss{\removespace{\shadowed}$\leftrightarrow$\removespace{\unshadowed}}$,
-    $\loss{rec}(\unshadowed)$ from the second training stage.
-    In $\ddagger$, we omit the first training stage.
-    Compared to the baselines, \lumigauss achieves reconstructions of high
-    fidelity.
-    It reliably produces smooth surfaces and sharp edges, reflected in its
-    high SSIM values.
-    Additionally, our proposed components either enhance reconstruction or
-    preserve physical accuracy without negatively impacting the results.
-    Please note, that NeuSky~\cite{gardner2023neusky} is a concurrent work,
-    published prior to the WACV's deadline at ECCV 2024.
-  }
-
   \setlength{\tabcolsep}{4pt}
   \resizebox{\linewidth}{!}{
     \begin{tabular}{lcccccccccccc}
@@ -55,5 +32,28 @@
       \bottomrule
     \end{tabular}
   }
+  \caption{\textbf{Quantitative results --}
+    Comparison between our \lumigauss and selected baselines for two
+    different.
+    We report the reconstruction quality regarding PSNR, MSE, MAE, SSIM on
+    full and 4x downsampled image resolutions.
+    \textit{u/s} denotes using upsampled, \textit{d/s} downsampled images for the evaluation, and the last delimited area presents the ablation study on downsampled data.
+    We denote NeRF-OSR \cite{rudnev2022nerfosr} results reproduced by
+    FEGR~\cite{wang2023fegr} with *.
+    We use $\dagger$ to further annotate our approach where we remove loss
+    terms
+    $\loss{\removespace{\shadowed}$\leftrightarrow$\removespace{\unshadowed}}$,
+    $\loss{rec}(\unshadowed)$ from the second training stage.
+    In $\ddagger$, we omit the first training stage.
+    Compared to the baselines, \lumigauss achieves reconstructions of high
+    fidelity.
+    It reliably produces smooth surfaces and sharp edges, reflected in its
+    high SSIM values.
+    Additionally, our proposed components either enhance reconstruction or
+    preserve physical accuracy without negatively impacting the results.
+    Please note, that NeuSky~\cite{gardner2023neusky} is a concurrent work,
+    published prior to the WACV's deadline at ECCV 2024.
+  }
+
   \label{tab:lumigauss-results_osr_eval}
 \end{table}

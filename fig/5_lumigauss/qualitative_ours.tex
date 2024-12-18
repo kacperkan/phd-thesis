@@ -1,75 +1,77 @@
-\def\spysize{24px}
-\def\offset{36px}
-\def\height{64px}
 \newcommand{\inpscene}[1]{\includegraphics[height=\height]{\lumigaussdirname/folder_for_kacper/relighting/#1.png}}
 
 \newcommand{\relighting}{
   \centering
   \tikzsetnextfilename{qualitative_ours}
-  \resizebox{\linewidth}{!}{
-    \begin{tikzpicture}[
-        >=stealth',
-        overlay/.style={
-            anchor=south west,
-            draw=black,
-            rectangle,
-            line width=0.8pt,
-            outer sep=0,
-            inner sep=0,
-          },
-        font=\Huge
-      ]
-      \matrix[
-        matrix of nodes,
-        column sep=0pt,
-        row sep=0pt,
-        ampersand replacement=\&,
-        inner sep=0,
-        outer sep=0
-      ] (pictures) {
-        \inpscene{orig_1} \&
-        \inpscene{rec_1} \&
-        \inpscene{novel_1} \\
-        \inpscene{orig_2} \&
-        \inpscene{rec_2} \&
-        \inpscene{novel_2} \\
-        \inpscene{orig_3} \&
-        \inpscene{rec_3} \&
-        \inpscene{novel_3} \\
-        \inpscene{orig_4} \&
-        \inpscene{rec_4} \&
-        \inpscene{novel_4} \\
-      };
-      \matrix[
-        matrix of nodes,
-        column sep=0pt,
-        row sep=0pt,
-        ampersand replacement=\&,
-        inner sep=0,
-        outer sep=0,
-        right=of pictures
-      ] (chair) {
-        \inpscene{obj_1} \\
-        \inpscene{obj_2} \\
-        \inpscene{obj_3} \\
-        \inpscene{obj_4} \\
-      };
-      \matrix[
-        matrix of nodes,
-        column sep=0pt,
-        row sep=0pt,
-        ampersand replacement=\&,
-        inner sep=0,
-        outer sep=0,
-        right=of chair
-      ] (chair) {
-        \inpscene{fic_1} \\
-        \inpscene{fic_2} \\
-        \inpscene{fic_3} \\
-        \inpscene{fic_4} \\
-      };
+  {
+    \def\spysize{24px}
+    \def\offset{36px}
+    \def\height{64px}
+    \resizebox{\linewidth}{!}{
+      \begin{tikzpicture}[
+          >=stealth',
+          overlay/.style={
+              anchor=south west,
+              draw=black,
+              rectangle,
+              line width=0.8pt,
+              outer sep=0,
+              inner sep=0,
+            },
+          font=\Huge
+        ]
+        \matrix[
+          matrix of nodes,
+          column sep=0pt,
+          row sep=0pt,
+          ampersand replacement=\&,
+          inner sep=0,
+          outer sep=0
+        ] (pictures) {
+          \inpscene{orig_1} \&
+          \inpscene{rec_1} \&
+          \inpscene{novel_1} \\
+          \inpscene{orig_2} \&
+          \inpscene{rec_2} \&
+          \inpscene{novel_2} \\
+          \inpscene{orig_3} \&
+          \inpscene{rec_3} \&
+          \inpscene{novel_3} \\
+          \inpscene{orig_4} \&
+          \inpscene{rec_4} \&
+          \inpscene{novel_4} \\
+        };
+        \matrix[
+          matrix of nodes,
+          column sep=0pt,
+          row sep=0pt,
+          ampersand replacement=\&,
+          inner sep=0,
+          outer sep=0,
+          right=of pictures
+        ] (chair) {
+          \inpscene{obj_1} \\
+          \inpscene{obj_2} \\
+          \inpscene{obj_3} \\
+          \inpscene{obj_4} \\
+        };
+        \matrix[
+          matrix of nodes,
+          column sep=0pt,
+          row sep=0pt,
+          ampersand replacement=\&,
+          inner sep=0,
+          outer sep=0,
+          right=of chair
+        ] (chair) {
+          \inpscene{fic_1} \\
+          \inpscene{fic_2} \\
+          \inpscene{fic_3} \\
+          \inpscene{fic_4} \\
+        };
 
-    \end{tikzpicture}
+      \end{tikzpicture}
+    }
   }
 }
 

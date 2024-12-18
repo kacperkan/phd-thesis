@@ -1,33 +1,35 @@
-\newcommand{\leftimageheight}{4.5cm}
-\newcommand{\rightimageheight}{4.5cm}
 
 \renewcommand{\versionone}{
   \tikzsetnextfilename{blendfields_failures}
-  \begin{tikzpicture}[
-      >=stealth',
-      overlay/.style={
-          anchor=south west,
-          draw=black,
-          rectangle,
-          line width=0.8pt,
-          outer sep=0,
-          inner sep=0,
-        },
-    ]
-    \matrix[
-      matrix of nodes,
-      column sep=2pt,
-      row sep=0pt,
-      ampersand replacement=\&,
-      inner sep=0,
-      outer sep=0,
-    ] (main) {
-      \includegraphics[height=\leftimageheight]{assets/\blendfieldsdirname/failures/convergence.png} \&
-      \includegraphics[height=\rightimageheight]{assets/\blendfieldsdirname/failures/tracking.png} \\
-    };
-    \node[above=0.0em of main-1-1.north, align=center, anchor=south]{Low contrast};
-    \node[above=0.0em of main-1-2.north, align=center, anchor=south]{Inaccurate off-the-shelf tracker};
-  \end{tikzpicture}
+  {
+    \def\leftimageheight{4.5cm}
+    \def\rightimageheight{4.5cm}
+    \begin{tikzpicture}[
+        >=stealth',
+        overlay/.style={
+            anchor=south west,
+            draw=black,
+            rectangle,
+            line width=0.8pt,
+            outer sep=0,
+            inner sep=0,
+          },
+      ]
+      \matrix[
+        matrix of nodes,
+        column sep=2pt,
+        row sep=0pt,
+        ampersand replacement=\&,
+        inner sep=0,
+        outer sep=0,
+      ] (main) {
+        \includegraphics[height=\leftimageheight]{assets/\blendfieldsdirname/failures/convergence.png} \&
+        \includegraphics[height=\rightimageheight]{assets/\blendfieldsdirname/failures/tracking.png} \\
+      };
+      \node[above=0.0em of main-1-1.north, align=center, anchor=south]{Low contrast};
+      \node[above=0.0em of main-1-2.north, align=center, anchor=south]{Inaccurate off-the-shelf tracker};
+    \end{tikzpicture}
+  }
 }
 \begin{figure}[t]
   \centering
