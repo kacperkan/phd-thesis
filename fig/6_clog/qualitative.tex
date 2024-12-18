@@ -1,0 +1,84 @@
+% drums: 0
+
+% scan37: 6 scan114: 6 SCAN97: 0
+
+% 20220412--1326--BGR645: 8 20220809--1034--BJM420: 3
+\newcommand{\lodimg}[5]{
+  \includegraphics[height=\height]{assets/\clogdirname/qualitative/#1_#2_#3_#4_#5.png}
+}
+
+\newcommand{\finallod}{
+  \def\height{84bp}
+  \tikzsetnextfilename{clog_qualitative}
+  \tikzset{external/export next=false}
+  \resizebox{\linewidth}{!}{
+    \begin{tikzpicture}[
+        >=stealth',
+        overlay/.style={
+            anchor=south west,
+            draw=black,
+            rectangle,
+            line width=0pt,
+            outer sep=0,
+            inner sep=0,
+          },
+      ]
+      \matrix[
+        matrix of nodes,
+        column sep=-3pt,
+        row sep=-0.1pt,
+        ampersand replacement=\&,
+        inner sep=0,
+        outer sep=0
+      ] (gts) {
+        \lodimg{gt}{blender}{hotdog}{0000}{1.0} \\
+        \lodimg{gt}{dtu}{scan105}{0000}{1.0}    \\
+        % \img{gt}{ava}{20220412--1326--BGR645}{0008}{1.0} \\
+        % \img{gt}{ava}{20220809--1034--BJM420}{0003}{1.0} \\
+      };
+      \node[above=0em of gts-1-1.north] {Ground Truth};
+
+      \matrix[
+        matrix of nodes,
+        right=1em of gts,
+        column sep=-3pt,
+        row sep=-0.1pt,
+        ampersand replacement=\&,
+        inner sep=0,
+        outer sep=0
+      ] (preds) {
+        \lodimg{ours}{blender}{hotdog}{0000}{1.0} \&
+        \lodimg{flod}{blender}{hotdog}{0000}{5} \&
+        \lodimg{octree}{blender}{hotdog}{0000}{1} \&
+        \lodimg{scaffold}{blender}{hotdog}{0000}{1} \&
+        \lodimg{3dgs}{blender}{hotdog}{0000}{1} \\
+        \lodimg{ours}{dtu}{scan105}{0000}{1.0} \&
+        \lodimg{flod}{dtu}{scan105}{0000}{5} \&
+        \lodimg{octree}{dtu}{scan105}{0000}{1} \&
+        \lodimg{scaffold}{dtu}{scan105}{0000}{1} \&
+        \lodimg{3dgs}{dtu}{scan105}{0000}{1}    \\
+      };
+      \node[above=0em of gts-1-1.north] {Ground Truth};
+      \node[above=0em of preds-1-1.north] {\textbf{Ours}};
+      \node[above=0em of preds-1-2.north] {FLoD~\cite{seo2024flod}};
+      \node[above=0em of preds-1-3.north] {OctreeGS~\cite{ren2024octree}};
+      \node[above=0em of preds-1-4.north] {ScaffoldGS~\cite{lu2024scaffold}};
+      \node[above=0em of preds-1-5.north] {3DGS~\cite{kerbl20233d}};
+
+    \end{tikzpicture}
+  }
+}
+\begin{figure}[t]
+  \centering
+  % \includegraphics[width=\linewidth, height=15em]{example-image-a}
+  \finallod
+  \caption{
+    \textbf{Qualitative examples (finest level of detail) --}
+    We show qualitative examples of our method, at the finest level of detail,
+    compared to other baselines.
+    Our method is able to provide comparable rendering quality at the finest
+    level, and additionally allow continuous levels of detail as demonstrated
+    in \cref{fig:clog-level-of-details}.
+  }
+  \label{fig:clog-qualitative}
+\end{figure}

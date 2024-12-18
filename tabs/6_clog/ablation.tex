@@ -1,0 +1,37 @@
+\newcommand{\first}{\cellcolor{firstbestcolor}}
+\newcommand{\second}{\cellcolor{secondbestcolor}}
+\begin{table}[!t]
+  \centering
+  {
+    \begin{tabular}{lccc}
+      \toprule
+      \multirow{2}[2]{*}{Model}                    & \multicolumn{3}{c}{DTU~\cite{aanaes2016large} @ LoD=0}                                                           \\
+      \cmidrule(lr){2-4}
+                                                   & PSNR $\uparrow$                                        & SSIM $\uparrow$            & LPIPS $\downarrow$         \\
+      \midrule
+      \quad $-$ $\modulator$                       & 14.556 $\pm$ 3.769                                     & 0.627 $\pm$ 0.114          & 0.297 $\pm$ 0.084          \\
+      \quad $-$ $\modulated{\mean}'$               & \second 23.498 $\pm$ 3.007                             & \second 0.788 $\pm$ 0.098  & \second 0.290 $\pm$ 0.098  \\
+      \quad $-$ $\regularizer(\cdot)$              & 23.421 $\pm$ 2.932                                     & 0.784 $\pm$ 0.098          & 0.296 $\pm$ 0.102          \\
+      \quad $-$ PLAS~\cite{morgenstern2024compact} & 23.326 $\pm$ 2.908                                     & 0.784 $\pm$ 0.097          & 0.297 $\pm$ 0.100          \\
+      \quad $-$ resampling~\cite{bulo2024revising} & 22.465 $\pm$ 2.821                                     & 0.775 $\pm$ 0.099          & 0.305 $\pm$ 0.101          \\
+      \midrule
+      \quad $-$ Full method                        & \first {23.648 $\pm$ 3.183}                            & \first {0.798 $\pm$ 0.087} & \first {0.283 $\pm$ 0.090} \\
+      \bottomrule
+    \end{tabular}
+
+  }
+  \caption{\textbf{Ablation study} --
+    We compare our method without
+    the modulator $\modulator$,
+    exploration noise $\modulated{\mean}'$,
+    regularizers $\regularizer(\cdot)$,
+    sorting using PLAS~\cite{morgenstern2024compact},
+    and resampling based on the method of~\citet{bulo2024revising}.
+    We show the results at the coarsest LoD with about 2.6 thousand Gaussians.
+    Our model comprising all the introduced components performs best on
+    average.
+    We mark best results with \mycoloredbox{firstbestcolor} and second best
+    with \mycoloredbox{secondbestcolor}.
+  }
+  \label{tab:clog-ablation}
+\end{table}

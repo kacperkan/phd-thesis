@@ -1,0 +1,139 @@
+\begin{table}[!t]
+  \setlength{\tabcolsep}{2pt}
+  \centering
+  \begin{subtable}{\linewidth}
+    \resizebox{\linewidth}{!}{
+      \begin{tabular}{lccccccccccccccccccccc}
+        \toprule
+        \multirow{3}[3]{*}{Method}        & \multicolumn{21}{c}{AVA~\cite{martinez2024codec}}                                                                                                                                                                                                                                                                                                                                                                                                                                                          \\
+        \cmidrule(lr){2-22}
+                                          & \multicolumn{3}{c}{AAN112}                        & \multicolumn{3}{c}{ADL311} & \multicolumn{3}{c}{AEY864} & \multicolumn{3}{c}{AJR151} & \multicolumn{3}{c}{ANX726} & \multicolumn{3}{c}{APP152} & \multicolumn{3}{c}{AYE877}                                                                                                                                                                                                                                                                            \\
+        \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}\cmidrule(lr){11-13}\cmidrule(lr){14-16}\cmidrule(lr){17-19}\cmidrule(lr){20-22}
+                                          & PSNR $\uparrow$                                   & SSIM $\uparrow$            & LPIPS $\downarrow$         & PSNR $\uparrow$            & SSIM $\uparrow$            & LPIPS $\downarrow$         & PSNR $\uparrow$            & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ \\
+        \midrule
+        3DGS~\cite{kerbl20233d}           & 25.184                                            & 0.914                      & 0.183                      & 21.597                     & 0.825                      & 0.170                      & 23.163                     & 0.864           & 0.172              & 23.295          & 0.871           & 0.152              & 24.032          & 0.892           & 0.148              & 21.258          & 0.814           & 0.185              & 23.784          & 0.872           & 0.156              \\
+        Octree-GS~\cite{ren2024octree}    & 24.898                                            & 0.909                      & 0.186                      & 21.768                     & 0.827                      & 0.173                      & 23.033                     & 0.868           & 0.170              & 23.632          & 0.873           & 0.154              & 24.412          & 0.891           & 0.143              & 21.200          & 0.777           & 0.195              & 23.666          & 0.872           & 0.155              \\
+        Scaffold-GS~\cite{lu2024scaffold} & 20.536                                            & 0.786                      & 0.364                      & 17.495                     & 0.654                      & 0.347                      & 17.480                     & 0.687           & 0.401              & 19.100          & 0.725           & 0.345              & 18.715          & 0.716           & 0.363              & 19.215          & 0.673           & 0.337              & 18.854          & 0.706           & 0.377              \\
+        FLoD~\cite{seo2024flod}           & 25.238                                            & 0.916                      & 0.267                      & 21.846                     & 0.839                      & 0.231                      & 23.086                     & 0.844           & 0.299              & 23.837          & 0.872           & 0.247              & 24.364          & 0.879           & 0.239              & 21.449          & 0.814           & 0.264              & 23.517          & 0.848           & 0.275              \\
+        \midrule
+        \textbf{Ours}                     & 29.530                                            & 0.901                      & 0.256                      & 27.740                     & 0.850                      & 0.183                      & 26.518                     & 0.816           & 0.214              & 24.382          & 0.808           & 0.272              & 26.618          & 0.847           & 0.227              & 31.049          & 0.892           & 0.161              & 30.796          & 0.904           & 0.175              \\
+        \bottomrule
+      \end{tabular}
+
+    }
+  \end{subtable}
+
+  \hfill
+  \vspace{1em}
+
+  \begin{subtable}{\linewidth}
+    \resizebox{\linewidth}{!}{
+      \begin{tabular}{lcccccccccccccccccccccccc}
+        \toprule
+        \multirow{3}[3]{*}{Method}        & \multicolumn{24}{c}{AVA~\cite{martinez2024codec}}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              \\
+        \cmidrule(lr){2-25}
+                                          & \multicolumn{3}{c}{BDF920}                        & \multicolumn{3}{c}{BGR645} & \multicolumn{3}{c}{BHC106} & \multicolumn{3}{c}{BHK376} & \multicolumn{3}{c}{BJM420} & \multicolumn{3}{c}{BLY735} & \multicolumn{3}{c}{BMP511} & \multicolumn{3}{c}{BPM833}                                                                                                                                                                                                                                                                                                                   \\
+        \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}\cmidrule(lr){11-13}\cmidrule(lr){14-16}\cmidrule(lr){17-19}\cmidrule(lr){20-22}\cmidrule(lr){23-25}
+                                          & PSNR $\uparrow$                                   & SSIM $\uparrow$            & LPIPS $\downarrow$         & PSNR $\uparrow$            & SSIM $\uparrow$            & LPIPS $\downarrow$         & PSNR $\uparrow$            & SSIM $\uparrow$            & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ \\
+        \midrule
+        3DGS~\cite{kerbl20233d}           & 22.365                                            & 0.864                      & 0.169                      & 21.987                     & 0.887                      & 0.185                      & 21.481                     & 0.862                      & 0.205              & 25.320          & 0.924           & 0.156              & 23.233          & 0.902           & 0.187              & 22.904          & 0.884           & 0.151              & 21.249          & 0.861           & 0.191              & 21.742          & 0.838           & 0.210              \\
+        Octree-GS~\cite{ren2024octree}    & 22.532                                            & 0.874                      & 0.171                      & 21.787                     & 0.883                      & 0.182                      & 21.494                     & 0.859                      & 0.204              & 24.892          & 0.927           & 0.150              & 23.357          & 0.903           & 0.178              & 22.851          & 0.889           & 0.144              & 21.362          & 0.871           & 0.186              & 21.799          & 0.834           & 0.208              \\
+        Scaffold-GS~\cite{lu2024scaffold} & 17.987                                            & 0.734                      & 0.345                      & 19.082                     & 0.778                      & 0.313                      & 18.354                     & 0.728                      & 0.402              & 21.666          & 0.832           & 0.298              & 18.513          & 0.782           & 0.370              & 17.129          & 0.720           & 0.365              & 17.120          & 0.723           & 0.400              & 18.713          & 0.683           & 0.438              \\
+        FLoD~\cite{seo2024flod}           & 22.704                                            & 0.873                      & 0.249                      & 21.954                     & 0.893                      & 0.210                      & 21.444                     & 0.848                      & 0.314              & 25.277          & 0.929           & 0.212              & 23.199          & 0.901           & 0.256              & 22.762          & 0.867           & 0.257              & 21.172          & 0.859           & 0.291              & 21.614          & 0.792           & 0.356              \\
+        \midrule
+        \textbf{Ours}                     & 26.683                                            & 0.843                      & 0.201                      & 26.465                     & 0.877                      & 0.221                      & 26.270                     & 0.811                      & 0.219              & 33.195          & 0.950           & 0.210              & 27.076          & 0.884           & 0.213              & 28.599          & 0.870           & 0.165              & 26.991          & 0.858           & 0.182              & 26.529          & 0.752           & 0.228              \\
+        \bottomrule
+      \end{tabular}
+
+    }
+  \end{subtable}
+
+  \hfill
+  \vspace{1em}
+
+  \begin{subtable}{\linewidth}
+    \resizebox{\linewidth}{!}{
+      \begin{tabular}{lcccccccccccccccccccccccc}
+        \toprule
+        \multirow{3}[3]{*}{Method}        & \multicolumn{24}{c}{Blender~\cite{mildenhall2020nerf}}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        \\
+        \cmidrule(lr){2-25}
+                                          & \multicolumn{3}{c}{chair}                              & \multicolumn{3}{c}{drums} & \multicolumn{3}{c}{ficus} & \multicolumn{3}{c}{hotdog} & \multicolumn{3}{c}{lego} & \multicolumn{3}{c}{materials} & \multicolumn{3}{c}{mic} & \multicolumn{3}{c}{ship}                                                                                                                                                                                                                                                                                                                   \\
+        \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}\cmidrule(lr){11-13}\cmidrule(lr){14-16}\cmidrule(lr){17-19}\cmidrule(lr){20-22}\cmidrule(lr){23-25}
+                                          & PSNR $\uparrow$                                        & SSIM $\uparrow$           & LPIPS $\downarrow$        & PSNR $\uparrow$            & SSIM $\uparrow$          & LPIPS $\downarrow$            & PSNR $\uparrow$         & SSIM $\uparrow$          & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ \\
+        \midrule
+        3DGS~\cite{kerbl20233d}           & 35.634                                                 & 0.988                     & 0.010                     & 26.280                     & 0.955                    & 0.037                         & 35.486                  & 0.987                    & 0.012              & 38.016          & 0.985           & 0.020              & 35.997          & 0.982           & 0.017              & 30.464          & 0.960           & 0.037              & 36.669          & 0.992           & 0.006              & 31.719          & 0.907           & 0.107              \\
+        Octree-GS~\cite{ren2024octree}    & 34.924                                                 & 0.985                     & 0.013                     & 25.180                     & 0.938                    & 0.060                         & 30.668                  & 0.971                    & 0.030              & 37.840          & 0.984           & 0.023              & 35.342          & 0.980           & 0.019              & 30.433          & 0.959           & 0.041              & 32.567          & 0.976           & 0.035              & 31.188          & 0.899           & 0.113              \\
+        Scaffold-GS~\cite{lu2024scaffold} & 35.218                                                 & 0.986                     & 0.013                     & 26.366                     & 0.950                    & 0.045                         & 34.882                  & 0.985                    & 0.014              & 37.959          & 0.984           & 0.022              & 35.728          & 0.981           & 0.018              & 30.715          & 0.961           & 0.040              & 37.172          & 0.992           & 0.008              & 31.535          & 0.903           & 0.107              \\
+        FLoD~\cite{seo2024flod}           & 35.711                                                 & 0.987                     & 0.011                     & 26.203                     & 0.953                    & 0.039                         & 35.281                  & 0.986                    & 0.012              & 38.197          & 0.985           & 0.022              & 35.993          & 0.981           & 0.018              & 14.406          & 0.721           & 0.240              & 18.190          & 0.867           & 0.150              & 31.858          & 0.906           & 0.108              \\
+        \midrule
+        \textbf{Ours}                     & 34.152                                                 & 0.981                     & 0.023                     & 25.290                     & 0.944                    & 0.057                         & 31.501                  & 0.978                    & 0.025              & 36.723          & 0.984           & 0.030              & 34.009          & 0.980           & 0.025              & 29.452          & 0.958           & 0.048              & 33.442          & 0.988           & 0.012              & 29.805          & 0.889           & 0.148              \\
+        \bottomrule
+      \end{tabular}
+
+    }
+  \end{subtable}
+
+  \hfill
+  \vspace{1em}
+
+  \begin{subtable}{\linewidth}
+    \resizebox{\linewidth}{!}{
+      \begin{tabular}{lccccccccccccccccccccc}
+        \toprule
+        \multirow{3}[3]{*}{Method}        & \multicolumn{21}{c}{DTU~\cite{aanaes2016large}}                                                                                                                                                                                                                                                                                                                                                                                                                                  \\
+        \cmidrule(lr){2-22}
+                                          & \multicolumn{3}{c}{24}                          & \multicolumn{3}{c}{37} & \multicolumn{3}{c}{40} & \multicolumn{3}{c}{55} & \multicolumn{3}{c}{63} & \multicolumn{3}{c}{65} & \multicolumn{3}{c}{69}                                                                                                                                                                                                                                                                            \\
+        \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}\cmidrule(lr){11-13}\cmidrule(lr){14-16}\cmidrule(lr){17-19}\cmidrule(lr){20-22}
+                                          & PSNR $\uparrow$                                 & SSIM $\uparrow$        & LPIPS $\downarrow$     & PSNR $\uparrow$        & SSIM $\uparrow$        & LPIPS $\downarrow$     & PSNR $\uparrow$        & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ \\
+        \midrule
+        3DGS~\cite{kerbl20233d}           & 27.539                                          & 0.924                  & 0.072                  & 24.470                 & 0.893                  & 0.082                  & 27.048                 & 0.875           & 0.137              & 30.570          & 0.936           & 0.052              & 34.371          & 0.971           & 0.035              & 29.554          & 0.949           & 0.069              & 28.028          & 0.913           & 0.097              \\
+        Octree-GS~\cite{ren2024octree}    & 28.096                                          & 0.907                  & 0.099                  & 24.954                 & 0.893                  & 0.091                  & 26.844                 & 0.868           & 0.140              & 29.912          & 0.940           & 0.059              & 34.117          & 0.960           & 0.046              & 30.205          & 0.947           & 0.072              & 28.995          & 0.921           & 0.101              \\
+        Scaffold-GS~\cite{lu2024scaffold} & 28.314                                          & 0.911                  & 0.093                  & 25.440                 & 0.894                  & 0.084                  & 27.643                 & 0.888           & 0.130              & 30.751          & 0.944           & 0.054              & 34.272          & 0.961           & 0.046              & 30.396          & 0.950           & 0.070              & 29.191          & 0.927           & 0.091              \\
+        FLoD~\cite{seo2024flod}           & 29.460                                          & 0.937                  & 0.059                  & 9.896                  & 0.608                  & 0.333                  & 28.882                 & 0.897           & 0.124              & 24.720          & 0.845           & 0.166              & 35.817          & 0.973           & 0.035              & 30.802          & 0.959           & 0.062              & 29.684          & 0.941           & 0.087              \\
+        \midrule
+        \textbf{Ours}                     & 26.261                                          & 0.905                  & 0.116                  & 23.121                 & 0.872                  & 0.122                  & 25.726                 & 0.861           & 0.182              & 29.490          & 0.933           & 0.080              & 29.467          & 0.918           & 0.058              & 29.682          & 0.951           & 0.086              & 28.304          & 0.913           & 0.122              \\
+        \bottomrule
+      \end{tabular}
+
+    }
+  \end{subtable}
+
+  \hfill
+  \vspace{1em}
+
+  \begin{subtable}{\linewidth}
+    \resizebox{\linewidth}{!}{
+      \begin{tabular}{lcccccccccccccccccccccccc}
+        \toprule
+        \multirow{3}[3]{*}{Method}        & \multicolumn{24}{c}{DTU~\cite{aanaes2016large}}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        \\
+        \cmidrule(lr){2-25}
+                                          & \multicolumn{3}{c}{83}                          & \multicolumn{3}{c}{97} & \multicolumn{3}{c}{105} & \multicolumn{3}{c}{106} & \multicolumn{3}{c}{110} & \multicolumn{3}{c}{114} & \multicolumn{3}{c}{118} & \multicolumn{3}{c}{122}                                                                                                                                                                                                                                                                                                                   \\
+        \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}\cmidrule(lr){11-13}\cmidrule(lr){14-16}\cmidrule(lr){17-19}\cmidrule(lr){20-22}\cmidrule(lr){23-25}
+                                          & PSNR $\uparrow$                                 & SSIM $\uparrow$        & LPIPS $\downarrow$      & PSNR $\uparrow$         & SSIM $\uparrow$         & LPIPS $\downarrow$      & PSNR $\uparrow$         & SSIM $\uparrow$         & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ \\
+        \midrule
+        3DGS~\cite{kerbl20233d}           & 38.681                                          & 0.984                  & 0.028                   & 30.210                  & 0.951                   & 0.053                   & 33.384                  & 0.960                   & 0.053              & 33.988          & 0.949           & 0.060              & 34.217          & 0.968           & 0.062              & 30.732          & 0.945           & 0.060              & 36.593          & 0.968           & 0.043              & 36.991          & 0.967           & 0.034              \\
+        Octree-GS~\cite{ren2024octree}    & 38.328                                          & 0.980                  & 0.029                   & 30.271                  & 0.943                   & 0.063                   & 33.075                  & 0.956                   & 0.060              & 34.342          & 0.952           & 0.066              & 34.140          & 0.963           & 0.065              & 30.531          & 0.942           & 0.065              & 36.526          & 0.964           & 0.048              & 36.707          & 0.970           & 0.037              \\
+        Scaffold-GS~\cite{lu2024scaffold} & 38.723                                          & 0.982                  & 0.030                   & 30.237                  & 0.947                   & 0.057                   & 33.799                  & 0.959                   & 0.060              & 34.664          & 0.955           & 0.061              & 34.506          & 0.967           & 0.063              & 30.787          & 0.947           & 0.062              & 36.983          & 0.971           & 0.044              & 37.659          & 0.974           & 0.032              \\
+        FLoD~\cite{seo2024flod}           & 38.596                                          & 0.983                  & 0.033                   & 30.818                  & 0.954                   & 0.051                   & 34.318                  & 0.964                   & 0.060              & 15.360          & 0.621           & 0.283              & 35.475          & 0.973           & 0.060              & 31.162          & 0.954           & 0.052              & 30.791          & 0.873           & 0.153              & 37.797          & 0.979           & 0.028              \\
+        \midrule
+        \textbf{Ours}                     & 34.404                                          & 0.979                  & 0.040                   & 29.638                  & 0.945                   & 0.074                   & 31.457                  & 0.960                   & 0.072              & 33.888          & 0.953           & 0.074              & 34.738          & 0.969           & 0.066              & 30.666          & 0.940           & 0.082              & 36.869          & 0.973           & 0.054              & 37.199          & 0.975           & 0.043              \\
+        \bottomrule
+      \end{tabular}
+
+    }
+  \end{subtable}
+  \caption{\textbf{Per-subject quantitative results (finest level of detail) --}
+    We show the performance of the methods presented in the main part of the
+    paper for each of the datasets' subjects.
+    We found that for some examples Scaffold-GS~\cite{lu2024scaffold} and
+    FLoD~\cite{seo2024flod} fails to produce crisp results and
+    FLoD~\cite{seo2024flod} outputs blank images on \texttt{ficus} and
+    \texttt{mic} datasets from NeRF~Synthetic~\cite{mildenhall2020nerf},
+    despite having the same hyperparameter and coordinate initialization
+    values across datasets.
+    That matter requires further investigation, potentially proposing a new
+    approach to stabilizing their performance.
+  }
+  \label{tab:clog-supp-quantitative}
+\end{table}
+

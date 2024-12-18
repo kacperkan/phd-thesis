@@ -1,0 +1,152 @@
+% mic: 40 drums: 0
+
+% scan37: 6 scan114: 6 SCAN97: 0
+
+% 20220412--1326--BGR645: 8 20220809--1034--BJM420: 3
+\newcommand{\img}[5]{
+  \includegraphics[height=\height]{assets/\clogdirname/qualitative/#1_#2_#3_#4_#5.png}
+}
+
+\newcommand{\clogqualitativefig}{
+  \def\height{64bp}
+  \tikzsetnextfilename{level_of_details}
+  \resizebox{\linewidth}{!}{
+    \begin{tikzpicture}[
+        >=stealth',
+        overlay/.style={
+            anchor=south west,
+            draw=black,
+            rectangle,
+            line width=0pt,
+            outer sep=0,
+            inner sep=0,
+          },
+      ]
+      \matrix[
+        matrix of nodes,
+        column sep=-3pt,
+        row sep=-0.1pt,
+        ampersand replacement=\&,
+        inner sep=0,
+        outer sep=0
+      ] (gts) {
+        % \img{gt}{blender}{mic}{0040}{1.0} \\
+        \img{gt}{blender}{drums}{0000}{1.0} \\
+        \img{gt}{blender}{chair}{0040}{1.0} \\
+        % \img{gt}{dtu}{scan37}{0006}{1.0} \\
+        \img{gt}{dtu}{scan114}{0006}{1.0}   \\
+        \img{gt}{dtu}{scan97}{0000}{1.0}    \\
+        % \img{gt}{ava}{20220412--1326--BGR645}{0008}{1.0} \\
+        % \img{gt}{ava}{20220809--1034--BJM420}{0003}{1.0} \\
+      };
+      \node[above=0em of gts-1-1.north] {Ground Truth};
+
+      \matrix[
+        right=1em of gts,
+        matrix of nodes,
+        column sep=-3pt,
+        row sep=-0.1pt,
+        ampersand replacement=\&,
+        inner sep=0,
+        outer sep=0
+      ] (lvl1) {
+        % \img{flod}{blender}{mic}{0040}{2} \&
+        % \img{ours}{blender}{mic}{0040}{0.1} \\
+        \img{flod}{blender}{drums}{0000}{2} \&
+        \img{ours}{blender}{drums}{0000}{0.1} \\
+        \img{flod}{blender}{chair}{0040}{2} \&
+        \img{ours}{blender}{chair}{0040}{0.1} \\
+        % \img{flod}{dtu}{scan37}{0006}{2} \&
+        % \img{ours}{dtu}{scan37}{0006}{0.1} \\
+        \img{flod}{dtu}{scan114}{0006}{2} \&
+        \img{ours}{dtu}{scan114}{0006}{0.1}   \\
+        \img{flod}{dtu}{scan97}{0000}{2} \&
+        \img{ours}{dtu}{scan97}{0000}{0.1}    \\
+        % \img{flod}{ava}{20220412--1326--BGR645}{0008}{2} \&
+        % \img{ours}{ava}{20220412--1326--BGR645}{0008}{0.1} \\
+        % \img{flod}{ava}{20220809--1034--BJM420}{0003}{2} \&
+        % \img{ours}{ava}{20220809--1034--BJM420}{0003}{0.1} \\
+      };
+
+      \node[above=0em of lvl1-1-1.north] {FLoD};
+      \node[above=0em of lvl1-1-2.north] {\textbf{Ours}};
+
+      \matrix[
+        right=1em of lvl1,
+        matrix of nodes,
+        column sep=-3pt,
+        row sep=-0.1pt,
+        ampersand replacement=\&,
+        inner sep=0,
+        outer sep=0
+      ] (lvl3) {
+        % \img{flod}{blender}{mic}{0040}{5} \&
+        % \img{ours}{blender}{mic}{0040}{1.0} \\
+        \img{flod}{blender}{drums}{0000}{3} \&
+        \img{ours}{blender}{drums}{0000}{0.5} \\
+        \img{flod}{blender}{chair}{0040}{3} \&
+        \img{ours}{blender}{chair}{0040}{0.5} \\
+        % \img{flod}{dtu}{scan37}{0006}{5} \&
+        % \img{ours}{dtu}{scan37}{0006}{1.0} \\
+        \img{flod}{dtu}{scan114}{0006}{3} \&
+        \img{ours}{dtu}{scan114}{0006}{0.5}   \\
+        \img{flod}{dtu}{scan97}{0000}{3} \&
+        \img{ours}{dtu}{scan97}{0000}{0.5}    \\
+        % \img{flod}{ava}{20220412--1326--BGR645}{0008}{3} \&
+        % \img{ours}{ava}{20220412--1326--BGR645}{0008}{0.5} \\
+        % \img{flod}{ava}{20220809--1034--BJM420}{0003}{3} \&
+        % \img{ours}{ava}{20220809--1034--BJM420}{0003}{0.5} \\
+      };
+
+      \node[above=0em of lvl3-1-1.north] {FLoD};
+      \node[above=0em of lvl3-1-2.north] {\textbf{Ours}};
+
+      \matrix[
+        right=1em of lvl3,
+        matrix of nodes,
+        column sep=-3pt,
+        row sep=-0.1pt,
+        ampersand replacement=\&,
+        inner sep=0,
+        outer sep=0
+      ] (lvl5) {
+        % \img{flod}{blender}{mic}{0040}{5} \&
+        % \img{ours}{blender}{mic}{0040}{1.0} \\
+        \img{flod}{blender}{drums}{0000}{5} \&
+        \img{ours}{blender}{drums}{0000}{1.0} \\
+        \img{flod}{blender}{chair}{0040}{5} \&
+        \img{ours}{blender}{chair}{0040}{1.0} \\
+        % \img{flod}{dtu}{scan37}{0006}{5} \&
+        % \img{ours}{dtu}{scan37}{0006}{1.0} \\
+        \img{flod}{dtu}{scan114}{0006}{5} \&
+        \img{ours}{dtu}{scan114}{0006}{1.0}   \\
+        \img{flod}{dtu}{scan97}{0000}{5} \&
+        \img{ours}{dtu}{scan97}{0000}{1.0}    \\
+        % \img{flod}{ava}{20220412--1326--BGR645}{0008}{5} \&
+        % \img{ours}{ava}{20220412--1326--BGR645}{0008}{1.0} \\
+        % \img{flod}{ava}{20220809--1034--BJM420}{0003}{5} \&
+        % \img{ours}{ava}{20220809--1034--BJM420}{0003}{1.0} \\
+      };
+
+      \node[above=0em of lvl5-1-1.north] {FLoD};
+      \node[above=0em of lvl5-1-2.north] {\textbf{Ours}};
+    \end{tikzpicture}
+  }
+}
+
+\begin{figure}
+  \centering
+  \clogqualitativefig
+  \caption{
+    \textbf{Qualitative highlight (varying levels of detail) --}
+    We provide example renderings for various levels of detail, denoted by the
+    number of Gaussians used.
+    As shown, our method is able to provide high-quality reconstructions at
+    various levels, and provides a better tradeoff than
+    FLoD~\cite{seo2024flod}.
+    We showcase the results for $\lod{\in}\{0.1, 0.5, 1.0\}$ for our method,
+    and $\text{LoD}{=}\{2,3,5\}$ for FLoD to roughly match the number of
+    Gaussians.
+  }
+  \label{fig:clog-level-of-details}
+\end{figure}

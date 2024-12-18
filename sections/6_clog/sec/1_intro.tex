@@ -1,0 +1,76 @@
+\section{Introduction}
+  \label{sec:clog-intro}
+
+  Since the introduction of Neural Radiance Fields
+  (NeRF)~\cite{mildenhall2020nerf}, 3D computer vision, especially image-based
+  reconstruction of 3D scenes, has seen a massive improvement in the quality
+  of novel-view renderings.
+  NeRFs store the radiance values of a scene within a neural representation
+  such as Multi-Layer Perceptrons (MLP)~\cite{mildenhall2020nerf} and hash
+  grids~\cite{mueller2022instant}, and render them via volume rendering.
+
+  More recently, 3D Gaussian Splatting~\cite{kerbl20233d} has become arguably
+  one of the de-facto standards when it comes to storing radiance values,
+  which are then \emph{rasterized}, \ie, ``splatted'', to images instead of
+  using volume rendering.
+  While 3D Gaussian Splatting offers faster rendering with enhanced rendering
+  quality, it comes at the cost of requiring millions of Gaussian primitives
+  to be trained.
+  Researchers have thus attempted to reduce the number of Gaussian primitives,
+  either via finding more compact configurations that allow similar rendering
+  quality~\cite{fan2023lightgaussian,lee2024compact,niedermayr2024compressed,niemeyer2024radsplat},
+  or concurrently to our work, via introducing Levels of Detail
+  (LoD)~\cite{seo2024flod,shi2024lapisgs}.
+  The former approach maintains rendering quality but is constrained by its
+  fixed number of Gaussians during training, preventing dynamic adaptation to
+  the budget available for deployment---they also typically still require many
+  Gaussians.
+  The latter resolves this issue, but these concurrent solutions only support
+  a discrete, predefined set of levels, limiting their application, for
+  example to continuous levels of details used in
+  gaming~\cite{venter2022unreal} or streaming.
+
+  In this work, we present Continuous Level of Gaussians (\clog), a novel
+  method that introduces continuous levels of detail to 3D Gaussian Splatting.
+  Our key idea is to learn a UV mapping~\cite{flavell2010uv} of 3D Gaussians,
+  representing them as uniform grid of points akin to pixels.
+  Specifically, we create a 2D image of trainable feature representations,
+  which are then interpreted by a light-weight Multi-Layer Perceptron (MLP) to
+  the center, variance, color, and opacity of Gaussians.
+  The learnable representation enables continuous level-of-detail control
+  through direct resampling of the 2D feature map to the desired level of
+  detail.
+  Although the UV maps are high-dimensional features, simply downsampling them
+  does not yield renderings of high-quality.
+  To address this limitation, we introduce a modulator MLP that dynamically
+  alters the downsampled feature values based on the target level of detail,
+  ensuring high-quality rendering.
+
+  We train \clog in two stages.
+  In the first stage, we jointly train the Gaussians, the 2D feature image and
+  the interpretive MLP, by progressively growing the 2D image to the highest
+  UV resolution.
+  After training, because we rely on downsampling, which assumes nearby
+  samples are alike, we sort~\cite{morgenstern2024compact} the 2D image such
+  that Gaussians with similar properties are nearby.
+  Now, with the highest resolution being pre-trained and fixed, we train the
+  modulator by first subsampling the 2D image, with appropriate blurring to a
+  desired randomly chosen level of detail, then applying the modulator and
+  using the modulated UV maps to render the scene.
+  We then optimize the modulator weights so that this rendering becomes
+  faithful to the training images.
+
+  Our evaluations show that CLoG maintains rendering quality comparable to
+  baseline methods at their highest resolution, and is able to outperform
+  alternative representations that provide LoD.
+
+  \noindent
+  In summary, our contributions are:
+  \begin{itemize}
+    \item We introduce Continuous Levels of Gaussians (CLoG), a novel method that enables continuous levels of detail for 3D Gaussian Splatting.
+    \item Our key idea lies in leveraging UV maps that support efficient subsampling for level-of-detail control.
+    \item We develop a progressive trainin strategy that grows UV maps from noise, followed by spatial sorting for optimal structure.
+          Additionally, we introduce a level-of-detail-conditioned modulator
+          that refines downsampled UV maps for high-quality rendering.
+    \item We demonstrate how our method dynamically adapts the underlying representation to accommodate the desired compute and memory budget.
+  \end{itemize}

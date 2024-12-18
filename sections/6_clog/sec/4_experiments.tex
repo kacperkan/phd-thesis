@@ -1,0 +1,158 @@
+\input{fig/\clogdirname/num_gaussians}
+
+\input{tabs/\clogdirname/quantitative_main}
+\section{Results}
+  \label{sec:clog-result}
+
+  We first discuss our evaluation setup, then present our results.
+  We also provide ablation study on the design choices.
+
+  \subsection{Experimental setup}
+
+    We discuss the datasets, the baselines, and metrics.
+
+    \paragraph{Datasets.}
+      We evaluate our method on three different datasets.
+      We use the NeRF Synthetic~\cite{mildenhall2020nerf} as this dataset is
+      commonly used in previous work.
+      We also use the DTU~\cite{aanaes2016large} dataset to evaluate
+      performance on a non-synthetic dataset.
+      Following the standard protocol~\cite{ren2024octree}, we use the
+      provided foreground masks.
+      Finally, we use the AVA~\cite{martinez2024codec} dataset to showcase
+      that our model can be also applied when ground truth UV mapping is
+      available.
+      % Since the datasets contain ground-truth background masks, we use them
+      % to remove the background and train the models to reconstruct the
+      % central object.
+
+    \paragraph{Baselines.}
+      We evaluate method against other neural-based Gaussian Splatting, namely
+      Scaffold-GS~\cite{lu2024scaffold} and Octree-GS~\cite{ren2024octree},
+      and vanilla 3DGS~\cite{kerbl20233d}.
+      Notably, Octree-GS implements a levels of detail mechanism which enables
+      adapting the output to the available computational constraints.
+      We additionally provide a comparison against FLoD~\cite{seo2024flod}, a
+      concurrent method that trains several defined levels.
+      For each baseline, we use default configurations provided by the
+      authors, using the official implementations.
+
+      % We compare the methods on NeRF Synthetic~\cite{mildenhall2020nerf} and
+      % DTU~\cite{aanaes2016large}. 
+
+      \input{fig/\clogdirname/qualitative}
+      \input{tabs/\clogdirname/lod}
+      \input{tabs/\clogdirname/ablation}
+    \paragraph{Metrics.}
+      We evaluate the novel-view rendering quality of each method via the
+      standard metrics: PSNR, SSIM~\cite{wang2004image} and
+      LPIPS~\cite{zhang2018perceptual}.
+      % To measure the visual quality of the methods, we use 
+      To provide an idea of the compute/memory budget for each method, we also
+      provide the number of Gaussians used to render images for each method.
+      For Scaffold-GS~\cite{lu2024scaffold} and
+      Octree-GS~\cite{ren2024octree}, we measure the final number Gaussians
+      used for rendering, which is by default ten times the number of point
+      cloud points used in the representation.
+
+      % as the number of points in the point cloud multiplied by the number of
+      % Gaussians spawned at each point which defaults to 10 in the original
+      % implementation. 
+
+  \subsection{Continuous Level of Details}
+
+    As the main focus of our work is to introduce continous levels of detail,
+    we first demonstrate its performance qualitatively
+    (\cref{fig:clog-level-of-details}) and quantitatively
+    (\cref{fig:clog-num-gaussians-psnr} and \cref{tab:clog-lod}).
+    As shown in \cref{fig:clog-level-of-details}, our method is able to render
+    scenes at varying levels of detail.
+    We additionally provide results for a concurrent work,
+    FLoD~\cite{seo2024flod}, which is also able to provide levels of detail at
+    pre-defined set of levels.
+    Our method can render at \emph{any} number of Gaussians between $32^2$ and
+    $512^2$, and provides sharper renderings.
+
+    We note that results for FLoD~\cite{seo2024flod} for the NeRF
+    Synthetic~\cite{mildenhall2020nerf} dataset should be interpreted with
+    caution, as they performed particularly badly for \texttt{ficus} and
+    \texttt{mic} sequences, despite our best efforts using the official
+    implementation.
+    We present metrics for each subject in the dataset and additional renders
+    in~\supplementary{}.
+
+    In \cref{fig:clog-num-gaussians-psnr}, we summarize the quantitative
+    results in \cref{tab:clog-lod} for the DTU dataset.
+    We use DTU only for this comparison as FLoD does not work well for the two
+    sequences from the NeRF Synthetic dataset.
+    As shown, our method provides the best rendering quality given a
+    predetermined number of Gaussians.
+    FLoD~\cite{seo2024flod} provides slightly inferior performance compared to
+    ours, and while Octree-GS is able to be used to extract a LOD, its quality
+    degrades quickly.
+    Finally, at the finest level, our results are comparable to traditional 3D
+    Gaussian Splatting.
+    We emphasize once more, that our results are obtained with a \emph{single}
+    underlying representation for all LoDs, simply rendered at a different
+    level of detail.
+
+    % We present that our method is capable of producing continuous levels of
+    % details for a chosen value $l{\in}[0.1, 1]$. We do not use any values
+    % than that as~\ours{} tends to produce illegible renderings.
+    % Octree-GS~\cite{ren2024octree} uses two levels across all datasets.
+    % FLoD~\cite{seo2024flod} applies 5 scales where the lowest scale tends to
+    % produce less than 20 Gaussians on average. We show the results according
+    % to predefined level. 
+
+    % As the number of Gaussians is not comparable among levels of all the used
+    % methods, we summarize the metrics according to their definition of level
+    % in~\cref{tab:lod}. We additionally present in~\cref{fig:level-of-details}
+    % how choosing a particular level affects the results. We show those values
+    % on~\cref{fig:num-gaussians-psnr} where we can see that~\ours{} achieves
+    % better PSNR performance than FLoD given the similar number of Gaussians.
+    % Moreover, our method achieves high-fidelity results, comparable to other
+    % baselines with a predefined number of LoDs, while enabling using a
+    % continuous LoD.
+
+  \subsection{At the finest level}
+    To demonstrate that our method is also able to provide fine details if
+    necessary, we provide a summary of the results at the finest level of
+    detail.
+    We provide qualitative examples in \cref{fig:clog-qualitative} and a
+    summary in \cref{tab:clog-quantitative}.
+    Our method provides comparable rendering quality to other state-of-the-art
+    Gaussian Splatting methods, and on top, is able to provide continuous
+    levels of detail.
+    Additionally, we note that our method trains given a pre-defined budget,
+    which makes deployment also easy.
+
+    % We measure the capability of the proposed approach to reconstruct the
+    % scene with high-fidelity. Please note that in this experiment our primary
+    % goal is to match the quality of the baselines as measured by PSNR, SSIM,
+    % LPIPS and number of Gaussians. \ours{} should not affect the fidelity but
+    % merely imbue the Gaussian Splatting representation with continuous level
+    % of details capabilities. We summarize the achieved results
+    % in~\cref{tab:quantitative} and showcase the reconstructions
+    % in~\cref{fig:qualitative}. Our approach fits between the baselines in
+    % terms of the quality. In contrast to the baselines, its number of output
+    % Gaussians is predictable---since we assume the maximum resolution of the
+    % grid at the start, there are no changes in the final number of Gaussians.
+    % We posit such a behavior to be beneficial in practice as the compute
+    % requirements are predictable. The number can be also constrained if
+    % required.
+
+  \subsection{Ablation study}
+    To motivate our design choices, we provide an ablation study where various
+    components of our method are disabled.
+    Specifically, we look into the impact of the modulator $\modulator$, the
+    noise in $\modulated{\mean}'$~\cref{eq:clog-noise-loc}, the sorting with
+    PLAS~\cite{morgenstern2024compact} in the feature space for Stage II
+    training, the use of regularizers $\regularizer(\cdot)$, and disabling
+    error-based relocation~\cite{bulo2024revising}.
+    Others can trivially be disabled, and for the modulator $\modulator$ we
+    use directly the downsampled descriptors~$\cloglatents$ without
+    refinement, \ie, we apply $\down{\cloglatents}$ instead of
+    $\modulated{\cloglatents}$ in the rendering
+    equation~(\cref{eq:clog-rendering-image}).
+    % To check how $\modulator$ affects the results, 
+    We present our results in~\cref{tab:clog-ablation}.

@@ -1,0 +1,84 @@
+\newcommand{\supplod}[6]{
+  \includegraphics[trim={#4},clip,width=\linewidth]{assets/\clogdirname/supp/lod_frames/ours_#1_#2_#3.png}
+}
+
+\newcommand{\supplodfig}{
+  % \pdfpxdimen=\dimexpr 1 in/72\relax
+  \def\height{64bp}
+  \tikzsetnextfilename{supp_qualitative_log}
+  \tikzset{external/export next=false}
+  \resizebox{0.94\linewidth}{!}{
+    \begin{tikzpicture}[
+        >=stealth',
+        overlay/.style={
+            anchor=south west,
+            draw=black,
+            rectangle,
+            line width=0pt,
+            outer sep=0,
+            inner sep=0,
+          },
+      ]
+      \matrix[
+        matrix of nodes,
+        column sep=-3pt,
+        row sep=-0.1pt,
+        ampersand replacement=\&,
+        inner sep=0,
+        outer sep=0,
+        nodes={scale=0.2},
+      ] (gts) {
+        \supplod{blender}{drums}{0.10}{0 0 0 0}{800}{800} \&
+        \supplod{blender}{drums}{0.28}{0 0 0 0}{800}{800} \&
+        \supplod{blender}{drums}{0.46}{0 0 0 0}{800}{800} \&
+        \supplod{blender}{drums}{0.82}{0 0 0 0}{800}{800} \&
+        \supplod{blender}{drums}{1.00}{0 0 0 0}{800}{800}               \\
+        \supplod{blender}{ficus}{0.10}{93bp 163bp 104bp 35bp}{800}{800} \&
+        \supplod{blender}{ficus}{0.28}{93bp 163bp 104bp 35bp}{800}{800} \&
+        \supplod{blender}{ficus}{0.46}{93bp 163bp 104bp 35bp}{800}{800} \&
+        \supplod{blender}{ficus}{0.82}{93bp 163bp 104bp 35bp}{800}{800} \&
+        \supplod{blender}{ficus}{1.00}{93bp 163bp 104bp 35bp}{800}{800} \\
+        \supplod{dtu}{scan65}{0.10}{142bp 12bp 154bp 80bp}{619}{823} \&
+        \supplod{dtu}{scan65}{0.28}{142bp 12bp 154bp 80bp}{619}{823} \&
+        \supplod{dtu}{scan65}{0.46}{142bp 12bp 154bp 80bp}{619}{823} \&
+        \supplod{dtu}{scan65}{0.82}{142bp 12bp 154bp 80bp}{619}{823} \&
+        \supplod{dtu}{scan65}{1.00}{142bp 12bp 154bp 80bp}{619}{823}    \\
+        \supplod{dtu}{scan83}{0.10}{227bp 92bp 96bp 27bp}{619}{823} \&
+        \supplod{dtu}{scan83}{0.28}{227bp 92bp 96bp 27bp}{619}{823} \&
+        \supplod{dtu}{scan83}{0.46}{227bp 92bp 96bp 27bp}{619}{823} \&
+        \supplod{dtu}{scan83}{0.82}{227bp 92bp 96bp 27bp}{619}{823} \&
+        \supplod{dtu}{scan83}{1.00}{227bp 92bp 96bp 27bp}{619}{823}     \\
+        \rotatebox{0}{\supplod{ava}{20230316--1103--BHK376}{0.10}{0bp 221bp 91bp 227bp}{619}{823}} \&
+        \rotatebox{0}{\supplod{ava}{20230316--1103--BHK376}{0.28}{0bp 221bp 91bp 227bp}{619}{823}} \&
+        \rotatebox{0}{\supplod{ava}{20230316--1103--BHK376}{0.46}{0bp 221bp 91bp 227bp}{619}{823}} \&
+        \rotatebox{0}{\supplod{ava}{20230316--1103--BHK376}{0.82}{0bp 221bp 91bp 227bp}{619}{823}} \&
+        \rotatebox{0}{\supplod{ava}{20230316--1103--BHK376}{1.00}{0bp 221bp 91bp 227bp}{619}{823}}                           \\
+        \rotatebox{0}{\supplod{ava}{20230324--0820--AEY864}{0.10}{0bp 162bp 0bp 195bp}{619}{823}} \&
+        \rotatebox{0}{\supplod{ava}{20230324--0820--AEY864}{0.28}{0bp 162bp 0bp 195bp}{619}{823}} \&
+        \rotatebox{0}{\supplod{ava}{20230324--0820--AEY864}{0.46}{0bp 162bp 0bp 195bp}{619}{823}} \&
+        \rotatebox{0}{\supplod{ava}{20230324--0820--AEY864}{0.82}{0bp 162bp 0bp 195bp}{619}{823}} \&
+        \rotatebox{0}{\supplod{ava}{20230324--0820--AEY864}{1.00}{0bp 162bp 0bp 195bp}{619}{823}}                           \\
+      };
+      \draw[-stealth,  thick, dashed,  ->] ([yshift=0pt]gts-1-1.north west) -- node [above, midway] {Increasing~$\lod\in[0.1, 1]$} ([yshift=0pt]gts-1-5.north east);
+
+      \node[below=0.2em of gts-6-1.south, align=center] {2601 \#G};
+      \node[below=0.2em of gts-6-2.south, align=center] {20449 \#G};
+      \node[below=0.2em of gts-6-3.south, align=center] {55225 \#G};
+      \node[below=0.2em of gts-6-4.south, align=center] {175561 \#G};
+      \node[below=0.2em of gts-6-5.south, align=center] {262144 \#G};
+    \end{tikzpicture}
+  }
+}
+
+\begin{figure}[t]
+  \centering
+  \supplodfig
+  \caption{
+    \textbf{Additional qualitative examples (progressive level of details) --}
+    We showcase how our method reconstructs different samples under a given
+    LoD~$\lod$.
+    The bottom row shows the number of Gaussians used to render an image.
+    We use $\lod{\in}\{0.1, 0.28, 0.46, 0.82, 1.0\}$ levels od detail.
+  }
+  \label{fig:clog-supp-qualitative-lod}
+\end{figure}

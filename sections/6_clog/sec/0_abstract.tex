@@ -1,0 +1,27 @@
+\section{Abstract}
+  \label{sec:clog-abstract}
+  Gaussian Splatting has become popular thanks to its ability to render
+  high-quality novel views from casually captured videos efficiently in real
+  time.
+  However, to achieve high-quality renderings, many Gaussians are used, which
+  limits the devices that can render these representations.
+  In this work, we introduce a method to dynamically change the number of
+  Gaussians used on demand, according to where the representation is deployed
+  and how many Gaussians can be supported.
+  Importantly, we achieve this with a single representation that is trained
+  only once---a representation that embeds a continuous notion of levels of
+  detail.
+  Specifically, we train a UV mapping---a multi-channel 2D image---of 3D
+  Gaussian features, which is then interpreted by a small Multi-Layer
+  Perceptron (MLP) to the characteristics of the Gaussian, i.e., center,
+  covariance, opacity, and color.
+  When training, we make sure that downsampled versions of this image also
+  render the scene well by introducing a modulator that adjusts UV map
+  features after downsampling.
+  Thus, at inference time, this 2D image can be downsampled to any resolution
+  of choice, rendering any number of 3D Gaussians.
+  We demonstrate the performance of our method on
+  NeRF~\cite{mildenhall2020nerf}, DTU~\cite{aanaes2016large} and
+  AVA~\cite{martinez2024codec} at with various number of Gaussians,
+  outperforming the state-of-the-art 3D Gaussian Splatting representations
+  that support levels of detail.

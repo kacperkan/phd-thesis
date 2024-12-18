@@ -1,0 +1,98 @@
+\newcommand{\insertsmallteaser}[1]{
+  \includegraphics[height=\height, trim={14em 2em 14em 0}, clip]{assets/\clogdirname/teaser/teaser_scale=#1.png}
+}
+\newcommand{\insertsmalluv}[1]{
+  \includegraphics[height=\smallheightuv]{assets/\clogdirname/teaser/uv_scale=#1.png}
+}
+\newcommand{\clogteasermanual}{
+  \def\height{128bp}
+  \def\smallheight{64bp}
+  \def\smallheightuv{76bp}
+  \begin{subfigure}[c]{\linewidth}
+    \centering
+
+    \tikzsetnextfilename{clogteaser}
+    \tikzset{external/export next=false}
+    \resizebox{\linewidth}{!}{
+      \begin{tikzpicture}[
+          >=stealth',
+          overlay/.style={
+              anchor=south west,
+              draw=black,
+              rectangle,
+              line width=0pt,
+              outer sep=0,
+              inner sep=0,
+            },
+        ]
+
+        \node (representation) {\includegraphics[height=\height, trim={12em 2em 12em 0}, clip]{assets/\clogdirname/teaser/teaser_1_blended.png}};
+        \node[circle, thick, fill=white, draw, below left=4.5em and 1.25em of representation.south] (x1) {};
+        \node[circle, thick, fill=white, draw, below=0.1em of x1] (x2) {};
+        \node[circle, thick, fill=white, draw, below=0.1em of x2] (x3) {};
+        \node[circle, thick, fill=white, draw, above=0.1em of x1] (x4) {};
+        \node[circle, thick, fill=white, draw, above=0.1em of x4] (x5) {};
+
+        \node[circle, thick, fill=white, draw, right=2em of x1] (x11) {};
+        \node[circle, thick, fill=white, draw, below=0.1em of x11] (x12) {};
+        \node[circle, thick, fill=white, draw, above=0.1em of x11] (x13) {};
+
+        \foreach \x in {1,...,5}
+        \foreach \y in {1,...,3}
+        \draw (x\x) -- (x1\y);
+        \matrix[
+          matrix of nodes,
+          right=1em of representation,
+          column sep=0pt,
+          row sep=0pt,
+          ampersand replacement=\&,
+          inner sep=0,
+          outer sep=0
+        ] (pictures) {
+          \insertsmallteaser{0.1} \&
+          \insertsmallteaser{0.25} \&
+          \insertsmallteaser{0.5} \&
+          % \insertsmallteaser{0.75} \&
+          \insertsmallteaser{1.0} \\
+        };
+
+        \node[below=1em of pictures-1-1.south, outer sep=2pt] (uv1) {\insertsmalluv{0.1}};
+        \node[below=1em of pictures-1-2.south, outer sep=2pt] (uv2) {\insertsmalluv{0.25}};
+        \node[below=1em of pictures-1-3.south, outer sep=2pt] {\insertsmalluv{0.5}};
+        \node[below=1em of pictures-1-4.south, outer sep=2pt] (uv5) {\insertsmalluv{1.0}};
+        \draw[-stealth, shorten <=2pt, decoration={snake}, decorate, thick] (x11) -- node [midway, above, outer sep=3pt] {\tiny modulation} (uv1);
+
+        \node[above=0em of pictures, anchor=base] (novelview) {Novel view and level of details synthesis};
+        \node[above=-0.5em of representation, anchor=base, align=center] {Learned\\representation};
+
+        \node[below=0em of pictures, align=center] {Learned 2D grid of features};
+
+        \draw[-stealth,  thick, dashed, ->] (uv1.south west) -- node [below, midway] {Increasing Continuous Levels of Details} (uv5.south east);
+
+        \node[below=0.5em of representation.south] {Modulator~$\modulator$};
+        \node[above right=2em and 0em of pictures.south east, anchor=west, scale=0.85] (plot) {\input{assets/\clogdirname/teaser/teaser_dtu.pgf}};
+
+        \node[above=-2.5em of plot.north] {Novel View Rendering Quality on DTU~\cite{aanaes2016large}};
+
+      \end{tikzpicture}
+    }
+  \end{subfigure}
+}
+\newcommand{\clogteaserfigure}{
+  \begin{figure}
+    \label{fig:clog-teaser}
+    \centering
+    \clogteasermanual
+    \caption{
+      \textbf{Teaser} -- We present a novel method to introduce continuous levels of detail (LoD) for Gaussian Splatting.
+      We represent Gaussians as a set of vectors~$\cloglatents$ embedded onto
+      a 2D grid, which we can easily subsample to obtain a desired level of
+      detail.
+      To account for any artifacts that can occur during downsampling, we
+      train a modulator~$\modulator$ that corrects such errors.
+      Our method provides a continuous change of the LoD and provides the best
+      trade-off between the number of Gaussians and rendering quality.
+    }
+  \end{figure}
+
+}

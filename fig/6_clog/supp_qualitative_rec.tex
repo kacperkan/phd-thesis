@@ -1,0 +1,131 @@
+
+% scan37: 6 scan114: 6 SCAN97: 0
+
+% 20220412--1326--BGR645: 8 20220809--1034--BJM420: 3
+\newcommand{\supprecimg}[6]{
+  \includegraphics[trim={#6},clip,width=0.15\linewidth]{assets/\clogdirname/qualitative/#1_#2_#3_#4_#5.png}
+}
+
+\newcommand{\supprec}{
+  \def\height{84bp}
+  \tikzsetnextfilename{supp_qualitative_rec}
+  \tikzset{external/export next=false}
+  \resizebox{\linewidth}{!}{
+    \begin{tikzpicture}[
+        >=stealth',
+        overlay/.style={
+            anchor=south west,
+            draw=black,
+            rectangle,
+            line width=0pt,
+            outer sep=0,
+            inner sep=0,
+          },
+      ]
+      \matrix[
+        matrix of nodes,
+        column sep=-3pt,
+        row sep=0,
+        ampersand replacement=\&,
+        inner sep=0,
+        outer sep=0
+      ] (gts) {
+        \supprecimg{gt}{blender}{materials}{0047}{1.0}{0bp 140bp 0bp 213bp}           \\
+        \supprecimg{gt}{blender}{ship}{0070}{1.0}{12bp 44bp 0bp 171bp}                \\
+        \supprecimg{gt}{blender}{mic}{0040}{1.0}{2bp 134bp 118bp 100bp}               \\
+        \supprecimg{gt}{dtu}{scan24}{0000}{1.0}{0 0 0 0}                              \\
+        \supprecimg{gt}{dtu}{scan37}{0006}{1.0}{0 0 0 0}                              \\
+        \supprecimg{gt}{dtu}{scan110}{0005}{1.0}{182bp 104bp 99bp 32bp}               \\
+        \supprecimg{gt}{ava}{20220809--1034--BJM420}{0003}{1.0}{19bp 324bp 0bp 52bp}  \\
+        \supprecimg{gt}{ava}{20230405--1635--AAN112}{0003}{1.0}{20bp 233bp 1bp 145bp} \\
+      };
+      \node[above=0em of gts-1-1.north] {Ground Truth};
+
+      \matrix[
+        matrix of nodes,
+        right=1em of gts,
+        column sep=-3pt,
+        row sep=0,
+        ampersand replacement=\&,
+        inner sep=0,
+        outer sep=0
+      ] (preds) {
+        \supprecimg{ours}{blender}{materials}{0047}{1.0}{0bp 140bp 0bp 213bp} \&
+        \supprecimg{flod}{blender}{materials}{0047}{5}{0bp 140bp 0bp 213bp} \&
+        \supprecimg{octree}{blender}{materials}{0047}{1}{0bp 140bp 0bp 213bp} \&
+        \supprecimg{scaffold}{blender}{materials}{0047}{1}{0bp 140bp 0bp 213bp} \&
+        \supprecimg{3dgs}{blender}{materials}{0047}{1}{0bp 140bp 0bp 213bp}           \\
+
+        \supprecimg{ours}{blender}{ship}{0070}{1.0}{12bp 44bp 0bp 171bp} \&
+        \supprecimg{flod}{blender}{ship}{0070}{5}{12bp 44bp 0bp 171bp} \&
+        \supprecimg{octree}{blender}{ship}{0070}{1}{12bp 44bp 0bp 171bp} \&
+        \supprecimg{scaffold}{blender}{ship}{0070}{1}{12bp 44bp 0bp 171bp} \&
+        \supprecimg{3dgs}{blender}{ship}{0070}{1}{12bp 44bp 0bp 171bp}                \\
+
+        \supprecimg{ours}{blender}{mic}{0040}{1.0}{2bp 134bp 118bp 100bp} \&
+        \supprecimg{flod}{blender}{mic}{0040}{5}{2bp 134bp 118bp 100bp} \&
+        \supprecimg{octree}{blender}{mic}{0040}{1}{2bp 134bp 118bp 100bp} \&
+        \supprecimg{scaffold}{blender}{mic}{0040}{1}{2bp 134bp 118bp 100bp} \&
+        \supprecimg{3dgs}{blender}{mic}{0040}{1}{2bp 134bp 118bp 100bp}               \\
+
+        \supprecimg{ours}{dtu}{scan24}{0000}{1.0}{0 0 0 0} \&
+        \supprecimg{flod}{dtu}{scan24}{0000}{5}{0 0 0 0} \&
+        \supprecimg{octree}{dtu}{scan24}{0000}{1}{0 0 0 0} \&
+        \supprecimg{scaffold}{dtu}{scan24}{0000}{1}{0 0 0 0} \&
+        \supprecimg{3dgs}{dtu}{scan24}{0000}{1}{0 0 0 0}                              \\
+
+        \supprecimg{ours}{dtu}{scan37}{0006}{1.0}{0 0 0 0} \&
+        \supprecimg{flod}{dtu}{scan37}{0006}{5}{0 0 0 0} \&
+        \supprecimg{octree}{dtu}{scan37}{0006}{1}{0 0 0 0} \&
+        \supprecimg{scaffold}{dtu}{scan37}{0006}{1}{0 0 0 0} \&
+        \supprecimg{3dgs}{dtu}{scan37}{0006}{1}{0 0 0 0}                              \\
+
+        \supprecimg{ours}{dtu}{scan110}{0005}{1.0}{182bp 104bp 99bp 32bp} \&
+        \supprecimg{flod}{dtu}{scan110}{0005}{5}{182bp 104bp 99bp 32bp} \&
+        \supprecimg{octree}{dtu}{scan110}{0005}{1}{182bp 104bp 99bp 32bp} \&
+        \supprecimg{scaffold}{dtu}{scan110}{0005}{1}{182bp 104bp 99bp 32bp} \&
+        \supprecimg{3dgs}{dtu}{scan110}{0005}{1}{182bp 104bp 99bp 32bp}               \\
+
+        \supprecimg{ours}{ava}{20220809--1034--BJM420}{0003}{1.0}{19bp 324bp 0bp 52bp} \&
+        \supprecimg{flod}{ava}{20220809--1034--BJM420}{0003}{5}{19bp 324bp 0bp 52bp} \&
+        \supprecimg{octree}{ava}{20220809--1034--BJM420}{0010}{1}{19bp 324bp 0bp 52bp} \&
+        \supprecimg{scaffold}{ava}{20220809--1034--BJM420}{0010}{1}{19bp 324bp 0bp 52bp} \&
+        \supprecimg{3dgs}{ava}{20220809--1034--BJM420}{0010}{1}{19bp 324bp 0bp 52bp}  \\
+
+        \supprecimg{ours}{ava}{20230405--1635--AAN112}{0003}{1.0}{20bp 233bp 1bp 145bp} \&
+        \supprecimg{flod}{ava}{20230405--1635--AAN112}{0003}{5}{20bp 233bp 1bp 145bp} \&
+        \supprecimg{octree}{ava}{20230405--1635--AAN112}{0010}{1}{20bp 233bp 1bp 145bp} \&
+        \supprecimg{scaffold}{ava}{20230405--1635--AAN112}{0010}{1}{20bp 233bp 1bp 145bp} \&
+        \supprecimg{3dgs}{ava}{20230405--1635--AAN112}{0010}{1}{20bp 233bp 1bp 145bp} \\
+      };
+      \node[above=0em of gts-1-1.north] {Ground Truth};
+      \node[above=0em of preds-1-1.north] {\textbf{Ours}};
+      \node[above=0em of preds-1-2.north] {FLoD~\cite{seo2024flod}};
+      \node[above=0em of preds-1-3.north] {OctreeGS~\cite{ren2024octree}};
+      \node[above=0em of preds-1-4.north] {ScaffoldGS~\cite{lu2024scaffold}};
+      \node[above=0em of preds-1-5.north] {3DGS~\cite{kerbl20233d}};
+
+    \end{tikzpicture}
+  }
+}
+
+\begin{figure}[t]
+  \centering
+  % \includegraphics[width=\linewidth,
+  % height=0.75\paperheight]{example-image-a}
+  \supprec
+  \caption{
+    \textbf{Additional qualitative examples (finest level of details) --}
+    We report additional qualitative results of our method and the baselines.
+    Empty images for FLoD~\cite{seo2024flod} denote subjects where the method
+    failed to converge.
+    However, it is worth noting that its quality is on par with
+    OctreeGS~\cite{ren2024octree}, ScaffoldGS~\cite{lu2024scaffold} and
+    3DGS~\cite{kerbl20233d} on all other samples.
+    Please notice that ScaffoldGS~\cite{lu2024scaffold} and
+    3DGS~\cite{kerbl20233d} produce artifacts for AVA (two last rows) which we
+    argue come from insufficient coverage of cameras around the subjects and
+    lack of the scale regularization mechanisms present in other approaches.
+  }
+  \label{fig:clog-supp-qualitative-rec}
+\end{figure}

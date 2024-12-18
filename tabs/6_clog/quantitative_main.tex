@@ -1,0 +1,30 @@
+\begin{table}[!t]
+  \centering
+  \resizebox{\linewidth}{!}{
+    \begin{tabular}{lccccccccc}
+      \toprule
+      \multirow{2}[2]{*}{Method}        & \multicolumn{3}{c}{AVA~\cite{martinez2024codec}} & \multicolumn{3}{c}{Blender~\cite{mildenhall2020nerf}} & \multicolumn{3}{c}{DTU~\cite{aanaes2016large}}                                                                                                                             \\
+      \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+                                        & PSNR $\uparrow$                                  & SSIM $\uparrow$                                       & LPIPS $\downarrow$                             & PSNR $\uparrow$    & SSIM $\uparrow$   & LPIPS $\downarrow$ & PSNR $\uparrow$    & SSIM $\uparrow$   & LPIPS $\downarrow$ \\
+      \midrule
+      3DGS~\cite{kerbl20233d}           & 22.840 $\pm$ 1.291                               & 0.872 $\pm$ 0.030                                     & 0.175 $\pm$ 0.019                              & 33.783 $\pm$ 3.692 & 0.970 $\pm$ 0.027 & 0.031 $\pm$ 0.031  & 31.758 $\pm$ 3.966 & 0.944 $\pm$ 0.030 & 0.063 $\pm$ 0.027  \\
+      Octree-GS~\cite{ren2024octree}    & 22.845 $\pm$ 1.229                               & 0.871 $\pm$ 0.035                                     & 0.173 $\pm$ 0.020                              & 32.268 $\pm$ 3.622 & 0.961 $\pm$ 0.028 & 0.042 $\pm$ 0.030  & 31.803 $\pm$ 3.751 & 0.941 $\pm$ 0.030 & 0.069 $\pm$ 0.027  \\
+      Scaffold-GS~\cite{lu2024scaffold} & 18.664 $\pm$ 1.192                               & 0.729 $\pm$ 0.047                                     & 0.364 $\pm$ 0.035                              & 33.697 $\pm$ 3.630 & 0.968 $\pm$ 0.028 & 0.033 $\pm$ 0.031  & 32.224 $\pm$ 3.788 & 0.945 $\pm$ 0.027 & 0.065 $\pm$ 0.025  \\
+      \midrule
+      FLoD~\cite{seo2024flod}           & 22.295 $\pm$ 1.465                               & 0.871 $\pm$ 0.030                                     & 0.191 $\pm$ 0.020                              & 29.480 $\pm$ 8.381 & 0.923 $\pm$ 0.087 & 0.075 $\pm$ 0.079  & 29.572 $\pm$ 7.597 & 0.897 $\pm$ 0.118 & 0.106 $\pm$ 0.089  \\
+      \textbf{Ours}                     & 27.896 $\pm$ 2.236                               & 0.858 $\pm$ 0.047                                     & 0.209 $\pm$ 0.031                              & 31.797 $\pm$ 3.341 & 0.963 $\pm$ 0.031 & 0.046 $\pm$ 0.041  & 30.727 $\pm$ 3.948 & 0.936 $\pm$ 0.035 & 0.085 $\pm$ 0.036  \\
+      \bottomrule
+
+    \end{tabular}
+  }
+  \caption{
+    \textbf{Quantitative results (finest level of detail) --}
+    We report the rendering quality our method, at the finest level of detail,
+    compared to other baselines.
+    we provide comparable rendering quality, and additionally allow continuous levels of detail.
+    Note that NeRF Synthetic~\cite{mildenhall2020nerf} dataset results for
+    FLoD~\cite{seo2024flod} should be interpreted with caution as it performs
+    excessively poorly in some sequences.
+  }
+  \label{tab:clog-quantitative}
+\end{table}

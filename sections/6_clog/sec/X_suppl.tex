@@ -1,0 +1,38 @@
+\clearpage
+{
+  \vspace{2.0em}
+  \centering
+  \Large
+  \textbf{\clog: Leveraging UV Space for Continuous Levels of Detail} \\
+  \vspace{0.5em}
+  Supplementary Material \\ \vspace{1.0em} }
+
+\section{Potential Societal Impact} Our approach is a
+  general framework for modeling Gaussian Splatting~\cite{kerbl20233d}, and,
+  therefore, inherits its potential misuses.
+  The abuse includes topics like fake identity
+  generation~\cite{zhang2024e3gen}, using copy-righted content for own
+  financial benefit, and detrimental effects of using GPU clusters for
+  training on environment~\cite{bouza2023estimate}.
+  We admit that negative impact.
+  However, we posit, that each of them can be addressed by deep-fake detection
+  methods~\cite{pei2024deepfake}, improving existing methods that achieve
+  better results on open-source material, and by training lighter
+  representations~\cite{lee2024compact,niedermayr2024compressed,fang2024mini}.
+
+  \input{tabs/\clogdirname/supp_quantitative_all}
+  \input{tabs/\clogdirname/supp_ablation}
+  \input{fig/\clogdirname/supp_qualitative_lod}
+  \input{fig/\clogdirname/supp_qualitative_rec}
+\section{Additional Results}
+  We present additional, per-subject quantitative results
+  in~\cref{tab:clog-supp-quantitative} and extended ablation studies over
+  additional scales $\lod{\in}\{0.25, 0.5, 0.75, 1.0\}$ (for
+  reference,~\cref{tab:clog-ablation} involves
+  $\lod{=}1.0$)~\cref{tab:clog-supp-ablation}.
+  We also include more reconstruction samples and comparison to baselines
+  in~\cref{fig:clog-supp-qualitative-rec} and the visualization the LoD
+  progression has on the results in~\cref{fig:clog-supp-qualitative-lod}.
+  % Please see the attached~\texttt{README.html} for animated LoD change and
+  % novel view synthesis, and video in~\texttt{WATCHME.mp4} for narrated method
+  % explanation.
