@@ -1,6 +1,87 @@
 \chapter{Final remarks and discussion}
-\label{chap:final}
+\label{chap:final} In this thesis, we have presented a series of innovative
+methods for rendering realistic human avatars using sparse conditioning
+signals. We began by enhancing Neural Radiance Fields (NeRFs) with
+controllability, introducing our \conerf model. Unlike concurrent approaches,
+\conerf enables interpretable control over the 3D representation of a subject
+while preserving the high quality of the output.
 
-\section{Conclusions}
+Recognizing that \conerf primarily focuses on spatially localized controls,
+such as eye movements, we developed \blendfields. This method generates
+animatable human head avatars from a single multi-view capture, predicting
+realistic, expression-dependent skin deformations in a few-shot data regime.
+By leveraging physically-based deformation features of underlying tetrahedra,
+\blendfields accurately determines skin shading adjustments. Our experiments
+demonstrated that \blendfields achieves impressive results from minimal data
+and surpasses other methods reliant on learnable conditioning signals.
 
-\section{Future work}
+We then tackled the challenge of disentangling subject color from lighting
+conditions in trained radiance fields. To address this, we introduced
+\lumigauss, a model that learns lighting features purely from data. By
+constraining the model so that the output color is a product of subject color
+and lighting attributes, \lumigauss facilitates intuitive scene relighting
+after training. Unlike methods such as~\textcite{saito2024relightable}, which
+require extensive datasets of subject images taken under varied lighting
+conditions, \lumigauss delivers high-fidelity results with minimal data.
+
+Finally, we proposed a general approach to adapt 3D Gaussian Splats (3DGS)
+representations to computational constraints. Our \clog method achieves this
+by modeling 3D Gaussians on a 2D grid. We applied
+PLAS~\cite{morgenstern2024compact} to reorganize the grid for compatibility
+with frequency-based modulation. We then introduced a continuous modulator
+that adjusts the grid based on conditioning signals, producing a constrained
+representation. Our approach is among the first to enable continuous
+representation adaptation during inference, without retraining, while
+maintaining performance comparable to methods with fixed-scale modeling.
+
+These contributions collectively address the research questions outlined
+in~\cref{chap:introduction}. Together, they form a comprehensive framework for
+radiance fields capable of: being controlled with a few annotation strokes,
+animating human avatars with realistic, expression-dependent wrinkles,
+relighting scenes using a small set of varied lighting images, adapting
+representations to fit computational budgets. We see these advancements as
+steps toward making NeRFs and 3DGS more accessible to the public and fostering
+their proliferation in fields like 3D medical imaging.
+
+\section{Future Work and Open Questions}
+  Our research opens doors to several promising directions that warrant further
+  exploration. At the time of writing, we have identified the following
+  questions that could inspire new innovations:
+
+  \paragraph{Are the developed ideas independent of the underlying
+      representation?} This thesis was conducted during a period of rapid advancements in both NeRFs
+    and 3DGS. Consequently, methods like \conerf were designed for NeRFs and may
+    require adaptation to work with other representations. For instance, NeRFs
+    rely on Fourier-transformed input coordinates to generate high-frequency
+    details, enabling coarse manipulation of the field by modulating corresponding
+    frequencies. In contrast, spatial encodings like hash grids from
+    InstantNGP~\cite{mueller2022instant} exhibit high expressivity but are
+    challenging to control due to the spatial decoherence of field attributes.
+    This discrepancy presents an intriguing avenue for research, especially with
+    progress from works like Neuralangelo~\cite{li2023neuralangelo}. Moreover,
+    \textcite{yu2024cogs} demonstrated that with proper modifications, \conerf can
+    induce controllability in 3DGS as well.
+
+  \paragraph{What other control modalities can be explored?}
+    We have explored various control modalities, including sparse
+    annotation-induced control in \conerf, spatial texture control with
+    \blendfields, lighting control with \lumigauss, and computational adaptability
+    with \clog. However, this list is far from exhaustive. Emerging research
+    directions include generating assets with text
+    prompts~\cite{tang2024dreamgaussian}, human control via parametric
+    models~\cite{kocabas2024hugs}, shadow prediction~\cite{solnerf}, and deciding
+    between NeRFs and Gaussians for specific 3D volumes~\cite{he2024nerfs}. This
+    thesis represents a starting point in a vast and rapidly evolving domain of
+    radiance field control.
+
+  \paragraph{Can the introduced concepts extend to generative modeling?}
+    Generative modeling for NeRFs and 3DGS currently demands substantial
+    computational resources to train a single model~\cite{tang2024dreamgaussian}.
+    Most existing approaches borrow from image-based techniques, using text
+    prompts for control. A key question is whether our contributions can be
+    integrated into such workflows. While no comprehensive solution exists yet, we
+    hypothesize that our methods could be applied to radiance fields using a score
+    distillation objective~\cite{poole2023dreamfusion}, where both the radiance
+    field and the diffusion process are conditioned on control signals. Realizing
+    this exciting prospect could unlock novel applications in art and gaming
+    industries.
