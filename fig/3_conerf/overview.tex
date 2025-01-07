@@ -15,16 +15,16 @@
     \label{fig:conerf-laced-implicit}
   \end{subfigure}
   \vspace{-0.7em}
-  \caption{{\bf Framework -- }
-    We depict in (a) the HyperNeRF~\cite{park2021hypernerf} formulation, and
-    (b) our Controllable-NeRF~(CoNeRF).
+  \caption[Pipeline of \conerf]{{\bf Framework -- }
+    We depict in (a) the HyperNeRF~\cite{park2021hypernerf} formulation, and (b)
+    our Controllable-NeRF~(CoNeRF).
     In (a), both point coordinates $\mathbf{x}$ and latent representation
     $\boldsymbol{\beta}$ are respectively processed by a canonicalizer
     $\Canonicalizer$ and a hyper map $\hypermap$, which are then turned into
     radiance and density field values by $\Representation$.
-    In (b), we introduce regressors $\Attribute$ and $\MaskNet$ that regress
-    the attribute and the corresponding mask that enable few-shot
-    attribute-based control of the NeRF model.
+    In (b), we introduce regressors $\Attribute$ and $\MaskNet$ that regress the
+    attribute and the corresponding mask that enable few-shot attribute-based
+    control of the NeRF model.
     See~\cref{sec:conerf-inference} for details.
   }
   \label{fig:conerf-pipeline}

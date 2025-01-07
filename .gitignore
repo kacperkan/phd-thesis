@@ -15,7 +15,6 @@ Makefile
 **/*.log
 **/*.lot
 **/*.out
-**/*.pdf
 **/*.run.xml
 **/*.slg
 **/*.slo
@@ -28,5 +27,7 @@ Makefile
 **/*.glsdefs*
 aux/*
 !aux/main.pdf
+thesis-*.pdf
+assets-back
 
 .DS_Store
