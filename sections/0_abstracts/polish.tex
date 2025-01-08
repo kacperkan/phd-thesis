@@ -1,5 +1,54 @@
 \streszczeniepracy{
-    To jest streszczenie. To jest trochę za krótkie, jako że powinno zająć całą stronę.
+  Rozprawa doktorska obejmuje szereg publikacji, które wprowadzają nowatorskie metody renderowania postaci ludzkich, używając przy tym częściowej informacji.
+  Zaproponowane podejścia skupiają się wokół Neuronowych Pól Radiancji (z ang.
+  \textit{Neural Radiance Fields} lub NeRFs) oraz Rozsmarowywania 3D Gaussów (\textit{3D Gaussian Splatting} lub 3DGS).
+  Przedstawiamy jak te modele budują reprezentację 3D z~płaskich zdjęć 2D oraz
+  demonstrujemy podejścia, za pomocą których możemy warunkować te reprezentacje
+  w celu uzyskania wysokiej jakości renderów postaci ludzkich.
+  Prezentujemy techniki, które używają proste oraz interpretowalne wejścia
+  wytworzone z rzadkich danych trenujących.
+  Pokazujemy również, jak można rozszerzyć je do uczenia w~ujęciu
+  kilkustrzałowym (\textit{few-shot learning}).
+
+  Rozprawę zaczynamy od rozważań na temat neuronowych pól radiancji, adresującym
+  przy tym ograniczenia istniejących podejść, oraz od kontrybucji w~dziedzinie
+  kontrolowalnych pól radiancji.
+  Poprzez integrację częściowej oraz rzadkiej informacji w~czasie uczenia, nasze
+  rozszerzenie NeRFów wykorzystuje gładkość sieci neuronowych, aby predykować
+  kontrolowalne, wysokiej jakości obrazy postaci ludzkich.
+
+  Aby ograniczyć zależność istniejących metod od ekstensywnych, wysokiej jakości
+  adnotacji w~nagraniach wideo z~wielu ujęć jednocześne, wprowadzamy nową metodę
+  uczenia NeRFów w~ujęciu kilkustrzałowym.
+  Nasze podejście uczy się wewnętrznych szablonów deformacji obiektu, które
+  są mieszane w~ciągły i~gładki sposób w~czasie wnioskowania, tym samym
+  osiągając znaczącą poprawę jakości rekonstrukcji obrazu w~porównaniu do
+  istniejących podejść.
+  Nasze podejście pozwala na efektywne i~realistyczne renderowanie ludzi
+  z~zaledwie kilku statycznych ujęć.
+
+  W~tej rozprawie adresujemy również brak metod, które pozwalą na adaptację
+  modeli pól radiancji dla określonych zdolność obliczeniowych w~czasie
+  wnioskowania.
+  Przedstawiamy podejście uczenia ,,od-ogółu-do-szczegółu'' dla modeli 3DGS,
+  które powiększa przestrzennie siatkę ukrytych, wyuczalnych wektorów, które
+  kodują informacje na temat Gaussów w~przestrzeni 3D.
+  Ta strategia osiąga porównywalne wyniki do podstawowego modelu 3DGS,
+  jednocześne pozwalając na wdrożenie tej reprezentacji do urządzeń o~różnych
+  zdolnościach obliczeniowych przy pojedynczym uczeniu modelu.
+
+  Dodatkowo, proponujemy podejście do kontrolowania światła środowiskowego
+  w~polach radiancji.
+  Poprzez uwzględnienie wyliczonej funkcji przeniesienia radiancji, model ten
+  pozwala na zmianę oświetlenia sceny w~realistyczny, oparty na zjawiskich
+  fizycznych sposób.
+
+  Przedstawione badania rozwijają naszą wiedzę w~zakresie kontrolowania pól
+  radiancji oraz rozszerzają ją w~zakresie aplikacji do środowisk, w~których
+  tylko kilka próbek uczących jest dostępnych.
+  Te innowacje zwiększają możliwości, w jakich możemy rekonstruować postacie
+  ludzkie w~3D z~ograniczonych danych oraz otwierają nowe ścieżki badań w~tej
+  dziedzinie.
 } % koniec streszczenia
 
-\slowakluczowe{A, B, C}
+\slowakluczowe{Renderowanie Sieciami Neuronowymi, Neuronowe Pola Radiancji, Uczenie Kilkustrzałowe, Renderowanie Postaci Ludzkich, Warunkowanie Częściową Informacją, Rozsmarowywanie Gaussów}
