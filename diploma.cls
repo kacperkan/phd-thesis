@@ -56,10 +56,6 @@
 
 \usepackage[T1]{fontenc}
 \RequirePackage{inputenc}
-\RequirePackage[acronym,symbols,nopostdot]{glossaries}
-\setglossarysection{section}
-\makeglossaries
-\loadglsentries{sections/0_glossary}
 \newcommand{\acronymstitle}{List of Abbreviations and Symbols}
 
 % -------------------------------------------------------------------
@@ -778,13 +774,7 @@
 % Lista skrótów i symboli
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\acronymslist}{
-    \chapter*{\acronymstitle}
-    \pagestyle{plain}
-    \addcontentsline{toc}{chapter}{\acronymstitle}
-    \printglossary[type=\acronymtype,title={}]
-    \printglossary[type=symbols,title={}]
-    % Alternatywna lista symboli - do użycia tylko w Overleaf
-    %\input{symbols}
+    \include{sections/0_symbols}
 }   %
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
