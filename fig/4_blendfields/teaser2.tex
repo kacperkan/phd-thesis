@@ -62,10 +62,10 @@
           \includegraphics[height=\smallimageheight]{assets/\blendfieldsdirname/teaser/colors/voltemorph.png}
         };
 
-        % \node[below=0.25em of final-1-2] {\textbf{Ours}}; \node[below=0.25em
-        % of final-1-1] {VolTeMorph \cite{garbin2022voltemorph}};
-        % \node[left=0.75em of training-1-1.west, rotate=90, anchor=center]
-        % {VolTeMorph \cite{garbin2022voltemorph}};
+        % \node[below=0.25em of final-1-2] {\textbf{Ours}}; \node[below=0.25em of
+        % final-1-1] {VolTeMorph \cite{garbin2022voltemorph}}; \node[left=0.75em of
+        % training-1-1.west, rotate=90, anchor=center] {VolTeMorph
+        % \cite{garbin2022voltemorph}};
         \node[left=0.75em of training-1-1.west, rotate=90, anchor=center] {VolTeMorph};
         \node[left=0.75em of training-2-1.west, rotate=90, anchor=center] {\textbf{Ours}};
         % \draw[-] ($(training-1-1.south west)+(0.5em,-0.3em)$) -- node[below]
@@ -76,13 +76,11 @@
 
         \draw[densely dotted, line width=0.1em] ($(training-1-5.north east)+(0.5em,0.0em)$) -- ($(training-2-5.south east)+(0.5em,0.0em)$);
 
-        % \matrix[matrix of nodes, inner sep=0, outer sep=0, column sep=0cm,
-        % row sep=0cm, ampersand replacement=\&, right=1em of final]
-        % (voltemorph) {
+        % \matrix[matrix of nodes, inner sep=0, outer sep=0, column sep=0cm, row
+        % sep=0cm, ampersand replacement=\&, right=1em of final] (voltemorph) {
 
         % }; \draw[->,postaction={decorate,decoration={text along path,text
-        % align=center,}}] (training-1-5.east) to [out=30,in=150]
-        % (final-1-1.west);
+        % align=center,}}] (training-1-5.east) to [out=30,in=150] (final-1-1.west);
       \end{tikzpicture}
     }
     % \includegraphics[width=\linewidth, height=8em]{example-image-a}
@@ -93,19 +91,19 @@
   \begin{figure}
     \centering
     \teasernobox
-    \caption{
+    \caption[Teaser introducing \blendfields]{
       \textbf{Teaser} --
       Given five multi-view frames of different expressions, our approach generates a model capable of capturing the fine-grained details of a novel expression beyond the resolution of the underlying face model~\cite{garbin2024voltemorph} (top right corner).
       This is achieved by \textit{blending} the radiance fields computed for
       individual expressions, where the blending coefficients are modulated
       accordingly to \textit{local} volumetric changes.
-      These volumetric changes are measured as the difference in the
-      tetrahedral volume of a mesh that deforms with the expression
-      (\mycoloredbox{seismicred} increase, \mycoloredbox{seismicblue}
-      decrease, and \mycoloredbox{seismicgray} no change in volume).
+      These volumetric changes are measured as the difference in the tetrahedral
+      volume of a mesh that deforms with the expression (\mycoloredbox{seismicred}
+      increase, \mycoloredbox{seismicblue} decrease, and \mycoloredbox{seismicgray}
+      no change in volume).
       Such an approach allows \textit{\blendfields} to render sharp,
-      expression-dependent details of the face without increasing the
-      resolution of the mesh (bottom right corner).
+      expression-dependent details of the face without increasing the resolution of
+      the mesh (bottom right corner).
       \label{fig:blendfields-teaser}
     }
   \end{figure}

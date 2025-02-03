@@ -94,15 +94,15 @@
   \centering
   % \includegraphics[width=\linewidth]{\lumigaussdirname/wild2d-shadowed_unshadowed.pdf}
   \shadowedunshadowed
-  \caption{
+  \caption[A simple visualization of how \lumigauss handles occluders to produce shadows]{
     Unshadowed $\radiance$ (\cref{eq:lumigauss-unshadowed-radiance}) and
     shadowed $\shadowedradiance$ (\cref{eq:lumigauss-shadowed-radiance}) may
     give the same output color if a Gaussian is fully exposed to the
     environment light.
-    In the case of any occluder, $\radiance$ does not handle, and the color
-    does not change.
-    However, our proposed $\shadowedradiance$ properly reacts to the occluder
-    and makes the output color darker.
+    In the case of any occluder, $\radiance$ does not handle, and the color does
+    not change.
+    However, our proposed $\shadowedradiance$ properly reacts to the occluder and
+    makes the output color darker.
   }
 
   \label{fig:lumigauss-shadowed_unshadowed}

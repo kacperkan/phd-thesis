@@ -114,15 +114,15 @@
 \begin{figure}
   \centering
   \clogpipelinefig
-  \caption{
+  \caption[Pipeline of \clog]{
     \textbf{Pipeline --}
     We represent the scene with a 2D UV map containing features that an MLP
     interprets 3D Gaussians.
     We first train the UV map at the highest resolution and sort it to ensure
     spatial coherence of similar features, enabling effective subsampling.
-    For any desired level of detail (LoD), we obtain the corresponding UV map
-    by downsampling and processing it through a modulator that adapts the
-    features to map correctly to 3D Gaussians at reduced density.
+    For any desired level of detail (LoD), we obtain the corresponding UV map by
+    downsampling and processing it through a modulator that adapts the features to
+    map correctly to 3D Gaussians at reduced density.
     This approach enables support for \emph{arbitrary} levels of detail.
   }
   \label{fig:clog-pipeline}

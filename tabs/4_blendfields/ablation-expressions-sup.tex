@@ -19,16 +19,16 @@
       \bottomrule
     \end{tabular}
   }
-  \caption{\textbf{Number of training expressions} -- {
+  \caption[Ablation study showcasing how the number of training expressions affects the results in \blendfields]{\textbf{Number of training expressions} -- {
       We ablate over the number of training expressions.
       We evaluate the model on the captures from the Multiface
       dataset~\cite{wuu2022multiface}.
-      We run the model for each possible expression combination for a given
-      $\nExpr$ and average the results.
-      The best results are colored in \mycoloredbox{firstbestcolor} and the
-      second best in \mycoloredbox{secondbestcolor}.
-      Increasing the number of available training expressions consistently
-      improves the results.
+      We run the model for each possible expression combination for a given $\nExpr$
+      and average the results.
+      The best results are colored in \mycoloredbox{firstbestcolor} and the second
+      best in \mycoloredbox{secondbestcolor}.
+      Increasing the number of available training expressions consistently improves
+      the results.
       However, using $\nExpr{=}5$ expressions saturates the quality and using
       $\nExpr{>}5$ brings diminishing improvements.
       We do not report ``Novel Pose Synthesis'' for $\nExpr{>}5$ as we use

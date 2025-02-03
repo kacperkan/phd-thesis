@@ -96,20 +96,20 @@
 \begin{figure*}[htb]
   \centering
   \resizebox{\linewidth}{!}{\versionone}
-  \caption{\textbf{Novel expression synthesis} --
+  \caption[Novel expression synthesis capabilities of \blendfields]{\textbf{Novel expression synthesis} --
     We compare qualitatively \blendfields with selected baselines (vertical) across two selected subjects (horizontal).
-    Firstly, we show a neutral pose of the subject and then any of the
-    available expressions.
-    To our surprise, VolTeMorph$_\text{avg}$ trained on multiple frames
-    renders some details but with much lower fidelity.
+    Firstly, we show a neutral pose of the subject and then any of the available
+    expressions.
+    To our surprise, VolTeMorph$_\text{avg}$ trained on multiple frames renders
+    some details but with much lower fidelity.
     We argue that VolTeMorph$_\text{arg}$ considers rendering wrinkles as
     artifacts that depend on the view direction
     (see~\cref{eq:blendfields-rendering-equation}).
     VolTeMorph$_1$ is limited to producing the wrinkles it was trained for.
-    In contrast to those baselines, \textbf{\blendfields} captures the details
-    and generalizes outside of the distribution.
-    Please refer to the \supplementary{} for animated sequences and results
-    for other methods.
+    In contrast to those baselines, \textbf{\blendfields} captures the details and
+    generalizes outside of the distribution.
+    Please refer to the \supplementary{} for animated sequences and results for
+    other methods.
   }
   \label{fig:blendfields-qualitative-comparison}
 \end{figure*}

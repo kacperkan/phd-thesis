@@ -34,16 +34,15 @@
 \begin{figure}[t]
   \centering
   \resizebox{0.7\linewidth}{!}{\versionone}
-  \caption{\textbf{Failure cases} -- {
+  \caption[Example failure cases of \blendfields]{\textbf{Failure cases} -- {
       We show failure cases for our proposed approach.
       \textit{Left:}
-      In the presence of wrinkles in low-contrast images, \blendfields takes
-      longer to converge to make wrinkles visible.
+      In the presence of wrinkles in low-contrast images, \blendfields takes longer
+      to converge to make wrinkles visible.
       We show the ground truth on the top, and rendering after training
       $7{\times}10^5$ steps on the bottom.
       In contrast, we rendered images
-      in~\cref{fig:blendfields-synthetic-qualitative} after $2{\times}10^5$
-      steps.
+      in~\cref{fig:blendfields-synthetic-qualitative} after $2{\times}10^5$ steps.
       \textit{Right:} \blendfields inherits issues from VolTeMorph~\cite{garbin2024voltemorph}, which relies on the initial fit of the face mesh.
       If the fit is inaccurate, artifacts appear in the final render.
     }}

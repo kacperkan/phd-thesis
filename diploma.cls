@@ -763,7 +763,8 @@
 % Headers
 \frontpages
 
-\acronymslist
+% TODO: potentially re-enable
+% \acronymslist
 % % % Spis rysunków
 \listoffigures
 % % % Spis tabel
@@ -804,7 +805,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\tailpages}{
     % wykaz symboli i skrótów
-    \acronymslist
+    % TODO: potentially re-enable
+    % \acronymslist
 
     % spis rysunków
     \listoffigures

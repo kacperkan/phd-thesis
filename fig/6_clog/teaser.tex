@@ -83,13 +83,12 @@
     \label{fig:clog-teaser}
     \centering
     \clogteasermanual
-    \caption{
+    \caption[Teaser introducing \clog]{
       \textbf{Teaser} -- We present a novel method to introduce continuous levels of detail (LoD) for Gaussian Splatting.
-      We represent Gaussians as a set of vectors~$\cloglatents$ embedded onto
-      a 2D grid, which we can easily subsample to obtain a desired level of
-      detail.
-      To account for any artifacts that can occur during downsampling, we
-      train a modulator~$\modulator$ that corrects such errors.
+      We represent Gaussians as a set of vectors~$\cloglatents$ embedded onto a 2D
+      grid, which we can easily subsample to obtain a desired level of detail.
+      To account for any artifacts that can occur during downsampling, we train a
+      modulator~$\modulator$ that corrects such errors.
       Our method provides a continuous change of the LoD and provides the best
       trade-off between the number of Gaussians and rendering quality.
     }

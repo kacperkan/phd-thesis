@@ -22,13 +22,12 @@
       \bottomrule
     \end{tabular}
   }
-  \caption{\textbf{Quantitative results} --
+  \caption[Quantitative results between \blendfields and chosen baselines]{\textbf{Quantitative results} --
     We compare \blendfields to other related approaches.
     We split the real data into two settings: one with casual expressions of
     subjects and the other with novel, static expressions.
     For the real data, we only compute metrics on the face region, which we
-    separate using an off-the-shelf face segmentation
-    network~\cite{wood2021fake}.
+    separate using an off-the-shelf face segmentation network~\cite{wood2021fake}.
     % we keep only face regions 
     Please refer to the \supplementary{} for the results that include the
     background in the metrics as well.
@@ -37,11 +36,11 @@
     frames, while VolTeMorph$_1$ is trained on a single frame.
     HyperNeRF-AP/-DS follows the design principles from
     Park~\etal~\cite{park2021hypernerf}.
-    The best results are colored in \mycoloredbox{firstbestcolor} and second
-    best results in \mycoloredbox{secondbestcolor}.
+    The best results are colored in \mycoloredbox{firstbestcolor} and second best
+    results in \mycoloredbox{secondbestcolor}.
     \blendfields performs best in most of the datasets and metrics.
-    Please note that HyperNeRF-AP/DS and NeRFies predict a dense deformation
-    field designed for dense data.
+    Please note that HyperNeRF-AP/DS and NeRFies predict a dense deformation field
+    designed for dense data.
     However, our input data consists of a few static frames only where the
     deformation field leads to severe overfitting.
   }

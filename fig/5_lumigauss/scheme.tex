@@ -84,18 +84,18 @@
   \centering
   \myscheme
   \vspace{-2em}
-  \caption{
+  \caption[Pipeline of \lumigauss]{
     \textbf{Pipeline --}
     \lumigauss learns the relightable 2D Gaussian~\cite{zhang2024gaussian} representation from unconstrained photo collection with variable camera parameters and lighting conditions.
     Each of $k$ Gaussians holds: a normal $\normal_k$, albedo $\albedo_k$, and
     learnable transfer function $\transferfunsh_k$.
-    Our contributed method composes the Gaussians in two
-    modes---\textit{shadowed} and \textit{unshadowed}.
+    Our contributed method composes the Gaussians in two modes---\textit{shadowed}
+    and \textit{unshadowed}.
     The \textit{shadowed} model reconstructs additional shadows
-    (see~\cref{fig:lumigauss-teaser}) on top of the unshadowed model thanks to
-    our proposed use of a radiance transfer function.
-    The Gaussians are splatted~\cite{kerbl20233d,zhang2024gaussian} to render
-    the output image in a novel view and light.
+    (see~\cref{fig:lumigauss-teaser}) on top of the unshadowed model thanks to our
+    proposed use of a radiance transfer function.
+    The Gaussians are splatted~\cite{kerbl20233d,zhang2024gaussian} to render the
+    output image in a novel view and light.
   }
   \label{fig:lumigauss-scheme}
   \vspace{-1.1em}

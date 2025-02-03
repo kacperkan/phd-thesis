@@ -110,9 +110,9 @@
     % align=center, anchor=south]{Eyes Squint, Lips Moved Left};
 
     % \node[above=0.0em of hypernerfstatic-1-1.north, align=center,
-    % anchor=south]{HyperNeRF-AP}; \node[above=0.0em of
-    % hypernerfdynamic-1-1.north, align=center, anchor=south]{HyperNeRF-DS};
-    % \node[above=0.0em of voltemorphstatic-1-1.north, align=center,
+    % anchor=south]{HyperNeRF-AP}; \node[above=0.0em of hypernerfdynamic-1-1.north,
+    % align=center, anchor=south]{HyperNeRF-DS}; \node[above=0.0em of
+    % voltemorphstatic-1-1.north, align=center,
     % anchor=south]{VolTeMorph$^\dagger$}; \node[above=0.0em of
     % voltemorph-1-1.north, align=center, anchor=south]{VolTeMorph};
     % \node[above=0.2em of ours-1-1.north, align=center,
@@ -124,8 +124,8 @@
 
     % \node[left=0em of nerf-2-1.west, align=center,
     % anchor=east]{\rotatebox{90}{Frowned and Smile}}; \node[left=0em of
-    % nerf-4-1.west, align=center, anchor=east]{\rotatebox{90}{Eyes Squint,
-    % Lips Moved Left}};
+    % nerf-4-1.west, align=center, anchor=east]{\rotatebox{90}{Eyes Squint, Lips
+    % Moved Left}};
 
     \node[left=0em of voltemorphstaticone-1-1.west, align=center, anchor=east]{\rotatebox{90}{VolTeMorph$_1$}};
     \node[left=0em of voltemorphone-1-1.west, align=center, anchor=east]{\rotatebox{90}{VolTeMorph$_\text{avg}$}};
@@ -133,8 +133,8 @@
 
     % \node[left=0em of nerf-2-1.west, align=center,
     % anchor=east]{\rotatebox{90}{Frowned and Smile}}; \node[left=0em of
-    % nerf-4-1.west, align=center, anchor=east]{\rotatebox{90}{Eyes Squint,
-    % Lips Moved Left}};
+    % nerf-4-1.west, align=center, anchor=east]{\rotatebox{90}{Eyes Squint, Lips
+    % Moved Left}};
   \end{tikzpicture}
 }
 
@@ -143,19 +143,18 @@
   \resizebox{\linewidth}{!}{
     \versionone
   }
-  \caption{\textbf{Novel expression synthesis} -- {
+  \caption[Novel expression synthesis capabilities of \blendfields]{\textbf{Novel expression synthesis} -- {
       We compare qualitatively \blendfields with selected baselines (vertical)
       across two selected subjects (horizontal).
-      To our surprise, VolTeMorph$_\text{avg}$ trained on multiple frames
-      renders some details too but with much lower fidelity.
-      We argue that VolTeMorph considers rendering wrinkles as artifacts that
-      depend on the view direction
-      (see~\cref{eq:blendfields-rendering-equation}).
+      To our surprise, VolTeMorph$_\text{avg}$ trained on multiple frames renders
+      some details too but with much lower fidelity.
+      We argue that VolTeMorph considers rendering wrinkles as artifacts that depend
+      on the view direction (see~\cref{eq:blendfields-rendering-equation}).
       VolTeMorph$_1$ is limited to producing wrinkles it was trained for.
-      In contrast to those baselines, \textbf{\blendfields} captures the
-      details and generalizes outside of the distribution.
-      Please refer to the \supplementary{} for animated sequences and results
-      for other methods.
+      In contrast to those baselines, \textbf{\blendfields} captures the details and
+      generalizes outside of the distribution.
+      Please refer to the \supplementary{} for animated sequences and results for
+      other methods.
     }}
   \label{fig:blendfields-qualitative-comparison}
 \end{figure*}

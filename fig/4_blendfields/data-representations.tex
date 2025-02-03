@@ -25,8 +25,7 @@
             \includegraphics[width=\imagewidth,trim={1.2cm 0 0 0},clip]{assets/\blendfieldsdirname/data/gt/002757580_28_1.png} \&
             \includegraphics[width=\imagewidth,trim={1.2cm 0 0 0},clip]{assets/\blendfieldsdirname/data/gt/002757580_28_3.png} \&
             \includegraphics[width=\imagewidth,trim={1.2cm 0 0 0},clip]{assets/\blendfieldsdirname/data/gt/002757580_28_4.png} \\ % \&
-            % \includegraphics[width=\imagewidth]{assets/data/gt/002757580_28_7.png}
-            % \\
+            % \includegraphics[width=\imagewidth]{assets/data/gt/002757580_28_7.png} \\
           };
           \node[below right=\offset and \offset of datarep-1-1.north west, overlay]{
             \includegraphics[width=\smallimagewidth]{assets/\blendfieldsdirname/data/wireframes/mesh_frame_0.png}
@@ -40,20 +39,19 @@
           \node[below right=\offset and \offset of datarep-1-4.north west, overlay]{
             \includegraphics[width=\smallimagewidth]{assets/\blendfieldsdirname/data/wireframes/mesh_frame_4.png}
           };
-          % \node[below right=\offset and \offset of datarep-1-5.north west,
-          % overlay]{
+          % \node[below right=\offset and \offset of datarep-1-5.north west, overlay]{
           % \includegraphics[width=\smallimagewidth]{assets/data/wireframes/mesh_frame_7.png}
           % };
         \end{tikzpicture}
       }
     \end{subfigure}
   }
-  \caption{\textbf{Data} -- We represent the data as a multi-view, multi-expression images.
-    For each of these images, we obtain parameters of a parametric model, such
-    as FLAME \cite{li2017flame} to get: an expression vector $\expression$ and
-    a tetrahedral mesh described by vertices $\meshVertices(\expression)$.
-    We highlight that our approach works for any object if a rough mesh and
-    its descriptor are already provided.
+  \caption[Example data samples using to train \blendfields]{\textbf{Data} -- We represent the data as a multi-view, multi-expression images.
+    For each of these images, we obtain parameters of a parametric model, such as
+    FLAME \cite{li2017flame} to get: an expression vector $\expression$ and a
+    tetrahedral mesh described by vertices $\meshVertices(\expression)$.
+    We highlight that our approach works for any object if a rough mesh and its
+    descriptor are already provided.
   }
   \label{fig:blendfields-data-representation}
 \end{figure}

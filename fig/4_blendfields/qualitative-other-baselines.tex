@@ -138,13 +138,13 @@
 \begin{figure*}[htb]
   \centering
   \resizebox{\linewidth}{!}{\versionone}
-  \caption{\textbf{Comparison to strictly data-driven approaches} --
+  \caption[Qualitative comparison between \blendfields and other data-driven approaches]{\textbf{Comparison to strictly data-driven approaches} --
     We compare \blendfields to other baselines that do not rely on mesh-driven rendering: NeRF~\cite{mildenhall2020nerf}, NeRF conditioned on the expression code (NeRF+expr)~\cite{mildenhall2020nerf}, NeRFies~\cite{park2021nerfies}, and HyperNeRF-AP/DS~\cite{park2021hypernerf}.
     As a static model, NeRF converges to an average face from available
     ($\nExpr{=}5$) expressions.
     All other baselines exhibit severe artifacts compared to \blendfields.
-    Those baselines rely on the data continuity in the training set (\eg, from
-    a video), and cannot generalize to any other expression.
+    Those baselines rely on the data continuity in the training set (\eg, from a
+    video), and cannot generalize to any other expression.
   }
   \label{fig:blendfields-qualitative-other-baselines}
 \end{figure*}
