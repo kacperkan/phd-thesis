@@ -766,9 +766,9 @@
 % TODO: potentially re-enable
 % \acronymslist
 % % % Spis rysunków
-\listoffigures
+% \listoffigures
 % % % Spis tabel
-\listoftables
+% \listoftables
  }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -814,7 +814,7 @@
     % spis tabel
     \listoftables
 
-    \easyappendices
+    % \easyappendices
 }
 
 \RequirePackage{xspace}
@@ -847,5 +847,5 @@
 
 %% More compact compact itemize/enumeration (e.g. list contributions)
 \RequirePackage[shortlabels,inline]{enumitem}
-% \setlist[itemize]{noitemsep,leftmargin=*,topsep=0em}
-% \setlist[enumerate]{noitemsep,leftmargin=*,topsep=0em}
+\setlist[itemize]{noitemsep,leftmargin=*,topsep=0em}
+\setlist[enumerate]{noitemsep,leftmargin=*,topsep=0em}

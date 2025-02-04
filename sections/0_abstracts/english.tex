@@ -7,22 +7,23 @@
   sparse training data and extends these methods to perform effectively in
   few-shot learning scenarios.
 
-  We begin by examining the field of neural radiance fields, addressing
-  limitations in existing approaches and presenting contributions to
-  controllable radiance fields.
-  By incorporating partial and sparse data during training, our NeRF extension
-  leverages the smoothness of neural networks to produce controllable,
-  high-quality human images.
+  We begin by examining the area of Neural Radiance Fields and Gaussian
+  Splatting, addressing limitations in existing approaches and presenting
+  contributions to achieve controllable radiance fields.
+  By incorporating partial and sparse data during training, our NeRF
+  extension---\conerf---leverages the smoothness of neural networks to produce
+  controllable, high-quality human images.
 
   To tackle the reliance on extensive, high-quality data annotations from
-  multi-view videos, we introduce a new method for training neural radiance
-  fields in few-shot, multi-view settings.
+  multi-view videos, we introduce a new method, \blendfields, for training
+  neural radiance fields in few-shot, multi-view settings.
   This approach learns internal deformation templates, which blend smoothly
   during inference, significantly improving image quality compared to existing
   baselines and enabling effective human rendering from limited input images.
 
-  The work also addresses the need for adaptable computational efficiency during
-  inference.
+  Many applications of neural rendering to humans require high performance, thus
+  in the last work of this thesis we focus on adaptable computation efficiency
+  with our \clog.
   It proposes a coarse-to-fine learning strategy for 3D Gaussian Splatting,
   which upscales a latent 2D grid that stores Gaussian representations.
   This strategy achieves competitive results while allowing deployment on
@@ -33,6 +34,8 @@
   By incorporating precomputed radiance transfer, this model enables physically
   plausible scene relighting and provides users with intuitive control over
   lighting in reconstructed scenes.
+  We achieve this goal despite the fact that each image is captured under
+  different lighting conditions.
 
   This research advances the state of the art in controllable neural radiance
   fields and expands their application to few-shot learning scenarios.
