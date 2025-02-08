@@ -810,6 +810,7 @@
 
     % spis rysunków
     \listoffigures
+    \clearpage
 
     % spis tabel
     \listoftables
