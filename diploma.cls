@@ -745,7 +745,7 @@
     \maketitle
     \acknowledgements
     \abstractpages
-    \laysummary
+    % \laysummary
     \articles
 % Zgodnie z Zarządzeniem JM Rektora 3/2022, oświadczenia o autorstwie i
 % opcjonalne oświadczenie o udzieleniu licencji składane są w systemie USOS
