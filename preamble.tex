@@ -36,6 +36,9 @@
   decorations.text,
   spy,
   external,
+  shadows,
+  shadows.blur,
+  shadings,
 }
 
 \tikzset{
@@ -180,8 +183,6 @@
 % ======== BlendFields ======= %
 \setlength{\abovedisplayskip}{0pt}
 \setlength{\belowdisplayskip}{0pt}
-
-\usetikzlibrary{matrix, positioning,arrows,arrows.meta,calc,decorations.pathreplacing,decorations.text,spy}
 
 \tikzset{
   % style for inserting images as nodes
@@ -384,3 +385,12 @@
 \newcommand{\normaldistribution}{\mathcal{N}}
 \newcommand{\threshold}[1]{\tau_{#1}}
 \newcommand{\error}{e}
+
+%%% Dirnames
+
+\newcommand{\conerfdirname}{3_conerf}
+\newcommand{\blendfieldsdirname}{4_blendfields}
+\newcommand{\lumigaussdirname}{5_lumigauss}
+\newcommand{\lumigaussassets}{assets/\lumigaussdirname/}
+\newcommand{\clogdirname}{6_clog}
+\newcommand{\clogassets}{assets/\clogdirname/}
