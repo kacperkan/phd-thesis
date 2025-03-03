@@ -743,7 +743,7 @@
     \counterwithout{lstlisting}{chapter} % hack niestety
     \pagestyle{empty}
     \maketitle
-    \acknowledgements
+    % \acknowledgements
     \abstractpages
     % \laysummary
     \articles
