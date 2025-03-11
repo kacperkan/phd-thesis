@@ -4,8 +4,7 @@
   \textit{Neural Radiance Fields} lub NeRFs) oraz Rozsmarowywania 3D Gaussów (\textit{3D Gaussian Splatting} lub 3DGS).
   Przedstawiamy jak te modele budują reprezentację 3D ze zdjęć 2D oraz
   demonstrujemy podejścia, za pomocą których możemy warunkować te reprezentacje
-  w celu uzyskania wysokiej jakości animacji postaci ludzkich i~innych obiektów
-  przedstawionych na scenie.
+  w celu uzyskania wysokiej jakości animacji obiektów przedstawionych na scenie.
   Prezentujemy techniki, które używają proste oraz interpretowalne wejścia
   wytworzone z rzadkich danych trenujących.
   Pokazujemy również, jak można rozszerzyć te podejścia do uczenia w~ujęciu
@@ -16,8 +15,7 @@
   kontrolowalnych pól radiancji.
   Poprzez integrację częściowej oraz rzadkiej informacji w~czasie uczenia, nasze
   rozszerzenie NeRFów---\conerf---wykorzystuje gładkość sieci neuronowych, aby
-  predykować kontrolowalne, wysokiej jakości obrazy postaci ludzkich oraz
-  obiektów.
+  predykować kontrolowalne, wysokiej jakości obrazy obiektów.
 
   Aby ograniczyć zależność istniejących metod od ekstensywnych, wysokiej jakości
   adnotacji w~nagraniach wideo z~wielu ujęć jednocześne, wprowadzamy nową
@@ -26,7 +24,7 @@
   są mieszane w~ciągły i~gładki sposób w~czasie wnioskowania, tym samym
   osiągając znaczącą poprawę jakości rekonstrukcji obrazu w~porównaniu do
   istniejących podejść.
-  Nasze podejście pozwala na efektywne i~realistyczne renderowanie ludzi
+  Nasze podejście pozwala na efektywne i~realistyczne renderowanie obiektów
   z~zaledwie kilku statycznych ujęć.
 
   W~tej rozprawie adresujemy również brak metod, które pozwalą na adaptację
@@ -42,15 +40,15 @@
   Dodatkowo, proponujemy podejście do kontrolowania światła środowiskowego
   w~polach radiancji przy użyciu naszego podejścia o~nazwie \lumigauss.
   Poprzez uwzględnienie wyliczonej funkcji przeniesienia radiancji, model ten
-  pozwala na zmianę oświetlenia sceny w~realistyczny, oparty na zjawiskich
-  fizycznych sposób.
+  pozwala na zmianę oświetlenia sceny w~realistyczny sposób, który jest także
+  oparty na zjawiskach fizycznych.
 
   Przedstawione badania rozwijają naszą wiedzę w~zakresie kontrolowania pól
-  radiancji oraz rozszerzają ją w~zakresie aplikacji do środowisk, w~których
+  radiancji oraz rozszerzają ją w~zakresie aplikacji do sytuacji, w~których
   tylko kilka próbek uczących jest dostępnych.
-  Te innowacje zwiększają możliwości, w jakich możemy rekonstruować postacie
-  ludzkie oraz codzienne obiekty przedstawione na scenie w~3D z~ograniczonych
-  danych oraz otwierają nowe ścieżki badań w~tej dziedzinie.
+  Te innowacje zwiększają możliwości, w jakich możemy rekonstruować codzienne
+  obiekty przedstawione na scenie w~3D z~ograniczonych danych oraz otwierają
+  nowe ścieżki badań w~tej dziedzinie.
 } % koniec streszczenia
 
-\slowakluczowe{Renderowanie Sieciami Neuronowymi, Neuronowe Pola Radiancji, Uczenie Kilkustrzałowe, Renderowanie Postaci Ludzkich, Warunkowanie Częściową Informacją, Rozsmarowywanie Gaussów}
+\slowakluczowe{Renderowanie Sieciami Neuronowymi, Neuronowe Pola Radiancji, Uczenie Kilkustrzałowe, Renderowanie Awatarów, Warunkowanie Częściową Informacją, Rozsmarowywanie Gaussów}

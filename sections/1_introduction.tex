@@ -29,7 +29,7 @@ GPU, making it a viable option for real-time applications.
 This thesis addresses the challenges of achieving controllability in neural
 rendering, with a focus on Neural Radiance Fields (NeRFs) and Gaussian
 Splatting.
-The work presented here reflects my research journey as I tackled key
+The work presented here reflects the research journey as we tackled key
 obstacles in controlling texture, expression, lighting, and computational
 efficiency in radiance fields.
 In the following sections, we describe the motivation behind this work,
@@ -40,7 +40,7 @@ contributions, and finally, provide an overview of the thesis structure.
   \thesisteaserfigure
 
   NeRF and 3DGS are powerful techniques for generating realistic images.
-  However, once trained, their representations become static and unmodifiable.
+  However, once trained, their representations become static and uncontrollable.
   This lack of flexibility makes it challenging to control key properties such
   as lighting, subject attributes, and scene composition, which are crucial for
   practical applications in graphics and vision.
@@ -56,8 +56,9 @@ contributions, and finally, provide an overview of the thesis structure.
   mesh, generate a UV map, and apply textures.
   If their supervisor requests changes, modifying the design without disrupting
   the existing structure is crucial.
-  In contrast, current neural rendering methods lack this flexibility—altering a
-  trained NeRF or 3DGS representation often requires extensive retraining.
+  In contrast, current neural rendering methods lack this flexibility---altering
+  a trained NeRF or 3DGS representation such that the output remains realistic
+  often requires extensive retraining.
   This limitation makes real-time edits impractical and hinders their adoption
   in interactive applications.
 
@@ -68,7 +69,7 @@ contributions, and finally, provide an overview of the thesis structure.
   We present the overview of our proposed solutions in~\cref{fig:thesis-teaser}.
 
   \paragraph{Data-driven controllability.}
-    Since the introduction of NeRFs~\cite{mildenhall2020nerf},
+    After the introduction of NeRFs~\cite{mildenhall2020nerf},
     NeRFies~\cite{park2021nerfies} pioneered high-quality reconstructions from
     casual video sequences of dynamic scenes.
     However, NeRFies initially provided only limited control, relying on simple
@@ -77,8 +78,9 @@ contributions, and finally, provide an overview of the thesis structure.
     HyperNeRF~\cite{park2021hypernerf} addressed this limitation by introducing a
     high-dimensional embedding space, which is projected onto a lower-dimensional
     representation to enable more interpretable scene traversal.
-    Despite this improvement, the projection remains non-linear, making the
-    effects of adjustments unpredictable and difficult to control.
+    Despite this improvement, the projection remains non-linear and thus
+    uninterpretable, making the effects of adjustments unpredictable and difficult
+    to control.
 
     To overcome these challenges, we propose CoNeRF~\cite{kania2022conerf}, which
     leverages the smoothness of Multilayer Perceptrons
@@ -91,14 +93,16 @@ contributions, and finally, provide an overview of the thesis structure.
     NeRFs while maintaining high rendering quality.
 
   \paragraph{Template-based controllability.}
+    Applying the approaches mentioned above to large-scale object deformations,
+    such as jumping jacks, is ineffective.
     Methods such as EditNeRF~\cite{liu2021editing} and FigNeRF~\cite{xie2021fig}
     focus on static elements, restricting control to colors and textures.
-    Additionally, our initial experiments revealed that
-    CoNeRF~\cite{kania2022conerf} struggles with global deformations, such as a
-    person performing jumping jacks.
-    While data-driven approaches like~\textcite{fang2022fast} use multi-scale
-    voxel structures to model deformations, these methods perform well primarily
-    in synthetic settings~\cite{pumarola2021d}.
+    While our CoNeRF~\cite{kania2022conerf} models local motions it struggles with
+    global deformations.
+    To overcome the issue, data-driven approaches like~\textcite{fang2022fast} use
+    multi-scale voxel structures to model deformations.
+    However, these methods perform well primarily in synthetic
+    settings~\cite{pumarola2021d}.
 
     An alternative strategy relies on template-based models, where a 3D mesh is
     used to canonicalize deformed points~\cite{zielonka2022instant}.
@@ -116,7 +120,7 @@ contributions, and finally, provide an overview of the thesis structure.
     Building on VolTeMorph's~\cite{garbin2024voltemorph} approach to point
     canonicalization, BlendFields introduces a physically-based mixture of
     predefined, data-driven wrinkle templates that capture expression-dependent
-    skin deformations.
+    skin deformations on human faces.
     This method significantly reduces data requirements while maintaining high
     fidelity, making it a practical solution for real-world applications.
     Our work on BlendFields was accepted at CVPR 2023.
@@ -166,7 +170,7 @@ contributions, and finally, provide an overview of the thesis structure.
     \clog learns the
     underlying representation once and dynamically adapts it in a feed-forward
     manner.
-    Our work is currently under review at CVPR 2025.
+    Our work is currently under review at ICCV 2025.
 
 \section{Research Objectives}
   In this thesis, we explore diverse avenues to achieve radiance field
@@ -222,8 +226,7 @@ contributions, and finally, provide an overview of the thesis structure.
 
   \subsection{Expression from Few-Shot Learning}
     In response to \ref{enum:movement}, we propose
-    \blendfields~\cite{kania2023blendfields}, which extends \conerf to handle
-    dynamic facial expressions.
+    \blendfields~\cite{kania2023blendfields} to handle dynamic facial expressions.
     Although \conerf is capable of rendering motions given sufficient data and
     annotations, acquiring such data for complex motions (\eg, speaking full
     sentences) is challenging.
@@ -330,8 +333,8 @@ contributions, and finally, provide an overview of the thesis structure.
     For \lumigauss, which addresses the challenge of illumination controllability,
     I played a supervisory role.
     Although I was not the first author on this project, I contributed to the
-    design of the final architecture, authored the revised version of the paper,
-    corrected figures, and oversaw further improvements.
+    design of the final architecture, co-authored the revised version of the
+    paper, corrected figures, and oversaw further improvements.
     This work decouples intrinsic subject color from environmental lighting by
     learning the radiance transfer function from unconstrained images.
 
