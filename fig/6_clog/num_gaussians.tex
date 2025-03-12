@@ -1,9 +1,11 @@
-
-\begin{figure}[t]
+\begin{figure}[!t]
   \centering
-  \resizebox{0.8\linewidth}{!}{
-    \input{assets/\clogdirname/plots/num_gaussians_psnr_dtu_log.pgf}
+  \adjustbox{clip,trim=0 -0.5em 0 1.0em}{%
+    \resizebox{0.7\linewidth}{!}{%
+      \input{assets/\clogdirname/plots/num_gaussians_psnr_dtu_log.pgf}
+    }
   }
+  \vspace{-0.5em}
   \caption[Rendering quality under different number of Gaussians constraints]{\textbf{Rendering quality vs number of Gaussians for the DTU dataset~\cite{aanaes2016large} --}
     We show the PSNR values for each method with respect to the number of
     Gaussians (level of detail).
@@ -13,4 +15,5 @@
     traditional baselines.
   }
   \label{fig:clog-num-gaussians-psnr}
+
 \end{figure}

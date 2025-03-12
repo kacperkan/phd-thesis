@@ -18,6 +18,11 @@
 \usepackage{silence}
 \usepackage{bbm}
 \usepackage{pifont}
+\usepackage{adjustbox}
+\usepackage{polski}
+\usepackage{shortvrb}
+\usepackage{etoolbox}
+\usepackage{xstring}
 % \usepackage{paralist}
 
 \def\mathdefault#1{#1}
@@ -178,7 +183,6 @@
 \newcommand{\VolRend}{\mathcal{V}}
 
 \newcommand{\CIRCLE}[1]{\raisebox{.5pt}{\footnotesize \textcircled{\raisebox{-.6pt}{#1}}}}
-\newcommand{\SupplementaryMaterial}{\texttt{Supplementary}\xspace}
 
 % ======== BlendFields ======= %
 \setlength{\abovedisplayskip}{0pt}
@@ -216,7 +220,6 @@
 % % % misc %
 \newcommand{\cmark}{\textcolor{green}{\ding{51}}}
 \newcommand{\xmark}{\textcolor{red}{\ding{55}}}
-\newcommand{\supplementary}{\texttt{Supplementary}}
 
 % % % math %
 \newcommand{\VolTeMorph}{VolTeMorph~\cite{garbin2024voltemorph}\xspace}
@@ -394,3 +397,18 @@
 \newcommand{\lumigaussassets}{assets/\lumigaussdirname/}
 \newcommand{\clogdirname}{6_clog}
 \newcommand{\clogassets}{assets/\clogdirname/}
+
+\newcommand{\activatepolishconjunctions}{%
+  \catcode`\a=\active \def a{a~}%
+  \catcode`\i=\active \def i{i~}%
+  \catcode`\o=\active \def o{o~}%
+  \catcode`\u=\active \def u{u~}%
+  \catcode`\w=\active \def w{w~}%
+  \catcode`\z=\active \def z{z~}%
+}
+
+\newcommand{\fixpolishtext}[1]{%
+  \begingroup
+  #1%
+  \endgroup
+}

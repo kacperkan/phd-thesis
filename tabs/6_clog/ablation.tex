@@ -2,35 +2,66 @@
 \newcommand{\second}{\cellcolor{secondbestcolor}}
 \begin{table}[!t]
   \centering
-  {
-    \begin{tabular}{lccc}
-      \toprule
-      \multirow{2}[2]{*}{Model}                    & \multicolumn{3}{c}{DTU~\cite{aanaes2016large} @ LoD=0}                                                           \\
-      \cmidrule(lr){2-4}
-                                                   & PSNR $\uparrow$                                        & SSIM $\uparrow$            & LPIPS $\downarrow$         \\
-      \midrule
-      \quad $-$ $\modulator$                       & 14.556 $\pm$ 3.769                                     & 0.627 $\pm$ 0.114          & 0.297 $\pm$ 0.084          \\
-      \quad $-$ $\modulated{\mean}'$               & \second 23.498 $\pm$ 3.007                             & \second 0.788 $\pm$ 0.098  & \second 0.290 $\pm$ 0.098  \\
-      \quad $-$ $\regularizer(\cdot)$              & 23.421 $\pm$ 2.932                                     & 0.784 $\pm$ 0.098          & 0.296 $\pm$ 0.102          \\
-      \quad $-$ PLAS~\cite{morgenstern2024compact} & 23.326 $\pm$ 2.908                                     & 0.784 $\pm$ 0.097          & 0.297 $\pm$ 0.100          \\
-      \quad $-$ resampling~\cite{bulo2024revising} & 22.465 $\pm$ 2.821                                     & 0.775 $\pm$ 0.099          & 0.305 $\pm$ 0.101          \\
-      \midrule
-      \quad $-$ Full method                        & \first {23.648 $\pm$ 3.183}                            & \first {0.798 $\pm$ 0.087} & \first {0.283 $\pm$ 0.090} \\
-      \bottomrule
-    \end{tabular}
+  \begin{minipage}[t]{0.49\linewidth}
+    \centering
+    \resizebox{\linewidth}{!}{
+      \begin{tabular}{lccc}
+        \toprule
+        Method                            & PSNR $\uparrow$    & SSIM $\uparrow$   & LPIPS $\downarrow$ \\
+        \midrule
+        3DGS~\cite{kerbl20233d}           & 28.330 $\pm$ 3.202 & 0.921 $\pm$ 0.040 & 0.090 $\pm$ 0.037  \\
+        Octree-GS~\cite{ren2024octree}    & 15.058 $\pm$ 6.695 & 0.533 $\pm$ 0.199 & 0.197 $\pm$ 0.242  \\
+        Scaffold-GS~\cite{lu2024scaffold} & 16.241 $\pm$ 7.944 & 0.592 $\pm$ 0.216 & 0.175 $\pm$ 0.205  \\
+        \midrule
+        FLoD~\cite{seo2024flod}           & 18.636 $\pm$ 8.502 & 0.671 $\pm$ 0.232 & 0.323 $\pm$ 0.187  \\
+        \textbf{Ours}                     & 24.254 $\pm$ 3.043 & 0.769 $\pm$ 0.083 & 0.256 $\pm$ 0.069  \\
+        \bottomrule
+      \end{tabular}
 
-  }
-  \caption[Ablation study evaluating components introduced in \clog]{\textbf{Ablation study} --
-    We compare our method without
-    the modulator $\modulator$,
-    exploration noise $\modulated{\mean}'$,
-    regularizers $\regularizer(\cdot)$,
-    sorting using PLAS~\cite{morgenstern2024compact},
-    and resampling based on the method of~\citet{bulo2024revising}.
-    We show the results at the coarsest LoD with about 2.6 thousand Gaussians.
-    Our model comprising all the introduced components performs best on average.
-    We mark best results with \mycoloredbox{firstbestcolor} and second best with
-    \mycoloredbox{secondbestcolor}.
-  }
-  \label{tab:clog-ablation}
+    }
+    \caption[Quantitative results (finest level of detail) on BlendedMVS~\cite{yao2020blendedmvs}]{%
+      \textbf{Quantitative results (finest level of detail) on BlendedMVS~\cite{yao2020blendedmvs} --}
+      We show the rendering quality of our method and the baselines at the finest
+      level of detail for BlendedMVS~\cite{yao2020blendedmvs}.
+      Compared to the datasets shown in~\cref{tab:clog-quantitative}, our approach
+      achieves better performance that the baselines that provide a mechanism for
+      varying levels of details.
+    }
+    \label{tab:clog-supp-quantitative-blendedmvs}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.49\linewidth}
+    \centering
+    \resizebox{\linewidth}{!}{
+      \begin{tabular}{lccc}
+        \toprule
+        \multirow{2}[2]{*}{Model}                    & \multicolumn{3}{c}{DTU~\cite{aanaes2016large} @ LoD=0}                                                           \\
+        \cmidrule(lr){2-4}
+                                                     & PSNR $\uparrow$                                        & SSIM $\uparrow$            & LPIPS $\downarrow$         \\
+        \midrule
+        \quad $-$ $\modulator$                       & 14.556 $\pm$ 3.769                                     & 0.627 $\pm$ 0.114          & 0.297 $\pm$ 0.084          \\
+        \quad $-$ $\modulated{\mean}'$               & \second 23.498 $\pm$ 3.007                             & \second 0.788 $\pm$ 0.098  & \second 0.290 $\pm$ 0.098  \\
+        \quad $-$ $\regularizer(\cdot)$              & 23.421 $\pm$ 2.932                                     & 0.784 $\pm$ 0.098          & 0.296 $\pm$ 0.102          \\
+        \quad $-$ PLAS~\cite{morgenstern2024compact} & 23.326 $\pm$ 2.908                                     & 0.784 $\pm$ 0.097          & 0.297 $\pm$ 0.100          \\
+        \quad $-$ resampling~\cite{bulo2024revising} & 22.465 $\pm$ 2.821                                     & 0.775 $\pm$ 0.099          & 0.305 $\pm$ 0.101          \\
+        \midrule
+        \quad $-$ Full method                        & \first {23.648 $\pm$ 3.183}                            & \first {0.798 $\pm$ 0.087} & \first {0.283 $\pm$ 0.090} \\
+        \bottomrule
+      \end{tabular}
+
+    }
+    \caption[Ablation study evaluating components introduced in \clog]{\textbf{Ablation study} --
+      We compare our method without
+      the modulator $\modulator$,
+      exploration noise $\modulated{\mean}'$,
+      regularizers $\regularizer(\cdot)$,
+      sorting using PLAS~\cite{morgenstern2024compact},
+      and resampling based on the method of~\citet{bulo2024revising}.
+      We show the results at the coarsest LoD with about 2.6 thousand Gaussians.
+      Our model comprising all the introduced components performs best on average.
+      We mark best results with \mycoloredbox{firstbestcolor} and second best with
+      \mycoloredbox{secondbestcolor}.
+    }
+    \label{tab:clog-ablation}
+  \end{minipage}
 \end{table}

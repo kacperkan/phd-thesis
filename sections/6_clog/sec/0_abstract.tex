@@ -9,13 +9,13 @@ Gaussians used on demand, according to where the representation is deployed
 and how many Gaussians can be supported.
 Importantly, we achieve this with a single representation that is trained only
 once---a representation that embeds a continuous notion of levels of detail.
-Specifically, we train a UV mapping---a multi-channel 2D image---of 3D
+Specifically, we train a 2D-to-3D mapping---a multi-channel 2D image---of 3D
 Gaussian features, which is then interpreted by a small Multi-Layer Perceptron
-(MLP) to the characteristics of the Gaussian, i.e., center, covariance,
+(MLP) to the characteristics of the Gaussian, \ie, center, covariance,
 opacity, and color.
 When training, we make sure that downsampled versions of this image also
-render the scene well by introducing a modulator that adjusts UV map features
-after downsampling.
+render the scene well by introducing a modulator that adjusts the 2D map of
+features after downsampling.
 Thus, at inference time, this 2D image can be downsampled to any resolution of
 choice, rendering any number of 3D Gaussians.
 We demonstrate the performance of our method on

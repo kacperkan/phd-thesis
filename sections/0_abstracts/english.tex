@@ -1,48 +1,66 @@
-\thesisabstract{
+\thesisabstract{%
   This thesis is a series of publications that introduce novel methods for neural rendering using limited information, focusing on Neural Radiance Fields (NeRFs) and 3D Gaussian Splatting (3DGS).
   It explores how these models construct 3D representations from 2D images and
   demonstrates ways to condition these representations for generating
-  high-quality human renderings.
-  However, both NeRFs and 3DGS representations are not
-  \textit{controllable}---once trained, one can no longer change the content of
-  the scene such that output remains as realistic as possible.
-  We propose techniques that use simple, interpretable inputs derived from
-  sparse training data and extend these methods to perform effectively in
-  few-shot learning scenarios.
+  high-quality renderings of 3D objects.
 
-  We begin by examining the area of Neural Radiance Fields and Gaussian
-  Splatting, addressing limitations in existing approaches and presenting
-  contributions to achieve controllable radiance fields.
+  We present that both NeRFs and 3DGS representations are not
+  \textit{controllable} in an interpretable way---once trained, one can no
+  longer change the content of the scene such that output reflects the changes
+  intended in the input.
+  We propose four complementary techniques that use simple, interpretable inputs
+  derived from sparse training data and extend these methods to perform
+  effectively in few-shot learning scenarios.
+
+  We begin by examining the area of Neural Radiance Fields addressing
+  limitations in existing approaches and presenting contributions to achieve
+  controllable radiance fields.
   By incorporating partial and sparse data during training, our NeRF
   extension---\conerf---leverages the smoothness of neural networks to produce
-  controllable, high-quality human images.
+  controllable, high-quality images across general scene types.
+  We argue that sparse, manual annotations obtainable in the matter of a minute
+  are sufficient to provide an interpretable control over the NeRF's output
+  thanks to the spectral bias of neural networks.
+  We support the argument with extensive evaluation results, showcasing that
+  \conerf is among the first steps to fully controllable radiance fields.
 
   To tackle the reliance on extensive, high-quality data annotations from
   multi-view videos, we introduce a new method, \blendfields, for training
   neural radiance fields in few-shot, multi-view settings.
   This approach learns internal deformation templates, which blend smoothly
   during inference, significantly improving image quality compared to existing
-  baselines and enabling effective human rendering from limited input images.
-
-  Many applications of neural rendering to humans require high performance, thus
-  in the last work of this thesis we focus on adaptable computation efficiency
-  with our \clog.
-  It proposes a coarse-to-fine learning strategy for 3D Gaussian Splatting,
-  which upscales a latent 2D grid that stores Gaussian representations.
-  This strategy achieves competitive results while allowing deployment on
-  various computational devices with minimal quality loss.
+  baselines and enabling effective rendering from limited input images.
+  We leverage our volume representation in the form of tetrahedral cages.
+  Using traditional techniques in computer graphics, we compute physically-based
+  deformation quantities that provide smooth and interpretable interpolation
+  between known expressions.
+  We show in our experiments that \blendfields achieves higher quality of
+  renderings from just a few shots which contrasts to previous works that rely
+  on hundreds of frames in a single capture.
 
   Moreover, we develop a novel model, \lumigauss, for controlling radiance
-  fields through environmental lighting.
-  By incorporating precomputed radiance transfer, this model enables physically
-  plausible scene relighting and provides users with intuitive control over
-  lighting in reconstructed scenes.
+  fields through environmental lighting for ``in-the-wild'' captures under
+  varying daylight conditions.
+  By incorporating precomputed radiance transfer well-known in computer
+  graphics, this model enables physically plausible scene relighting and
+  provides users with intuitive control over lighting in reconstructed scenes.
   We achieve this goal despite the fact that each training image is captured
-  under different lighting conditions.
+  under different lighting conditions and does not contain any information about
+  light presented in the scene.
+
+  Many applications of neural rendering require high performance, thus in the
+  last work of this thesis we focus on adaptable computation efficiency with our
+  \clog.
+  It applies a coarse-to-fine learning strategy for 3D Gaussian Splatting, which
+  upscales a 2D grid that stores Gaussian latent representations.
+  This strategy achieves competitive results while allowing deployment on
+  various computational devices with minimal quality loss.
+  As demonstrated in our experiments, \clog becomes increasingly efficient
+  during inference with fewer Gaussians.
 
   This research advances the state of the art in controllable neural radiance
   fields and expands their application to few-shot learning scenarios.
-  These innovations enhance the possibilities for human rendering and other
+  These innovations enhance the possibilities for neural rendering and other
   objects in the scene from limited information and open new directions for
   future research in the field.
 }

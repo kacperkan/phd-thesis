@@ -122,6 +122,30 @@
 
     }
   \end{subtable}
+  \hfill
+  \vspace{1em}
+
+  \begin{subtable}{\linewidth}
+    \resizebox{\linewidth}{!}{
+      \begin{tabular}{lcccccccccccccccccccccccc}
+        \toprule
+        \multirow{3}[3]{*}{Method}        & \multicolumn{24}{c}{BlendedMVS~\cite{yao2020blendedmvs}}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              \\
+        \cmidrule(lr){2-25}
+                                          & \multicolumn{3}{c}{59d265}                               & \multicolumn{3}{c}{59f363} & \multicolumn{3}{c}{5a3ca9} & \multicolumn{3}{c}{5a6400} & \multicolumn{3}{c}{5a6464} & \multicolumn{3}{c}{5aa235} & \multicolumn{3}{c}{5ab871} & \multicolumn{3}{c}{5adc6b}                                                                                                                                                                                                                                                                                                                   \\
+        \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}\cmidrule(lr){11-13}\cmidrule(lr){14-16}\cmidrule(lr){17-19}\cmidrule(lr){20-22}\cmidrule(lr){23-25}
+                                          & PSNR $\uparrow$                                          & SSIM $\uparrow$            & LPIPS $\downarrow$         & PSNR $\uparrow$            & SSIM $\uparrow$            & LPIPS $\downarrow$         & PSNR $\uparrow$            & SSIM $\uparrow$            & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ & PSNR $\uparrow$ & SSIM $\uparrow$ & LPIPS $\downarrow$ \\
+        \midrule
+        3DGS~\cite{kerbl20233d}           & 27.554                                                   & 0.902                      & 0.077                      & 31.809                     & 0.968                      & 0.048                      & 28.098                     & 0.927                      & 0.110              & 27.490          & 0.927           & 0.082              & 26.610          & 0.939           & 0.064              & 21.938          & 0.827           & 0.176              & 30.204          & 0.937           & 0.094              & 32.939          & 0.945           & 0.070              \\
+        Octree-GS~\cite{ren2024octree}    & 8.796                                                    & 0.409                      & 0.489                      & 28.366                     & 0.922                      & 0.097                      & 18.336                     & 0.632                      & 0.397              & 16.363          & 0.511           & -0.016             & 14.392          & 0.573           & 0.327              & 17.862          & 0.566           & 0.516              & 14.119          & 0.509           & 0.515              & 4.781           & 0.190           & 0.647              \\
+        Scaffold-GS~\cite{lu2024scaffold} & 8.796                                                    & 0.409                      & 0.489                      & 31.305                     & 0.958                      & 0.058                      & 17.540                     & 0.622                      & 0.375              & 16.924          & 0.637           & 0.328              & 10.706          & 0.599           & 0.313              & 19.625          & 0.685           & 0.345              & 26.593          & 0.859           & 0.170              & 4.781           & 0.190           & 0.647              \\
+        FLoD~\cite{seo2024flod}           & 23.896                                                   & 0.719                      & 0.256                      & 29.684                     & 0.938                      & 0.109                      & 25.268                     & 0.854                      & 0.193              & 23.954          & 0.856           & 0.167              & 10.760          & 0.599           & 0.313              & 21.737          & 0.749           & 0.293              & 9.009           & 0.460           & 0.609              & 4.782           & 0.190           & 0.647              \\
+        \midrule
+        \textbf{Ours}                     & 23.330                                                   & 0.653                      & 0.321                      & 19.011                     & 0.731                      & 0.274                      & 25.158                     & 0.818                      & 0.225              & 26.025          & 0.831           & 0.212              & 24.378          & 0.864           & 0.152              & 20.385          & 0.629           & 0.391              & 27.328          & 0.846           & 0.211              & 28.420          & 0.783           & 0.260              \\
+        \bottomrule
+      \end{tabular}
+
+    }
+  \end{subtable}
   \caption[Quantitative results of \clog at the finest level of detail for each of the subjects in the used datatets]{\textbf{Per-subject quantitative results (finest level of detail) --}
     We show the performance of the methods presented in the main part of the paper
     for each of the datasets' subjects.

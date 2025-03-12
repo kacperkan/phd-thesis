@@ -82,23 +82,23 @@ contributions, and finally, provide an overview of the thesis structure.
     uninterpretable, making the effects of adjustments unpredictable and difficult
     to control.
 
-    To overcome these challenges, we propose CoNeRF~\cite{kania2022conerf}, which
-    leverages the smoothness of Multilayer Perceptrons
-    (MLPs)~\cite{tancik2020fourier,park2021nerfies} to introduce controllability
-    through sparse supervision.
-    Our approach trains a weakly-supervised MLP using at least 100 frames, with
-    only a subset receiving coarse annotations that define attribute values and
-    their spatial influence.
-    Published at CVPR 2022, our method enables flexible, interpretable edits to
-    NeRFs while maintaining high rendering quality.
+    % To overcome these challenges, we propose CoNeRF~\cite{kania2022conerf}, which
+    % leverages the smoothness of Multilayer Perceptrons
+    % (MLPs)~\cite{tancik2020fourier,park2021nerfies} to introduce controllability
+    % through sparse supervision.
+    % Our approach trains a weakly-supervised MLP using at least 100 frames, with
+    % only a subset receiving coarse annotations that define attribute values and
+    % their spatial influence.
+    % Published at CVPR 2022, our method enables flexible, interpretable edits to
+    % NeRFs while maintaining high rendering quality.
 
   \paragraph{Template-based controllability.}
     Applying the approaches mentioned above to large-scale object deformations,
     such as jumping jacks, is ineffective.
     Methods such as EditNeRF~\cite{liu2021editing} and FigNeRF~\cite{xie2021fig}
     focus on static elements, restricting control to colors and textures.
-    While our CoNeRF~\cite{kania2022conerf} models local motions it struggles with
-    global deformations.
+    % While our CoNeRF~\cite{kania2022conerf} models local motions it struggles with
+    % global deformations.
     To overcome the issue, data-driven approaches like~\textcite{fang2022fast} use
     multi-scale voxel structures to model deformations.
     However, these methods perform well primarily in synthetic
@@ -114,16 +114,15 @@ contributions, and finally, provide an overview of the thesis structure.
     spaces~\cite{grassal2022neural, kania2022conerf, martin2021nerfw} that require
     thousands of frames to capture high-fidelity deformations, making them
     impractical for data-efficient learning.
-
-    To address these challenges, we propose \blendfields, a data-efficient method
-    inspired by traditional blendshapes~\cite{lewis2014practice}.
-    Building on VolTeMorph's~\cite{garbin2024voltemorph} approach to point
-    canonicalization, BlendFields introduces a physically-based mixture of
-    predefined, data-driven wrinkle templates that capture expression-dependent
-    skin deformations on human faces.
-    This method significantly reduces data requirements while maintaining high
-    fidelity, making it a practical solution for real-world applications.
-    Our work on BlendFields was accepted at CVPR 2023.
+    % To address these challenges, we propose \blendfields, a data-efficient method
+    % inspired by traditional blendshapes~\cite{lewis2014practice}.
+    % Building on VolTeMorph's~\cite{garbin2024voltemorph} approach to point
+    % canonicalization, BlendFields introduces a physically-based mixture of
+    % predefined, data-driven wrinkle templates that capture expression-dependent
+    % skin deformations on human faces.
+    % This method significantly reduces data requirements while maintaining high
+    % fidelity, making it a practical solution for real-world applications.
+    % Our work on BlendFields was accepted at CVPR 2023.
 
   \paragraph{Physically-based illumination controllability.}
     Beyond controlling shape and texture, realistic scene illumination is
@@ -136,13 +135,12 @@ contributions, and finally, provide an overview of the thesis structure.
     lighting~\cite{chen2022hallucinated, yang2023crnerf} or require auxiliary
     networks to predict shadows~\cite{rudnev2022nerfosr}, thereby limiting their
     practicality.
-
-    We propose \lumigauss, which builds on the high-quality surface reconstruction
-    capabilities of 2D Gaussian Splatting~\cite{huang20242d}.
-    By integrating precomputed radiance transfer techniques~\cite{slomp2006gentle,
-      ramamoorthi2001envmap}, \lumigauss achieves high-fidelity rendering with
-    realistic, physics-based lighting.
-    This work was accepted at WACV 2025.
+    % We propose \lumigauss, which builds on the high-quality surface reconstruction
+    % capabilities of 2D Gaussian Splatting~\cite{huang20242d}.
+    % By integrating precomputed radiance transfer techniques~\cite{slomp2006gentle,
+    %   ramamoorthi2001envmap}, \lumigauss achieves high-fidelity rendering with
+    % controllable, physically-plausible lighting.
+    % This work was accepted at WACV 2025.
 
   \paragraph{Efficiency controllability.}
     Volumetric representations are computationally expensive compared to
@@ -164,13 +162,12 @@ contributions, and finally, provide an overview of the thesis structure.
     where needed without compromising overall perception.
     We seek to develop analogous strategies for 3DGS to enable flexible,
     resource-aware rendering.
-
-    Therefore, we propose \clog~\cite{kania2024clog}, a method that predicts the
-    target Gaussian Splatting representation for a specified LoD.
-    \clog learns the
-    underlying representation once and dynamically adapts it in a feed-forward
-    manner.
-    Our work is currently under review at ICCV 2025.
+    % Therefore, we propose \clog~\cite{kania2024clog}, a method that predicts the
+    % target Gaussian Splatting representation for a specified LoD.
+    % \clog learns the
+    % underlying representation once and dynamically adapts it in a feed-forward
+    % manner.
+    % Our work is currently under review at ICCV 2025.
 
 \section{Research Objectives}
   In this thesis, we explore diverse avenues to achieve radiance field
@@ -202,6 +199,9 @@ contributions, and finally, provide an overview of the thesis structure.
   texture~\cite{kania2022conerf,kania2023blendfields},
   shape/expression~\cite{kania2023blendfields},
   lighting~\cite{kaleta2024lumigauss}, and resource usage~\cite{kania2024clog}.
+  Integrating the solutions presented below addresses texture, expression,
+  lighting, and resource adaptability, offering a comprehensive solution to
+  radiance field controllability.
 
   \subsection{Texture from Partial Information}
     To address \ref{enum:texturing}, we introduce \conerf~\cite{kania2022conerf},
@@ -223,6 +223,11 @@ contributions, and finally, provide an overview of the thesis structure.
     Such coarse annotations that can be generated in a few minutes suffice to
     achieve both novel view synthesis and novel attribute manipulations, though
     the annotation complexity grows with the number of controlled attributes.
+    Our method enables flexible, interpretable edits to NeRFs while maintaining
+    high rendering quality.
+
+    The article describing \conerf was published at the top-tier Conference on
+    Computer Vision and Pattern Recognition (CVPR) 2022.
 
   \subsection{Expression from Few-Shot Learning}
     In response to \ref{enum:movement}, we propose
@@ -243,6 +248,10 @@ contributions, and finally, provide an overview of the thesis structure.
     color.
     This framework yields spatially coherent, expression-dependent details even
     when provided with only a few extreme expressions.
+    It also significantly reduces data requirements while maintaining high
+    fidelity, making it a practical solution for real-world applications.
+
+    Our work on \blendfields was accepted at CVPR 2023.
 
   \subsection{Light from Unconstrained Images}
     For \ref{enum:lighting}, we introduce \lumigauss~\cite{kaleta2024lumigauss} to
@@ -254,12 +263,17 @@ contributions, and finally, provide an overview of the thesis structure.
     lighting effects by learning the radiance transfer function directly from
     unconstrained photo collections.
     We employ 2D Gaussian Splatting (2DGS)~\cite{huang20242d} to obtain a smooth
-    and spatially coherent surface—a task that is difficult with
+    and spatially coherent surface---a task that is difficult with
     3DGS~\cite{kerbl20233d}.
     By endowing the Gaussians with additional features corresponding to radiance
     transfer, expressed as Spherical Harmonics~\cite{green2003grittydetail},
     \lumigauss renders realistic scenes and shadows that adapt to novel
     environment maps, achieving higher fidelity than prior approaches.
+    By integrating precomputed radiance transfer techniques~\cite{slomp2006gentle,
+      ramamoorthi2001envmap}, \lumigauss also achieves controllable,
+    physically-plausible lighting.
+
+    This work was accepted at WACV 2025.
 
   \subsection{Levels of Detail in One Model}
     Finally, to address \ref{enum:resources}, we propose
@@ -282,25 +296,9 @@ contributions, and finally, provide an overview of the thesis structure.
     to the typical $10^5$--$10^6$), the object remains recognizable and the model
     adapts continuously—eliminating the need to retrain for different LoD
     settings.
+    \clog learns the underlying representation once and dynamically adapts it in a feed-forward manner.
 
-    The integrated approach above addresses texture, expression, lighting, and
-    resource adaptability, offering a comprehensive solution to radiance field
-    controllability.
-
-    % \section{Contributions} Building on those questions, we structure the content
-    % of this thesis into a set of four chapters that correspond to the research
-    % questions. where we introduce the following: My individual contributions to
-    % answer them, in the form of a multi-authored article, are summarized below:
-    % \begin{itemize} \item A novel approach for controlling trained radiance
-    % fields with the use of sparsely annotated images from a casually captured
-    % data. \item A new model capable of blending trained radiance fields from
-    % multi-view frames in an interpretable way and extrapolating to novel human
-    % expressions for the trained subject. \item The first use of Gaussian
-    % Splatting methods that learns a coherent shape representation of a subject
-    % and an ability to distill the varying lighting conditions in the data to a
-    % radiance transfer function. \item A novel paradigm for learning Gaussian
-    % Splatting models as 2D grids to achieve flexibility to adapt the model to
-    % different computational regimes at inference time. \end{itemize}
+    Our work is currently under review at ICCV 2025.
 
 \section{Contributions}
   Based on these research questions, my contributions are summarized in four

@@ -1,6 +1,7 @@
 \input{fig/\clogdirname/num_gaussians}
-
 \input{tabs/\clogdirname/quantitative_main}
+\input{tabs/\clogdirname/inference_times}
+
 \section{Results}
   \label{sec:clog-result}
 
@@ -8,15 +9,13 @@
   We also provide ablation study on the design choices.
 
   \subsection{Experimental setup}
-
-    We discuss the datasets, the baselines, and metrics.
-
     \paragraph{Datasets.}
       We evaluate our method on three different datasets.
       We use the NeRF Synthetic~\cite{mildenhall2020nerf} as this dataset is
       commonly used in previous work.
-      We also use the DTU~\cite{aanaes2016large} dataset to evaluate performance on
-      a non-synthetic dataset.
+      We also use the DTU~\cite{aanaes2016large} and
+      BlendedMVS~\cite{yao2020blendedmvs} datasets to evaluate performance on a
+      non-synthetic dataset.
       Following the standard protocol~\cite{ren2024octree}, we use the provided
       foreground masks.
       Finally, we use the AVA~\cite{martinez2024codec} dataset to showcase that our
@@ -59,6 +58,7 @@
       \input{tabs/\clogdirname/supp_ablation}
       \input{fig/\clogdirname/supp_qualitative_lod}
       \input{fig/\clogdirname/supp_qualitative_rec}
+      \input{fig/\clogdirname/supp_qualitative_blendedmvs}
   \subsection{Continuous Level of Details}
 
     As the main focus of our work is to introduce continous levels of detail, we
@@ -79,7 +79,7 @@
     \texttt{mic} sequences, despite our best efforts using the official
     implementation.
     We present metrics for each subject in the dataset and additional renders
-    in~\supplementary{}.
+    in~\cref{tab:clog-supp-quantitative}.
 
     In \cref{fig:clog-num-gaussians-psnr}, we summarize the quantitative results
     in \cref{tab:clog-lod} for the DTU dataset.
@@ -126,8 +126,9 @@
   \subsection{At the finest level}
     To demonstrate that our method is also able to provide fine details if
     necessary, we provide a summary of the results at the finest level of detail.
-    We provide qualitative examples in \cref{fig:clog-qualitative} and a summary
-    in \cref{tab:clog-quantitative}.
+    We provide qualitative examples in
+    \cref{fig:clog-qualitative,fig:clog-supp-qualitative-rec-blendedmvs} and a
+    summary in \cref{tab:clog-quantitative,tab:clog-supp-quantitative-blendedmvs}.
     Our method provides comparable rendering quality to other state-of-the-art
     Gaussian Splatting methods, and on top, is able to provide continuous levels
     of detail.

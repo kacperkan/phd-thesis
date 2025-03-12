@@ -1,0 +1,29 @@
+
+\begin{table}[!t]
+  \centering
+  \centering
+  \resizebox{0.8\linewidth}{!}{%
+    \begin{tabular}{llcccc}
+      \toprule
+      Mode                       & Method        & LoD=1                      & LoD=2                      & LoD=3                      & LoD=4                      \\
+      \midrule
+      \multirow{2}{*}{Decoding}  & FLoD          & 1.091 $\pm$ 0.041          & 2.429 $\pm$ 0.080          & 6.500 $\pm$ 0.496          & 14.183 $\pm$ 1.246         \\
+                                 & \textbf{Ours} & 3.337 $\pm$ 0.106          & 16.415 $\pm$ 0.081         & 39.771 $\pm$ 0.152         & 62.275 $\pm$ 0.209         \\
+      \midrule
+      \multirow{2}{*}{Inference} & FLoD          & 2.317 $\pm$ 0.013          & 4.047 $\pm$ 0.015          & 5.887 $\pm$ 0.026          & 7.400 $\pm$ 0.056          \\
+                                 & \textbf{Ours} & \textbf{1.228 $\pm$ 0.027} & \textbf{1.219 $\pm$ 0.015} & \textbf{1.231 $\pm$ 0.021} & \textbf{1.238 $\pm$ 0.049} \\
+      \bottomrule
+    \end{tabular}
+  }
+  \caption[Decoding and inference times of \clog]{\textbf{Decoding and inference times --}
+    We present timing measurements in milliseconds averaged across all datasets
+    for different LoDs.
+    Decoding encompasses all steps required to obtain Gaussians' characteristics
+    for splatting.
+    Inference, on the other hand, measures the time needed to generate the final
+    image.
+    Faster times are in bold.
+  }
+  \label{tab:clog-supp-inference-times}
+
+\end{table}
