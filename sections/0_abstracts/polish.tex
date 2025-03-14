@@ -1,6 +1,6 @@
 \streszczeniepracy{%
-  Ta praca doktorska składa się z~serii publikacji, które wprowadzają nowatorskie metody renderowania neuronowego przy użyciu ograniczonych informacji, koncentrując się na Neuronowych Polach Radiancji (NeRF) i~Rozsmarowywaniu Gaussów 3D (3DGS).
-  Bada ona, w~jaki sposób te modele konstruują reprezentacje 3D z~obrazów 2D i
+  Ta praca doktorska składa się z~serii publikacji, które wprowadzają nowe metody renderowania neuronowego przy użyciu ograniczonej informacji, koncentrując się na Neuronowych Polach Radiancji (NeRF) i~Rozsmarowywaniu Gaussów 3D (3DGS).
+  Bada ona, w~jaki sposób te modele konstruują reprezentacje 3D z~obrazów 2D, i
   demonstruje sposoby warunkowania tych reprezentacji do generowania wysokiej
   jakości renderów obiektów 3D.
 
@@ -16,61 +16,61 @@
   Zaczynamy od analizy obszaru Neuronowych Pól Radiancji, zajmując się
   ograniczeniami istniejących podejść i~przedstawiając wkład w~osiągnięcie
   kontrolowalnych pól radiancji.
-  Poprzez włączenie częściowych rzadkich danych podczas treningu, nasze
-  rozszerzenie NeRF---\conerf---wykorzystuje gładkość sieci neuronowych do
+  Poprzez włączenie częściowych, rzadkich danych podczas treningu, nasze
+  rozszerzenie NeRFów---\conerf---wykorzystuje gładkość sieci neuronowych do
   tworzenia kontrolowalnych obrazów wysokiej jakości dla różnych typów scen.
   Twierdzimy, że rzadkie, ręczne adnotacje, które można uzyskać w~ciągu minuty,
   są wystarczające do zapewnienia interpretowalnej kontroli nad wynikiem NeRFów
   dzięki tendencji sieci neuronowych do faworyzowania niskich częstotliwości.
-  Wspieramy ten argument obszernymi wynikami ewaluacji, pokazując, że \conerf
+  Podpieramy ten argument obszernymi wynikami ewaluacji, pokazując, że \conerf
   jest jednym z~pierwszych kroków w~kierunku w~pełni kontrolowalnych pól
   radiancji.
 
   Aby rozwiązać problem polegania na obszernych, wysokiej jakości adnotacjach
-  danych z~filmów wieloperspektywicznych, wprowadzamy nową metodę, \blendfields,
-  do trenowania neuronowych pól radiancji w~środowiskach z~wielu kamer z~kilkoma
-  przykładami.
+  danych z~filmów z~wielu kamer, wprowadzamy nową metodę, \blendfields, do
+  trenowania neuronowych pól radiancji w~środowiskach z~kilkoma przykładami.
   To podejście uczy się wewnętrznych szablonów deformacji, które są płynnie
   mieszane w~czasie wnioskowania, znacznie poprawiając jakość obrazu w
-  porównaniu do istniejących punktów odniesienia i~umożliwiając efektywne
-  renderowanie z~ograniczonej liczby obrazów wejściowych.
-  Wykorzystujemy naszą reprezentację objętościową w~formie siatki czworościanów.
+  porównaniu do istniejących podejść i~umożliwiając efektywne renderowanie
+  z~ograniczonej liczby obrazów wejściowych.
+  W~tym celu, wykorzystujemy naszą reprezentację przestrzenie, która przyjmuje
+  formę czworościanów.
   Używając tradycyjnych technik w~grafice komputerowej, obliczamy wielkości
-  deformacji oparte na fizyce, które zapewniają płynną i~interpretowalną
-  interpolację między znanymi wyrażeniami.
+  deformacji oparte na fizycznych równaniach, które zapewniają płynną
+  i~interpretowalną interpolację między znanymi wyrażeniami twarzy.
   Pokazujemy w~naszych eksperymentach, że \blendfields osiąga wyższą jakość
   renderów z~zaledwie kilku ujęć, co kontrastuje z~poprzednimi pracami, które
-  opierają się na setkach klatek w~pojedynczym ujęciu.
+  opierają się na nagraniach składających się z~setek klatek.
 
   Ponadto prezentujemy model do kontrolowania pól radiancji poprzez oświetlenie
   środowiskowe dla ujęć ,,w warunkach naturalnych'' przy różnych warunkach
   oświetleniowych---\lumigauss.
-  Poprzez włączenie wstępnie obliczanego transferu promienistego dobrze znanego
-  w~grafice komputerowej, model ten umożliwia fizycznie wiarygodne przeliczanie
+  Poprzez użycie wyliczonego transferu radiancji, dobrze znanego w~grafice
+  komputerowej, model ten umożliwia fizycznie wiarygodne przeliczanie
   oświetlenia sceny i~zapewnia użytkownikom intuicyjną kontrolę nad oświetleniem
   w~zrekonstruowanych scenach.
-  Osiągamy ten cel mimo faktu, że każdy obraz treningowy jest wykonywany w
-  innych warunkach oświetleniowych i~nie zawiera żadnych informacji o~świetle
-  obecnym w~scenie.
+  Osiągamy ten cel mimo faktu, że każdy obraz treningowy jest wykonany w~różnych
+  warunkach oświetleniowych i~nie zawiera żadnych informacji o~świetle obecnym
+  w~scenie.
 
   Wiele zastosowań renderowania neuronowego wymaga wysokiej wydajności, dlatego
   w~ostatniej pracy tej rozprawy koncentrujemy się na adaptowalnej efektywności
   obliczeniowej z~naszym \clog.
-  Stosuje on strategię uczenia od zgrubnego do dokładnego dla Rozsmarowywania
-  Gaussów 3D, która skaluje w~górę siatkę 2D przechowującą reprezentacje ukryte
+  Stosuje on strategię uczenia ,,od ogółu do szczegółu'' dla Rozsmarowywania
+  Gaussów 3D, która skaluje siatkę 2D przechowującą ukryte reprezentacje
   Gaussów.
   Ta strategia osiąga konkurencyjne wyniki, jednocześnie umożliwiając wdrożenie
-  na różnych urządzeniach obliczeniowych z~minimalną utratą jakości.
-  Jak wykazano w~naszych eksperymentach, \clog staje się coraz bardziej wydajny
-  podczas wnioskowania z~mniejszą liczbą Gaussów.
-  zoptymalizowany dla scen skoncentrowanych na obiektach bez tła.
+  na urządzeniach z~różnymi zdolnościami obliczeniowymi przy minimalnej utracie
+  jakości.
+  Jak wykazujemy w~naszych eksperymentach, \clog jest tym wydajniejszy im mniej
+  Gaussów jest zadanych jako wejście.
 
   Te badania rozwijają najnowsze osiągnięcia w~dziedzinie kontrolowalnych
   neuronowych pól radiancji i~rozszerzają ich zastosowanie do scenariuszy
   uczenia się z~kilku przykładów.
-  Te innowacje zwiększają możliwości renderowania neuronowego i~innych obiektów
-  w~scenie z~ograniczonych informacji i~otwierają nowe kierunki dla przyszłych
-  badań w~tej dziedzinie.
+  Nasze metody zwiększają możliwości renderowania neuronowego obiektów w~scenie
+  z~ograniczonych informacji i~otwierają nowe kierunki dla przyszłych badań
+  w~tej dziedzinie.
 } % koniec streszczenia
 
 \slowakluczowe{Renderowanie Sieciami Neuronowymi, Neuronowe Pola Radiancji, Uczenie z~Kilku Ujęć, Renderowanie Awatarów, Warunkowanie Częściową Informacją, Rozsmarowywanie Gaussów}

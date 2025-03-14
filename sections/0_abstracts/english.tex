@@ -27,10 +27,11 @@
   To tackle the reliance on extensive, high-quality data annotations from
   multi-view videos, we introduce a new method, \blendfields, for training
   neural radiance fields in few-shot, multi-view settings.
-  This approach learns internal deformation templates, which blend smoothly
-  during inference, significantly improving image quality compared to existing
-  baselines and enabling effective rendering from limited input images.
-  We leverage our volume representation in the form of tetrahedral cages.
+  This approach learns internal deformation templates, which are blended
+  smoothly during inference, significantly improving image quality compared to
+  existing baselines and enabling effective rendering from limited input images.
+  To achieve that, we leverage our volume representation which takes form of
+  tetrahedral cages.
   Using traditional techniques in computer graphics, we compute physically-based
   deformation quantities that provide smooth and interpretable interpolation
   between known expressions.
@@ -41,18 +42,18 @@
   Moreover, we develop a novel model, \lumigauss, for controlling radiance
   fields through environmental lighting for ``in-the-wild'' captures under
   varying daylight conditions.
-  By incorporating precomputed radiance transfer well-known in computer
+  By incorporating precomputed radiance transfer, well-known in computer
   graphics, this model enables physically plausible scene relighting and
   provides users with intuitive control over lighting in reconstructed scenes.
   We achieve this goal despite the fact that each training image is captured
   under different lighting conditions and does not contain any information about
   light presented in the scene.
 
-  Many applications of neural rendering require high performance, thus in the
-  last work of this thesis we focus on adaptable computation efficiency with our
-  \clog.
+  Many applications of neural rendering require high computation throughput,
+  thus in the last work of this thesis we focus on adaptable computation
+  efficiency with our \clog.
   It applies a coarse-to-fine learning strategy for 3D Gaussian Splatting, which
-  upscales a 2D grid that stores Gaussian latent representations.
+  upscales a 2D grid storing Gaussian latent representations.
   This strategy achieves competitive results while allowing deployment on
   various computational devices with minimal quality loss.
   As demonstrated in our experiments, \clog becomes increasingly efficient
@@ -60,9 +61,9 @@
 
   This research advances the state of the art in controllable neural radiance
   fields and expands their application to few-shot learning scenarios.
-  These innovations enhance the possibilities for neural rendering and other
-  objects in the scene from limited information and open new directions for
-  future research in the field.
+  These techniques enhance the possibilities for neural rendering of objects in
+  the scene from limited information, and open new directions for future
+  research in the field.
 }
 
 \thesiskeywords{Neural Rendering, Neural Radiance Fields, Few-Shot Learning, Human Rendering, Partial Information, Gaussian Splatting}
