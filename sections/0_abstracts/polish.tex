@@ -19,25 +19,32 @@
   Poprzez włączenie częściowych, rzadkich danych podczas treningu, nasze
   rozszerzenie NeRFów---\conerf---wykorzystuje gładkość sieci neuronowych do
   tworzenia kontrolowalnych obrazów wysokiej jakości dla różnych typów scen.
-  Twierdzimy, że rzadkie, ręczne adnotacje, które można uzyskać w~ciągu minuty,
+  Pokazujemy, że rzadkie, ręczne adnotacje, które można uzyskać w~ciągu minuty,
   są wystarczające do zapewnienia interpretowalnej kontroli nad wynikiem NeRFów
   dzięki tendencji sieci neuronowych do faworyzowania niskich częstotliwości.
   Podpieramy ten argument obszernymi wynikami ewaluacji, pokazując, że \conerf
   jest jednym z~pierwszych kroków w~kierunku w~pełni kontrolowalnych pól
   radiancji.
 
-  Aby rozwiązać problem polegania na obszernych, wysokiej jakości adnotacjach
-  danych z~filmów z~wielu kamer, wprowadzamy nową metodę, \blendfields, do
-  trenowania neuronowych pól radiancji w~środowiskach z~kilkoma przykładami.
+  % Aby rozwiązać problem polegania na obszernych, wysokiej jakości adnotacjach
+  % danych z~filmów z~wielu kamer, wprowadzamy nową metodę, \blendfields, do
+  % trenowania neuronowych pól radiancji w~środowiskach z~kilkoma przykładami.
+
+  Modelowanie drobnych deformacji, jak marszczenie się na twarzy, oraz efektów,
+  które te deformacje mają na otaczającą przestrzeń, wymaga wielu wysokiej
+  jakości adnotacji w~obrębie ujęć z~wielu kamer.
+  Aby zredukować tę zależność jakości obrazów od ilości danych, przedstawiamy
+  nową metodę, \blendfields, która modeluje te deformacje przy pomocy kilku ujęć
+  z~wielu kamer.
   To podejście uczy się wewnętrznych szablonów deformacji, które są płynnie
   mieszane w~czasie wnioskowania, znacznie poprawiając jakość obrazu w
   porównaniu do istniejących podejść i~umożliwiając efektywne renderowanie
   z~ograniczonej liczby obrazów wejściowych.
-  W~tym celu, wykorzystujemy naszą reprezentację przestrzenie, która przyjmuje
-  formę czworościanów.
+  W~tym celu, wykorzystujemy reprezentację przestrzeni, która przyjmuje formę
+  sieci czworościanów.
   Używając tradycyjnych technik w~grafice komputerowej, obliczamy wielkości
   deformacji oparte na fizycznych równaniach, które zapewniają płynną
-  i~interpretowalną interpolację między znanymi wyrażeniami twarzy.
+  i~interpretowalną interpolację między znanymi ``granicznymi'' deformacjami.
   Pokazujemy w~naszych eksperymentach, że \blendfields osiąga wyższą jakość
   renderów z~zaledwie kilku ujęć, co kontrastuje z~poprzednimi pracami, które
   opierają się na nagraniach składających się z~setek klatek.

@@ -53,15 +53,17 @@ contributions, and finally, provide an overview of the thesis structure.
   intuitive and efficient control mechanisms.
 
   Controllability is a fundamental requirement in computer graphics, especially
-  in artistic workflows that rely on iterative refinement.Consider a game artist
-  designing a 3D character: they carefully model the object, apply textures, and
-  set up the surrounding scene.While high-quality NeRF and 3DGS reconstructions
-  enable unprecedented immersion, replacing traditional meshes with them remains
-  challenging.Creating hyperrealistic meshes and textures is constrained by
-  current hardware, making radiance field representations an appealing
-  alternative in the computer graphics pipeline.However, modifying a trained
-  NeRF or 3DGS without disrupting its realism is difficult, often requiring
-  extensive retraining.
+  in artistic workflows that rely on iterative refinement.
+  Consider a game artist designing a 3D character who decides to use volumetric
+  representations instead of meshes in their game.
+  The artist's rationale is that NeRF and 3DGS reconstructions enable
+  unprecedented immersion with low cost while creating hyperrealistic meshes and
+  textures require an extensive effort, infeasible for large-scale products like
+  games.
+  This reason makes radiance field representations an appealing alternative to
+  the computer graphics pipeline.
+  However, modifying a trained NeRF or 3DGS without disrupting its realism is
+  complex, often requiring extensive retraining.
   This limitation hinders real-time edits and reduces their viability for
   interactive applications.
 
@@ -81,7 +83,7 @@ contributions, and finally, provide an overview of the thesis structure.
     HyperNeRF~\cite{park2021hypernerf} addressed this limitation by introducing a
     high-dimensional embedding space, which is projected onto a lower-dimensional
     representation to enable more interpretable scene traversal.
-    Despite this improvement, the projection remains non-linear and thus
+    Despite this improvement, the projection remains non-linear and
     uninterpretable, making the effects of adjustments unpredictable and difficult
     to control.
 
@@ -114,8 +116,9 @@ contributions, and finally, provide an overview of the thesis structure.
     essential for practical applications.
     However, inverse rendering is inherently ill-posed, as multiple lighting
     conditions can produce identical observations~\cite{patow2003survey}.
-    Some approaches rely on datasets of single objects under diverse lighting
-    conditions~\cite{chen2022hallucinated,yang2023crnerf,rudnev2022nerfosr}.
+    Some approaches rely on datasets of a single object under diverse lighting
+    conditions~\cite{chen2022hallucinated,yang2023crnerf,rudnev2022nerfosr} which
+    is infeasible for thousands of objects.
     These methods either fail to disentangle albedo from
     lighting~\cite{chen2022hallucinated, yang2023crnerf} or require auxiliary
     networks to predict shadows~\cite{rudnev2022nerfosr}, thereby limiting their
@@ -176,7 +179,7 @@ contributions, and finally, provide an overview of the thesis structure.
   lighting, and resource adaptability, offering a comprehensive solution to
   radiance field controllability.
 
-  \subsection{Texture from Partial Information}
+  \subsection{Controlling the Object from Partial Information}
     To address \ref{enum:texturing}, we introduce \conerf~\cite{kania2022conerf},
     an approach that leverages sparse annotations to control subject attributes in
     a post-hoc manner.
@@ -201,10 +204,10 @@ contributions, and finally, provide an overview of the thesis structure.
     Our method enables flexible, interpretable edits to NeRFs while maintaining
     high rendering quality.
 
-    The article describing \conerf was published at the top-tier Conference on
-    Computer Vision and Pattern Recognition (CVPR) 2022.
+    The article describing \conerf was published at the Conference on Computer
+    Vision and Pattern Recognition (CVPR) 2022.
 
-  \subsection{Expression from Few-Shot Learning}
+  \subsection{Controlling the Expression from Few-Shot Learning}
     In response to \ref{enum:movement}, we propose
     \blendfields~\cite{kania2023blendfields} to handle dynamic facial expressions
     and effects it has on face due to the surface compression and decompression.
@@ -230,7 +233,7 @@ contributions, and finally, provide an overview of the thesis structure.
 
     Our work on \blendfields was accepted at CVPR 2023.
 
-  \subsection{Light from Unconstrained Images}
+  \subsection{Controlling the Light from Unconstrained Images}
     For \ref{enum:lighting}, we introduce \lumigauss~\cite{kaleta2024lumigauss} to
     tackle the challenge of illumination controllability.
     Previous approaches assumed idealized capture conditions with constant camera
@@ -252,7 +255,7 @@ contributions, and finally, provide an overview of the thesis structure.
 
     This work was accepted at WACV 2025.
 
-  \subsection{Levels of Detail in One Model}
+  \subsection{Controlling the Level of Detail in One Model}
     Finally, to address \ref{enum:resources}, we propose
     \clog~\cite{kania2024clog} as a solution to the high computational demands of
     current radiance field models.
