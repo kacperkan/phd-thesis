@@ -118,12 +118,13 @@
 \RequirePackage[a4paper,
     includehead,
     includefoot,
-    inner=30mm,
-    outer=20mm,
-    vmargin=25mm]
+    inner=25mm,
+    outer=25mm,
+    vmargin=25mm,
+    bindingoffset=0mm,]
 {geometry}
 % Do debugowania wymiarów
-%\RequirePackage{showframe}
+% \RequirePackage{showframe}
 
 % -------------------------------------------------------------------
 % Odstęp międzywierszowy
@@ -141,10 +142,10 @@
 %\singlespacing % == \setstretch{1.0}
 % -------------------------------------------------------------------
 % Alternatywnie superzłoty podział (0.83333 * 1.46557)
-\setstretch{1.2213}
+% \setstretch{1.2213}
 % -------------------------------------------------------------------
 % Alternatywnie interlinia 1.5
-%\onehalfspacing % == \setstretch{1.25} 1.25*1.2=1.5
+\onehalfspacing % == \setstretch{1.25} 1.25*1.2=1.5
 % -------------------------------------------------------------------
 % Alternatywnie złoty podział (odstęp 1.618):
 %\setstretch{1.348333}
@@ -163,7 +164,7 @@
     \fancyhf{}
     \renewcommand{\headrulewidth}{0pt}
     \renewcommand{\footrulewidth}{0pt}
-    \fancyfoot[RO,LE]{\thepage}
+    \fancyfoot[CO,CE]{\thepage}
 }
 \fancypagestyle{headings}{
     \fancyhf{}
@@ -171,16 +172,26 @@
     \fancyheadoffset{0cm}
     \fancyhead[LE]{\textit{\nouppercase{\leftmark}}}
     \fancyhead[RO]{\textit{\nouppercase{\rightmark}}}
-    \fancyfoot[RO,LE]{\thepage}
+    \fancyfoot[CO,CE]{\uppercase{\thepage}}
     \renewcommand{\footrulewidth}{0pt}
     \setlength{\headheight}{16pt}
 }
 \pagestyle{headings}
+\RequirePackage{xpatch}
+
+\xpatchcmd{\frontmatter}{\pagenumbering{roman}}{\pagenumbering{Roman}}{}{}%
 
 % -------------------------------------------------------------------
 % Puste strony niech będą naprawdę puste
 % -------------------------------------------------------------------
 \RequirePackage{emptypage}
+
+% -------------------------------------------------------------------
+% Ustawienie chapterów, żeby tytuły nie miały tak dużego odstępu
+% -------------------------------------------------------------------
+\RequirePackage{titlesec}
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}    
+\titlespacing*{\chapter}{0pt}{-20pt}{20pt}
 
 % -------------------------------------------------------------------
 % Formatowanie akapitów
@@ -492,8 +503,8 @@
 % Here be dragons...
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\instytut}[1]{
-    \newcommand{\@instytut}{#1}
+\newcommand{\dziedzina}[1]{
+    \newcommand{\@dziedzina}{#1}
 }
 \newcommand{\kierunek}[1]{
     \newcommand{\@kierunek}{#1}
@@ -522,7 +533,7 @@
 
 \newcommand{\frontpageheader}{mschead.png}
 
-\newcommand{\kieruneklocal}{in~the~field~of~study }
+\newcommand{\dziedzinalocal}{in~the~field~of }
 \newcommand{\dyscyplinalocal}{in~the~discipline~of }
 \newcommand{\specjalnosclocal}{and~specialisation }
 \newcommand{\titlelocal}{\@engtitle }
@@ -535,7 +546,7 @@
 \let\oldmaketitle\maketitle
 \renewcommand{\maketitle}{
     \linespread{1.15}
-    \thispagestyle{empty}
+    \thispagestyle{headings}
     \begin{center}
         \begin{minipage}[c]{0.8\textwidth}
             {
@@ -548,7 +559,6 @@
                 \setmainfont{Adagio Slab}
                 \addfontfeature{LetterSpace=2.0} 
                 \fontsize{12pt}{12pt}\selectfont
-                FACULTY OF ELECTRONICS AND INFORMATION TECHNOLOGY
             }
         \end{minipage}
         \hfill{}
@@ -567,18 +577,19 @@
         {
             \setmainfont{Helvetica Light}
             \fontsize{12pt}{12pt}\selectfont
+            \dziedzinalocal \@dziedzina \\
             \dyscyplinalocal \@dyscyplina
         }
         \vskip 5em
         {
             \setmainfont{Helvetica Light}
-            \fontsize{14pt}{14pt}\selectfont
+            \fontsize{21pt}{21pt}\selectfont
             \titlelocal \\
         }
         \vskip 5em
         {
             \setmainfont{Helvetica}
-            \fontsize{21pt}{21pt}\selectfont
+            \fontsize{14pt}{14pt}\selectfont
             \@author \\
         }
         {
@@ -593,7 +604,7 @@
         \citylocal \@date
         }
     \end{center}
-    \cleardoublepage
+    \clearpage
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -623,10 +634,10 @@
 
 % Streszczenie polskie
 \newcommand{\stronastreszczenia}{
-    \thispagestyle{empty}
+    \thispagestyle{headings}
     \chapter*{Streszczenie}
     \addcontentsline{toc}{chapter}{Streszczenie}
-    \thispagestyle{empty}
+    \thispagestyle{headings}
     \@streszczeniepracy
     
     \vskip 2em
@@ -639,7 +650,7 @@
 \newcommand{\abstractpage}{
     \chapter*{Abstract}
     \addcontentsline{toc}{chapter}{Abstract}
-    \thispagestyle{empty}
+    \thispagestyle{headings}
     % \begin{center}
     %     \textbf{\large\@engtitle}
     %     \vskip 1em
@@ -657,23 +668,23 @@
 \newcommand{\acknowledgements}{
     \chapter*{Acknowledgements}
     \addcontentsline{toc}{chapter}{Acknowledgements}
-    \thispagestyle{empty}
+    \thispagestyle{headings}
     \@thesisacknowledgements
-    \cleardoublepage
+    \clearpage
 }
 \newcommand{\laysummary}{
     \chapter*{Lay Summary}
     \addcontentsline{toc}{chapter}{Lay Summary}
-    \thispagestyle{empty}
+    \thispagestyle{headings}
     \@thesislaysummary
-    \cleardoublepage
+    \clearpage
 }
 \newcommand{\articles}{
     \chapter*{Publications in this thesis}
     \addcontentsline{toc}{chapter}{Publications in this thesis}
-    \thispagestyle{empty}
+    \thispagestyle{headings}
     \@thesisarticles
-    \cleardoublepage
+    \clearpage
 }
 % Spięcie stron streszczeń we właściwej
 % kolejności w jedno polecenie.
@@ -737,11 +748,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Jedno polecenie - kombajn stron początkowych
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtBeginDocument{\addtocontents{toc}{\protect\thispagestyle{empty}}} 
+\AtBeginDocument{\addtocontents{toc}{\protect\thispagestyle{headings}}} 
 \newcommand{\frontpages}{
     \frontmatter
     \counterwithout{lstlisting}{chapter} % hack niestety
-    \pagestyle{empty}
+    \pagestyle{headings}
     \maketitle
     % \acknowledgements
     \abstractpages
