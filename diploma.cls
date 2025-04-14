@@ -533,74 +533,76 @@
 
 \newcommand{\frontpageheader}{mschead.png}
 
-\newcommand{\dziedzinalocal}{in~the~field~of }
-\newcommand{\dyscyplinalocal}{in~the~discipline~of }
+\newcommand{\dziedzinalocal}{FIELD~OF~SCIENCE }
+\newcommand{\dyscyplinalocal}{DISCIPLINE~OF~SCIENCE }
 \newcommand{\specjalnosclocal}{and~specialisation }
 \newcommand{\titlelocal}{\@engtitle }
 \newcommand{\albumlocal}{student record book number }
-\newcommand{\promotorlocal}{supervisor }
-\newcommand{\promotorpomocniczylocal}{assistant supervisor }
-\newcommand{\citylocal}{WARSZAWA }
+\newcommand{\promotorlocal}{Supervisor }
+\newcommand{\promotorpomocniczylocal}{Additional supervisor }
+\newcommand{\citylocal}{WARSAW }
 
 
 \let\oldmaketitle\maketitle
 \renewcommand{\maketitle}{
-    \linespread{1.15}
+    \linespread{1.5}
     \thispagestyle{headings}
     \begin{center}
-        \begin{minipage}[c]{0.8\textwidth}
+        {
             {
                 \setmainfont{Adagio Slab}
                 \fontsize{23pt}{23pt}\selectfont
-                Warsaw University of Technology
+                WARSAW UNIVERSITY OF TECHNOLOGY
             }
             \vskip 2em
             {
-                \setmainfont{Adagio Slab}
-                \addfontfeature{LetterSpace=2.0} 
+                \setmainfont{Helvetica Light}
                 \fontsize{12pt}{12pt}\selectfont
+                \dyscyplinalocal \@dyscyplina \\
+                \dziedzinalocal \@dziedzina 
             }
-        \end{minipage}
-        \hfill{}
-        \begin{minipage}[c]{25mm}
-            \includegraphics[width=\linewidth]{assets/gfx/logo-PW.png}
-        \end{minipage}
+        }
 
         \vskip 6em
-        % \includegraphics[width=\linewidth]{\frontpageheader}
         {
             \setmainfont{Adagio Slab Light}
             \fontsize{43pt}{43pt}\selectfont
-            PhD Thesis
+            Ph.D. Thesis
         }
         \vskip 4em
         {
             \setmainfont{Helvetica Light}
-            \fontsize{12pt}{12pt}\selectfont
-            \dziedzinalocal \@dziedzina \\
-            \dyscyplinalocal \@dyscyplina
+            \fontsize{16pt}{16pt}\selectfont
+            \@author \\
         }
-        \vskip 5em
+        \vskip 4em
         {
-            \setmainfont{Helvetica Light}
-            \fontsize{21pt}{21pt}\selectfont
+            \setmainfont{Helvetica}
+            \fontsize{16pt}{16pt}\selectfont
             \titlelocal \\
         }
         \vskip 5em
-        {
+        \begin{flushright}
             \setmainfont{Helvetica}
-            \fontsize{14pt}{14pt}\selectfont
-            \@author \\
-        }
-        {
-            \setmainfont{Helvetica Light}
             \fontsize{12pt}{16pt}\selectfont
             % \albumlocal \@album
             \vskip 2em
-            \promotorlocal\\\@promotor
+            \promotorlocal\\
+            \setmainfont{Helvetica Light}
+            \fontsize{12pt}{16pt}\selectfont
+            \@promotor
             \vskip 2em
-            \promotorpomocniczylocal\\\@promotorpomocniczy
+            \setmainfont{Helvetica}
+            \fontsize{12pt}{16pt}\selectfont
+            \promotorpomocniczylocal\\
+            \setmainfont{Helvetica Light}
+            \fontsize{12pt}{16pt}\selectfont
+            \@promotorpomocniczy
+        \end{flushright}
+        {
         \vfill
+        \setmainfont{Helvetica Light}
+        \fontsize{12pt}{12pt}\selectfont
         \citylocal \@date
         }
     \end{center}
