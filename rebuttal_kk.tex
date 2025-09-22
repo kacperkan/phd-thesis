@@ -14,71 +14,63 @@
 \responsedelimiter
 
 \paragraph{Pytanie.}
-  Z uwag polemicznych, metody proponowane w rozprawie (a przynajmniej niektóre z
-  nich, m.in.
-  np. \clog, Sec. 5.3.3 i 5.3.4) wydają się wymagać dużego nakładu pracy badacza w procesie uczenia (tzw. model babysitting).
+  Z uwag polemicznych, metody proponowane w~rozprawie (a przynajmniej niektóre z
+  nich, m.in. np. \clog, Sec. 5.3.3 i~5.3.4) wydają się wymagać dużego nakładu
+  pracy badacza w~procesie uczenia (tzw. model babysitting).
 
 \paragraph{Odpowiedź.}
-  W naszych badaniach nie spotkaliśmy się z problemem \textit{babysittingu}.
+  W naszych badaniach nie spotkaliśmy się z~problemem \textit{babysittingu}.
   Początkową trudnością okazało się zbudowanie wystarczająco ekspresywnych sieci
   MLP, które pozwalałyby modelować wartości Gaussów przy dowolnie zadanym
-  poziomie szczegółów, a jednocześnie pozwalały na uczenie przy wykorzystaniu
-  pojedynczej karty A100 z 40GB pamięci VRAM.
-  Pozostałe parametry, takie wagi regularyzacji, zostały dobrane empirycznie i
-  nie podlegały znaczącym poszukiwaniom optymalnych wartości przy użyciu np.
-  \textit{grid search}.
+  poziomie szczegółów, a~jednocześnie pozwalały na uczenie przy wykorzystaniu
+  pojedynczej karty A100 z~40GB pamięci VRAM. Pozostałe parametry, takie wagi
+  regularyzacji, zostały dobrane empirycznie i nie podlegały znaczącym
+  poszukiwaniom optymalnych wartości przy użyciu np. \textit{grid search}.
   Dodatkowo, raz ustalone wartości były wystarczające, aby osiągnąć
-  satysfakcjonujące wyniki na dowolnym z użytych w publikacji zbiorów danych.
+  satysfakcjonujące wyniki na dowolnym z~użytych w~publikacji zbiorów danych.
 
   \responsedelimiter
 
 \paragraph{Pytanie.}
   Zastanawiam się także nad zdolnościami proponowanych metod do ekstrapolacji.
-  Czy np.
-  \conerf potrafi też ekstrapolować, raczej niż jedynie interpolować? (np. pomiędzy położeniami, orientacjami obiektów, ale także pomiędzy wartościami kontrolujących atrybutów).
-  Termin ,,ekstrapolacja'' pojawiają się w m.in.
-  w RQ2 i Rozdziale~3, ale nie doczekał się chyba w rozprawie definitywnych konkluzji.
+  Czy np. \conerf potrafi też ekstrapolować, raczej niż jedynie interpolować?
+  (np. pomiędzy położeniami, orientacjami obiektów, ale także pomiędzy
+  wartościami kontrolujących atrybutów). Termin ,,ekstrapolacja'' pojawiają się
+  w~m.in. w~RQ2 i~Rozdziale~3, ale nie doczekał się chyba w~rozprawie
+  definitywnych konkluzji.
 
 \paragraph{Odpowiedź.}
-  Zarówno \conerf oraz \blendfields zostały zaprojektowane z myślą o osiągnięciu
+  Zarówno \conerf oraz \blendfields zostały zaprojektowane z~myślą o~osiągnięciu
   jak najlepszej wizualnej jakości rekonstrukcji przy minimalnym nakładzie
-  danych.
-  W kontekście użytych metod możemy rozpatrywać ich zdolności do ekstrapolacji
-  względnem pewnych osi.
-  Dla przykładu, NeRFy mogą ekstrapolować jakość rekonstrukcji dla nowych
-  widoków, które nie były widoczne w czasie treningu (np.
-  tył głowy). \conerf i \blendfields są rozszerzeniami NeRFów, przez co naturalnie dziedziczą tę oś.
-  Natomiast w naszym przypadku, jesteśmy zainteresowani głównie ekstrapolacją w
-  kontekście rzadkich sygnałów warunkujących naszych model.
-  Dla CoNeRFa są to wartości atrybutów, natomiast BlendFieldsa---wartości
-  wektora ekspresji.
-  Zdolność do ekstrapolacji w CoNeRFie osiągamy poprzez część modelu predykującą
-  maskę 3D, której celem jest rozdzielenie wpływu wartości atrybutów na
-  określone obszary w przestrzeni NeRFa.
-  Jednocześnie, ta część jest niezależna od samych wartości atrybutów i działa w
-  przestrzeni kanonicznej.
-  Dzięki temu możemy dowolnie mieszać wartości atrybutów, mimo że w czasie
-  treningu przedstawione były tylko pewne możliwe kombinacje atrybutów.
-  Na przykład, w czasie treningu wektory atrybutów wynosiły $[1, 0, 0], [0, 1,
-        0], [0, 0, 1]$, a dzięki naszemu systemu maskowania, możliwe jest realistyczne
-  renderowanie obiektu zainteresowania przy podaniu wektora $[1, 1, 1]$ na
-  wejście.
-  Przykład takiej ekstrapolacji prezentuję na Rysunku~2 Rozdziału~2 oraz na
-  wizualizacjach znajdujących się na stronie \url{https://conerf.github.io}.
-  Natomiast w \blendfields mamy do czynienia z wielowymiarowym wektorem
-  reprezentującym wartości ekspresji.
-  Ten wektor warunkuje pozycje wierzchołków czworościanów, które budują naszą
-  przestrzeń.
-  Ze względu, że wartości kolorów predykowanych przez model są warunkowane tylko
-  lokalnym sąsiedztwem czworościanów, punkty w przestrzeni są niezależne od
-  siebie.
-  To powoduje, że nawet przy wykorzystaniu niewielu skrajnych wyrazów twarzy,
-  jesteśmy w stanie z wysoką jakością przedstawiać wygląd zmarszczek nawet przy
-  nowych wyrazach twarzy.
-  Taką ekstrapolacją jest właśnie na renderze po prawej stronie Rysunku~17
-  Rozdziału~3.
-  Dodatkowo, prezentuję nie widziane w czasie treningu wyrazy twarzy i ich wpływ
-  na predykowany kolor skóry na stronie \url{https://blendfields.github.io}.
+  danych. W kontekście użytych metod możemy rozpatrywać ich zdolności do
+  ekstrapolacji względnem pewnych osi. Dla przykładu, NeRFy mogą ekstrapolować
+  jakość rekonstrukcji dla nowych widoków, które nie były widoczne w~czasie
+  treningu (np. tył głowy). \conerf i~\blendfields są rozszerzeniami NeRFów,
+  przez co naturalnie dziedziczą tę oś. Natomiast w~naszym przypadku, jesteśmy
+  zainteresowani głównie ekstrapolacją w kontekście rzadkich sygnałów
+  warunkujących naszych model. Dla CoNeRFa są to wartości atrybutów, natomiast
+  BlendFieldsa---wartości wektora ekspresji. Zdolność do ekstrapolacji
+  w~CoNeRFie osiągamy poprzez część modelu predykującą maskę 3D, której celem
+  jest rozdzielenie wpływu wartości atrybutów na określone obszary w~przestrzeni
+  NeRFa. Jednocześnie, ta część jest niezależna od samych wartości atrybutów
+  i~działa w przestrzeni kanonicznej. Dzięki temu możemy dowolnie mieszać
+  wartości atrybutów, mimo że w~czasie treningu przedstawione były tylko pewne
+  możliwe kombinacje atrybutów. Na przykład, w~czasie treningu wektory atrybutów
+  wynosiły $[1, 0, 0], [0, 1, 0], [0, 0, 1]$, a~dzięki naszemu systemu
+  maskowania, możliwe jest realistyczne renderowanie obiektu zainteresowania
+  przy podaniu wektora $[1, 1, 1]$ na wejście. Przykład takiej ekstrapolacji
+  prezentuję na Rysunku~2 Rozdziału~2 oraz na wizualizacjach znajdujących się na
+  stronie \url{https://conerf.github.io}. Natomiast w~\blendfields mamy do
+  czynienia z~wielowymiarowym wektorem reprezentującym wartości ekspresji. Ten
+  wektor warunkuje pozycje wierzchołków czworościanów, które budują naszą
+  przestrzeń. Ze względu, że wartości kolorów predykowanych przez model są
+  warunkowane tylko lokalnym sąsiedztwem czworościanów, punkty w~przestrzeni są
+  niezależne od siebie. To powoduje, że nawet przy wykorzystaniu niewielu
+  skrajnych wyrazów twarzy, jesteśmy w~stanie z~wysoką jakością przedstawiać
+  wygląd zmarszczek nawet przy nowych wyrazach twarzy. Taką ekstrapolacją jest
+  właśnie na renderze po prawej stronie Rysunku~17 Rozdziału~3. Dodatkowo,
+  prezentuję nie widziane w~czasie treningu wyrazy twarzy i~ich wpływ na
+  predykowany kolor skóry na stronie \url{https://blendfields.github.io}.
 
   \responsedelimiter
 

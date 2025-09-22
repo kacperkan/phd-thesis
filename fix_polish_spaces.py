@@ -47,9 +47,18 @@ def fix_polish_spaces(input_file, output_file):
 
 
 if __name__ == "__main__":
-    input_file = "./sections/0_abstracts/polish.tex"
-    output_file = "./sections/0_abstracts/polish.tex"
+    input_files = [
+        "./sections/0_abstracts/polish.tex",
+        "./rebuttal_bg.tex",
+        "./rebuttal_kk.tex",
+    ]
+    output_file = [
+        "./sections/0_abstracts/polish.tex",
+        "./rebuttal_bg.tex",
+        "./rebuttal_kk.tex",
+    ]
 
-    success = fix_polish_spaces(input_file, output_file)
-    if not success:
-        sys.exit(1)
+    for input_file, output_file in zip(input_files, output_file):
+        success = fix_polish_spaces(input_file, output_file)
+        if not success:
+            sys.exit(1)
