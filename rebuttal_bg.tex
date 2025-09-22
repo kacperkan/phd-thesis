@@ -34,19 +34,19 @@
           poprawek do publikacji.
   \end{itemize}
   Ostatni punkt wiąże się też z~budowaniem
-  materiałów promocyjnych metod, np. \url{https://conerf.github.io},
+  materiałów promocyjnych, np. \url{https://conerf.github.io},
   \url{https://blendfields.github.io}, \url{https://lumigauss.github.io}. W
   przypadku pracy dotyczącej LumiGaussa, moim wkładem było nadzorowanie
   projektu, konsultacje pomysłów, wykonanie jednego z~eksperymentów, oraz
   redakcja Rysunków w~finalnej publikacji oraz formalizmu matematycznego
   zawartego w~publikacji.
 
-  Pragnę przy tym zaznaczyć wpływ, jaki mieli współautorzy na mój rozwój oraz
+  Pragnę przy tym zaznaczyć, jaki wpływ mieli współautorzy na mój rozwój oraz
   postęp projektów---od \textit{brainstormingu} na temat idei projektu oraz jego
   kierunku, przez konsultacje związane z~opracowaniem metody i~budowaniem sieci
   kontaktów pomocnych przy rozwoju projeku, po pomoc w~redagowaniu publikacji
-  oraz nadzorowaniu rozwoju moich umiejętności związanych z~umiejętnościami w
-  prowadzeniu badań naukowych i~ich opisywaniem.
+  oraz nadzorowaniu rozwoju moich umiejętności związanych prowadzeniem badań
+  naukowych.
 
   \responsedelimiter
 
@@ -75,14 +75,14 @@
   potencjalnie pozwoliłby osiągnięcie jeszcze lepszych wyników osiąganych przez
   zaproponowane metody.
 
-  Celem tego projektu było również zaproponowanie podejścia, które pozwala na
-  osiągnięcie kontroli predykcji przy rekonstrukcji 3D, niezależnie od samej
-  architektury wykonującej tę predukcję. Aby zminimializować ilość stopni
-  swobody wpływających na jakość rekonstrukcji, zastosowałem architekturę
+  Celem tych projektów było zaproponowanie podejść, które pozwalają na
+  osiągnięcie kontroli predykcji przy jednoczesnej rekonstrukcji 3D, niezależnie
+  od samej architektury wykonującej tę predykcję. Aby zminimializować ilość
+  stopni swobody wpływających na jakość rekonstrukcji, zastosowałem architekturę
   sprawdzoną we wcześniejszych
   badaniach~\cite{mildenhall2020nerf,park2021nerfies}.
 
-  W przypadku BlendFields, zrealizowałem rozszerzenie metody (nazwane
+  W przypadku BlendFields zrealizowałem rozszerzenie metody (nazwane
   InstantBlendFields) z~bardziej zaawansowaną architekturą, które pozwalało na
   szybsze uczenie modelu. Materiały promocyjne podejścia można obejrzeć pod tym
   linkiem: \url{https://blendfields.github.io/instantblendfields/}.
@@ -90,23 +90,23 @@
   \responsedelimiter
 
 \paragraph{Pytanie.}
-  Rozdział 2.3.3, Wzór (19) - Czy użyty tu symbol mnożenia to mnożenie w~sensie
+  Rozdział 2.3.3, Wzór (19) -- Czy użyty tu symbol mnożenia to mnożenie w~sensie
   Khatri-Rao?
 
 \paragraph{Odpowiedź.}
   W tej i~pozostałych pracach nadużywamy typowej notacji. Takie nadużycie w
   wielu przypadkach pozwala na uniknięcie wizualnego zanieczyszczenia formalizmu
-  matematycznego, które utrudniałoby zrozumienie pracy. Dodatkowo, zostało
-  nieformalnie przyjęte, że operator w~postaci symbolu $\odot$ oznacza wykonanie
-  mnożenia \textit{element-wise} (element po elemencie, lub elementów o~tych
-  samych indeksach w~obu macierzach). W środowiskach typu Matlab taka operacja
-  jest zazwyczaj zapisywana jako~\texttt{*.}, gdzie ten zapis nie jest
-  powszechnie stosowany w~publikacjach.
+  matematycznego, które utrudniałoby zrozumienie pracy. Dodatkowo, nieformalnie
+  zostało przyjęte w~rozważanej dziedzinie, że operator oznaczony symbolem
+  $\odot$ jest mnożeniem typu \textit{element-wise} (element po elemencie, lub
+  elementów o~tych samych indeksach w~obu macierzach). W środowiskach typu
+  Matlab taka operacja jest zazwyczaj zapisywana jako~\texttt{*.}. Taki zapis
+  jednak nie jest powszechnie stosowany w~publikacjach naukowych.
 
   \responsedelimiter
 
 \paragraph{Pytanie.}
-  Rozdział 2.3.4 - skoro w~sieci kodujemy również pozycje punktów (,,windowed
+  Rozdział 2.3.4 -- skoro w~sieci kodujemy również pozycje punktów (,,windowed
   positional encoding'') to nie lepiej byłoby rozważyć architekturę transformera
   wizyjnego, który już w~naturalny dla siebie sposób dokonuje tego typu
   kodowania?
@@ -115,7 +115,8 @@
   wystarczające oraz tańsze pod względem wykorzystania pamięci na GPU dostępnych
   w~tamtym momencie. Dodatkowo, prace analizujące korzyści płynące z
   wykorzystania warunkowanych transformerów zamiast sieci MLP do rekonstrukcji
-  3D~\cite{rebain2023attention} pojawi się równolegle do naszej pracy.
+  3D~\cite{rebain2023attention} pojawiły się równolegle do pracy opisującej
+  CoNeRF.
 
   Zgadzam się, że wykorzystanie transformera w~tym przypadku mogłoby zwiększyć
   jakość rekonstrukcji. Jednak samo kodowanie pozycyjne w~ich sytuacji nie
@@ -131,14 +132,14 @@
 
 \paragraph{Odpowiedź.}
   Celem wykorzystania syntetycznego zbioru było pokazanie, że nasza metoda może
-  działać w~skrajnych przypadkach, kiedy kontrolowalne atrybuty obiektów są
-  zsynchronizowane, natomiast w~czasie testowanie podlegają losowym, ciągłym
-  zmianą. Na przykładzie użytego syntetycznego zbioru danych, synchronizacja
-  atrybutów oznacza jednoczesną zmianę kolorów obiektów w~dokładnie w~ten sam
-  sposób. Natomiast w~czasie testu, model przedstawiający czajnik zmienia kolor
-  na zielony, natomiast model królika na czerwony (czyli zmiany są
-  zdesynchronizowane). Przykładowa wizualizacja tej synchronizacji jest
-  przedstawiona
+  działać w~skrajnych przypadkach, kiedy zmiana kontrolowalnych atrybutów
+  obiektów jest zsynchronizowana, natomiast w~czasie testowania podlega losowym,
+  ciągłym perturbacjom. Na przykładzie użytego syntetycznego zbioru danych,
+  synchronizacja atrybutów oznacza jednoczesną zmianę kolorów obiektów
+  w~dokładnie ten sam sposób. Natomiast w~czasie testowania trójwymiarowy model
+  przedstawiający czajnik zmienia kolor na zielony, natomiast trójwymiarowy
+  model królika na czerwony (czyli zmiany są zdesynchronizowane). Przykładowa
+  wizualizacja tej synchronizacji jest przedstawiona
   \href{https://conerf.github.io/videos/synthetic-data/train.mp4}{tutaj},
   natomiast desynchronizacji pod
   \href{https://conerf.github.io/videos/synthetic-data/valid.mp4}{tym linkiem}.
@@ -154,38 +155,38 @@
 \paragraph{Odpowiedź.}
   Tę odpowiedź pragnę podzielić na cztery części, po jednej dla każdej z~metod.
 
-  \textbf{CoNeRF} wykazywał szczególne niesatysfakcjonujące w~trzech
-  przypadkach. Pierwszym z~nich są drobne szczegóły obiektów, które chcemy
-  modelować ze względu na ograniczoną ilość danych---aby drobne, ruchome obiekty
-  były poprawnie rekonstruowane, dane trenujące musiałyby być bardzo wysokiej
-  jakości, w~jednolitym oświetleniu z~wielu ujęć dokoła. Dodatkowo,
-  niewystarczające oznaczenia danych mogą powodować skorelowanie wpływu wartości
-  atrybutów na wyjście, co objawia się modyfikacją wielu obszarów jednocześnie
-  na wyjściu mimo zmiany tylko pojedynczego atrybutu. Wszystkie te przypadki
-  zostały przedstawione na Rysunku 16.
+  \textbf{CoNeRF} wykazywał niesatysfakcjonujące wyniki w~trzech przypadkach.
+  Pierwszym z~nich jest obecność drobnych szczegóły obiektów na zdjęciach, które
+  chcemy modelować. Wyniki w~tym scenariuszu są ograniczone ze względu na małą
+  ilość danych treningowych---aby drobne, ruchome obiekty były poprawnie
+  rekonstruowane, dane trenujące musiałyby być bardzo wysokiej jakości,
+  w~jednolitym oświetleniu z~wielu ujęć dookoła. Dodatkowo, niewystarczające
+  oznaczenia danych mogą powodować skorelowanie wpływu wartości atrybutów na
+  wyjście, co objawia się modyfikacją wielu obszarów jednocześnie na wyjściu
+  mimo zmiany tylko pojedynczego atrybutu. Wszystkie te przypadki zostały
+  przedstawione na Rysunku 16 w~pracy doktorskiej.
 
   \textbf{Blendfields} dziedziczy problemy podejść opartych na dokładnej
-  kalibracji kamer. W trakcie eksperymentów zauważyliśmy, że niedokładne
-  spasowanie modelu twarzy powodowało efekt \textit{ghostingu}, gdzie można było
-  zauważyć wiele instancji osoby nakładających się niedokładnie ze sobą.
-  Dodatkowo, niski kontrast zmarszczek wynikających ze zniekształceń objawiał
-  się niską wartości funkcji straty, co powodowało niedokładne dopasowanie
-  modelu do danych.
+  kalibracji kamer~\cite{garbin2024voltemorph}. W trakcie eksperymentów
+  zauważyliśmy, że niedokładne spasowanie trójwymiarowego modelu twarzy
+  powodowało efekt \textit{ghostingu}, gdzie można było zauważyć wiele instancji
+  osoby nakładających się niedokładnie ze sobą. Co więcej, niski kontrast
+  zmarszczek wynikających ze zniekształceń objawiał się niską wartością funkcji
+  straty, co powodowało niedokładne dopasowanie modelu do danych.
 
   \textbf{LumiGauss} ze względu na wykorzystanie harmonik sferycznych niskiego
   stopnia nie był w~stanie modelować ostrych cieni wynikających z~kierunkowego
-  oświetlenia, np. słońca w~bezchmurny dzień. Jednocześnie wykorzystanie
+  oświetlenia, np. słońca w~bezchmurny dzień. Z~drugiej strony, wykorzystanie
   wyższych stopni powodowało błędne dopasowanie do danych i~migotanie przy
-  ciągłej rotacji mapy oświetlenia.
+  uciąglonej rotacji mapy oświetlenia.
 
   \textbf{CLoG} natomiast miał dwa znaczące ograniczenia wynikające z~jego
-  zdefiniowania. Po pierwsze, nie był w~stanie modelować scen otwartych, w
-  których scena nie ma określonych granic. Po drugie, jakość rekonstrukcji była
-  niższa od standardowego podejścia Gaussian Splatting w~scenach o~dużej
-  złożoności (np. scena z~trawnikiem, gdzie pojedyncze źdźbła są widoczne na
-  zdjęciach). To ograniczenie wynikało z~użycia reprezentacji w~postaci
-  dwuwymiarowej mapy, gdzie mapowanie otwartej reprezentacji lub wielu
-  szczegółów jest ograniczone.
+  definicji. Po pierwsze, nie jest w~stanie modelować scen otwartych, w których
+  scena nie ma określonych granic. Po drugie, jakość rekonstrukcji była niższa
+  od standardowego podejścia Gaussian Splatting w~scenach o~dużej złożoności
+  (np. scena z~trawnikiem, gdzie pojedyncze źdźbła są widoczne na zdjęciach). To
+  ograniczenie wynikało z~użycia reprezentacji w~postaci dwuwymiarowej mapy,
+  gdzie mapowanie otwartej sceny lub wielu szczegółów jest ograniczone.
 
   \responsedelimiter
 
@@ -193,23 +194,22 @@
   Rozdział 2.4.4 -- ,,our controllability losses do not interfere with the
   rendering quality'' -- jak zostało to zmierzone?
 \paragraph{Odpowiedź.}
-  Głównym celem zastosowanych składowych funkcji w~CoNeRFie straty było
+  Głównym celem zastosowanych składowych funkcji straty w~CoNeRFie było
   nauczenie sieci dwóch rzeczy---poprawnej rekonstrukcji obrazów po
   zaaplikowaniu równania renderującego oraz rekonstrukcji adnotacji masek, które
-  były dostępne dla niektórych ze zdjęć. By dodatkowo wymusić gładkość
-  rekonstrukcji, czyli aby dla dwóch oznaczeń czasowych $t_1, t_2, t_2 - t_1 \to
-    0$ ich rekonstrukcje były maksymalnie podobne\footnote{W pracy powołuję się na
-    warunek Lipschitza, czyli $\|f(t_2) - f(t_1)\| \leq \|t_2 - t_1\|$, gdzie
-    $f(t)$ jest funkcją rekonstruującą obraz dla oznaczenia czasowego $t$.}. Celem
-  tej pracy były jedynie dodanie możliwości kontroli wyjścia bez wpływu na
-  jakość tej predykcji. W tym celu wykonałem ablację, gdzie mierzyłem jak
-  dodanie kolejnych elementów funkcji straty wpływa na zadanie rekonstrukcji. W
-  Tabeli~4 przedstawiłem wyniki i~pokazałem, że przy zadaniu interpolacji
+  były dostępne dla niektórych ze zdjęć. Chcieliśmy wymusić również gładkość
+  samych sieci neuronowych, czyli aby dla dwóch oznaczeń czasowych $t_1, t_2,
+    t_2 - t_1 \to 0$ rekonstrukcje obrazów były maksymalnie podobne\footnote{W
+    pracy powołuję się na warunek Lipschitza, czyli $\|f(t_2) - f(t_1)\| \leq
+      \|t_2 - t_1\|$, gdzie $f(t)$ jest funkcją rekonstruującą obraz dla oznaczenia
+    czasowego $t$.}. Aby sprawdzić czy te dodatkowe czynniki funkcji straty mają
+  wpływ na jakość rekonstrukcji, wykonałem ablację, gdzie mierzyłem jak dodanie
+  kolejnych elementów funkcji straty wpływa na jakość rekonstruowanych obrazów.
+  W~Tabeli~4 przedstawiłem wyniki i~pokazałem, że przy zadaniu interpolacji
   widoków wyniki nie zmieniają się w~porównaniu do zwykłego NeRFa, który jest
-  warunkowany wyuczalnym, wielowymiarowym wektorem~\cite{mildenhall2020nerf}. W
-  tym kontekście przedstawiłem wniosek, że zdefiniowane funkcje straty
-  odpowiadający za dodanie kontroli predykcji nie wpływają na jakość
-  renderowania.
+  warunkowany wyuczalnym, wielowymiarowym wektorem~\cite{mildenhall2020nerf}.
+  Eksperyment podsumowałem wnioskiem, że zdefiniowana funkcja straty
+  odpowiadająca za dodanie kontroli predykcji nie wpływa na jakość renderowania.
 
   \responsedelimiter
 
@@ -228,7 +228,7 @@
   Materiały dotyczący CLoG nie zostały upublicznione.
   Można je znaleźć spakowane w~pliku \texttt{zip} pod
   \href{https://drive.google.com/file/d/1ViaYDDo-x5DjfMBDzO1bjK4UDX1qEomv/view?
-    usp=sharing}{tym linkiem}.
+    usp=sharing}{tym linkiem}.  Takie wizualizacje są szczególnie istotne w~dziedzinie wizji komputerowej, gdzie statyczne zdjęcia są często niewystarczające do wyciągnięcia wniosków na temat działania danej metody.
 
   \responsedelimiter
 
@@ -237,11 +237,11 @@
   ,,concurrent''. Być może chodziło o~,,competitive''?
 \paragraph{Odpowiedź.}
   Publikacje znajdujące się w~pracy doktorskiej były umieszczane z~zawartością
-  taką, jaką posiadały w~momencie publikacji lub wysyłania do recenzji. To
+  taką, jaką posiadały w~momencie publikacji lub wysłania do recenzji. To
   oznacza też, że w~wielu przypadkach odnosiłem się do prac równoległych, czyli
-  takich, które były publikowane w~podobnym momencie, w~którym pisałem daną
-  publikację. Ze względu na chęć zachowania oryginalności treści publikacji, nie
-  redagowałem ich przy umieszczaniu ich w~pracy doktorskiej.
+  takich, które były publikowane w~momencie, kiedy pisałem daną publikację. Ze
+  względu na chęć zachowania oryginalności treści publikacji, nie redagowałem
+  ich przy umieszczaniu ich w~pracy doktorskiej.
 
   \responsedelimiter
 
@@ -252,8 +252,9 @@
   Zastosowana architektura była dobrana empirycznie w~czasie wczesnych
   eksperymentów. Została ona oparta na jednej z~pierwszych prac dotyczącej
   NeRFów~\cite{mildenhall2020nerf}. Jej dobór został podyktowany chęcią łatwego
-  dopasowania sieci do danych treningowych przy jednoczesnym zachowanie
-  ograniczenia pamięci wykorzystywanej wtedy karty graficznej A100 z~40GB VRAM.
+  dopasowania sieci do danych treningowych przy jednoczesnym ograniczeniu
+  w~postaci ilości pamięci wykorzystywanej wtedy karty graficznej A100 z~40GB
+  VRAM.
 
   \responsedelimiter
 
@@ -268,10 +269,10 @@
   generatywnych podejść rekonstrukcji 3D jest bardzo ciekawym kierunkiem. W tej
   rozprawie skupiłem się na podejściu rekonstrukcji \textit{per} scena ze
   względu na ograniczenia obliczeniowe. Dodatkowo znaczący rozwój tych modeli
-  pojawił się w późniejszym okresie, kiedy prace na prezentowanymi publikacjami
-  były już w~zaawansowanym stadium. Pragnę zaznaczyć jak bardzo rozwinęła się ta
-  klasa modeli i~przytoczyć kilka przykładowych kategorii oraz prac, które
-  zostały opracowane w~tym czasie:
+  pojawił się w późniejszym okresie, kiedy praca nad prezentowanymi publikacjami
+  były już w~zaawansowanym stadium. Pragnę zaznaczyć jak bardzo rozwinęła się
+  klasa modeli generatywnych dla rekonstrukcji 3D i~przytoczyć kilka
+  przykładowych kategorii oraz prac, które zostały opracowane w~tym czasie:
   \begin{itemize}
     \item generowanie pojedynczych obiektów \cite{tang2024dreamgaussian},
     \item generowanie całych scen \cite{bai2025360},
