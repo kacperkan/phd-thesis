@@ -1,0 +1,286 @@
+\documentclass{rebuttal}
+\renewcommand{\locallang}{PL}
+\input{preamble.tex}
+
+\addbibresource{rebuttal.bib}
+
+\title{Odpowiedź na pytania Recenzenta}
+\author{Kacper Kania}
+\date{}
+
+
+\begin{document}
+\maketitle
+
+\responsedelimiter
+
+\paragraph{Pytanie.}
+  Mimo krótkiej wzmianki na temat roli i udziału współautorów w publikacjach,
+  warto byłoby jakby Doktorant w punktach wymienił swój indywidualny wkład w
+  każdą publikację.
+\paragraph{Odpowiedź.}
+  Zgadzam się z Recenzentem, że wartość pracy doktorskiej zostałaby podniesiona,
+  gdyby zawierała dodatkową informację o wkładzie autorów w publikacje, tak jak
+  jest przyjęte w przypadku publikacji w czasopismach wydawanych przez IEEE. W
+  każdej z pierwszoautorskich publikacji miałem znaczący wpływ na rozwój
+  projektu. To uwzględnia zadania takie jak:
+  \begin{itemize}
+    \item określenie problemu badawczego oraz pytań z tym związanych,
+    \item postawienie hipotezy badawczej,
+    \item wykonywanie eksperymentów testujących zadaną hipotezę,
+    \item pisanie kodu metody oraz eksperymentów,
+    \item budowanie aparatu matematycznego formalizującego działanie metody,
+    \item pisanie publikacji oraz udział w poprawianiu oraz nadzorowaniu aplikowania
+          poprawek do publikacji.
+  \end{itemize}
+  Ostatni punkt wiąże się też z budowaniem
+  materiałów promocyjnych metod, np. \url{https://conerf.github.io},
+  \url{https://blendfields.github.io}, \url{https://lumigauss.github.io}. W
+  przypadku pracy dotyczącej LumiGaussa, moim wkładem było nadzorowanie
+  projektu, konsultacje pomysłów, wykonanie jednego z eksperymentów, oraz
+  redakcja Rysunków w finalnej publikacji oraz formalizmu matematycznego
+  zawartego w publikacji.
+
+  Pragnę przy tym zaznaczyć wpływ, jaki mieli współautorzy na mój rozwój oraz
+  postęp projektów---od \textit{brainstormingu} na temat idei projektu oraz jego
+  kierunku, przez konsultacje związane z opracowaniem metody i budowaniem sieci
+  kontaktów pomocnych przy rozwoju projeku, po pomoc w redagowaniu publikacji
+  oraz nadzorowaniu rozwoju moich umiejętności związanych z umiejętnościami w
+  prowadzeniu badań naukowych i ich opisywaniem.
+
+  \responsedelimiter
+
+\paragraph{Pytanie.}
+  Zaproponowana sieć neuronowa dla systemu CoNeRF to stosunkowo prosta w swojej
+  strukturze sieć typu MLP, co jest w pewnym sensie powieleniem pomysłu z
+  oryginalnych publikacji dotyczących metody NeRF. Ciekawe jednak czy nie lepsza
+  byłaby tu sieć grafowa? Tego typu podejście umożliwiłoby uwzględnienie
+  przestrzennej struktury pikseli już w samej architekturze sieci. Czy Doktorant
+  rozważał użycie architektur sieci innych niż MLP? To samo pytanie można też
+  powtórzyć w przypadku metody BlendFields.
+
+\paragraph{Odpowiedź.} Rzeczywiście, kodowanie sąsiedztwa czy to przez sieć
+  grafową~\cite{ververas2024sags}, konkatenację współrzędnych sąsiadujących
+  punktów przy użyciu $k$-NN~\cite{dupont2022from}, czy użycie
+  Transformera~\cite{joshi2025transformers,zhuang2023diffusion} przyczynia się
+  do zwiększenia jakości rekonstrukcji w ujęciu generatywnym. Okazuje się
+  jednak, że zastosowanie wystarczająco ekspresywnej sieci MLP jest
+  wystarczające w zadaniu rekonstrukcji. Oba stwierdzenia potwierdziły
+  wcześniejsze moje badania wykonywane przy każdym z prezentowanych projektów.
+
+  Pragnę zaznaczyć również, że operacje w sieciach MLP są wysoce zoptymalizowane
+  i ,,tanie'' w ujęciu wykorzystania pamięci. To pozwalało nam efektywnie
+  wykonywać eksperymenty i iterować w projekcie po różnych pomysłach. Analiza
+  wpływu bardziej skomplikowanych modeli jest ciekawym kierunkiem, który
+  potencjalnie pozwoliłby osiągnięcie jeszcze lepszych wyników osiąganych przez
+  zaproponowane metody.
+
+  Celem tego projektu było również zaproponowanie podejścia, które pozwala na
+  osiągnięcie kontroli predykcji przy rekonstrukcji 3D, niezależnie od samej
+  architektury wykonującej tę predukcję. Aby zminimializować ilość stopni
+  swobody wpływających na jakość rekonstrukcji, zastosowałem architekturę
+  sprawdzoną we wcześniejszych
+  badaniach~\cite{mildenhall2020nerf,park2021nerfies}.
+
+  W przypadku BlendFields, zrealizowałem rozszerzenie metody (nazwane
+  InstantBlendFields) z bardziej zaawansowaną architekturą, które pozwalało na
+  szybsze uczenie modelu. Materiały promocyjne podejścia można obejrzeć pod tym
+  linkiem: \url{https://blendfields.github.io/instantblendfields/}.
+
+  \responsedelimiter
+
+\paragraph{Pytanie.}
+  Rozdział 2.3.3, Wzór (19) - Czy użyty tu symbol mnożenia to mnożenie w sensie
+  Khatri-Rao?
+
+\paragraph{Odpowiedź.}
+  W tej i pozostałych pracach nadużywamy typowej notacji. Takie nadużycie w
+  wielu przypadkach pozwala na uniknięcie wizualnego zanieczyszczenia formalizmu
+  matematycznego, które utrudniałoby zrozumienie pracy. Dodatkowo, zostało
+  nieformalnie przyjęte, że operator w postaci symbolu $\odot$ oznacza wykonanie
+  mnożenia \textit{element-wise} (element po elemencie, lub elementów o tych
+  samych indeksach w obu macierzach). W środowiskach typu Matlab taka operacja
+  jest zazwyczaj zapisywana jako~\texttt{*.}, gdzie ten zapis nie jest
+  powszechnie stosowany w publikacjach.
+
+  \responsedelimiter
+
+\paragraph{Pytanie.}
+  Rozdział 2.3.4 - skoro w sieci kodujemy również pozycje punktów (,,windowed
+  positional encoding'') to nie lepiej byłoby rozważyć architekturę transformera
+  wizyjnego, który już w naturalny dla siebie sposób dokonuje tego typu
+  kodowania?
+\paragraph{Odpowiedź.}
+  Architektura sieci wykorzystująca same sieci MLP były w wielu przypadkach
+  wystarczające oraz tańsze pod względem wykorzystania pamięci na GPU dostępnych
+  w tamtym momencie. Dodatkowo, prace analizujące korzyści płynące z
+  wykorzystania warunkowanych transformerów zamiast sieci MLP do rekonstrukcji
+  3D~\cite{rebain2023attention} pojawi się równolegle do naszej pracy.
+
+  Zgadzam się, że wykorzystanie transformera w tym przypadku mogłoby zwiększyć
+  jakość rekonstrukcji. Jednak samo kodowanie pozycyjne w ich sytuacji nie
+  podlega tak bezpośredniej kontroli jak to ma w przypadku \textit{windowed
+    positional encoding}~\cite{park2021nerfies}.
+
+  \responsedelimiter
+
+\paragraph{Pytanie.}
+  Rozdział 2.4.1 -- co to znaczy ,,we set the attributes to be synchronized for
+  the training split, and desynchronized for the test split''? Jak dokonuje się
+  tego typu ,,synchronizacji'' atrybutów danych?
+
+\paragraph{Odpowiedź.}
+  Celem wykorzystania syntetycznego zbioru było pokazanie, że nasza metoda może
+  działać w skrajnych przypadkach, kiedy kontrolowalne atrybuty obiektów są
+  zsynchronizowane, natomiast w czasie testowanie podlegają losowym, ciągłym
+  zmianą. Na przykładzie użytego syntetycznego zbioru danych, synchronizacja
+  atrybutów oznacza jednoczesną zmianę kolorów obiektów w dokładnie w ten sam
+  sposób. Natomiast w czasie testu, model przedstawiający czajnik zmienia kolor
+  na zielony, natomiast model królika na czerwony (czyli zmiany są
+  zdesynchronizowane). Przykładowa wizualizacja tej synchronizacji jest
+  przedstawiona
+  \href{https://conerf.github.io/videos/synthetic-data/train.mp4}{tutaj},
+  natomiast desynchronizacji pod
+  \href{https://conerf.github.io/videos/synthetic-data/valid.mp4}{tym linkiem}.
+  Pragnę zaznaczyć, że ten zbiór został wygenerowany sztucznie za pomocą
+  programu Blender.
+
+  \responsedelimiter
+
+\paragraph{Pytanie.}
+  Przy prezentowaniu metod warto byłoby pokazać przypadki, dla których one
+  jednak nie działają lub działają poniżej oczekiwań. Czy jest wiele takich
+  przypadków? Kiedy i dla jakich danych?
+\paragraph{Odpowiedź.}
+  Tę odpowiedź pragnę podzielić na cztery części, po jednej dla każdej z metod.
+
+  \textbf{CoNeRF} wykazywał szczególne niesatysfakcjonujące w trzech
+  przypadkach. Pierwszym z nich są drobne szczegóły obiektów, które chcemy
+  modelować ze względu na ograniczoną ilość danych---aby drobne, ruchome obiekty
+  były poprawnie rekonstruowane, dane trenujące musiałyby być bardzo wysokiej
+  jakości, w jednolitym oświetleniu z wielu ujęć dokoła. Dodatkowo,
+  niewystarczające oznaczenia danych mogą powodować skorelowanie wpływu wartości
+  atrybutów na wyjście, co objawia się modyfikacją wielu obszarów jednocześnie
+  na wyjściu mimo zmiany tylko pojedynczego atrybutu. Wszystkie te przypadki
+  zostały przedstawione na Rysunku 16.
+
+  \textbf{Blendfields} dziedziczy problemy podejść opartych na dokładnej
+  kalibracji kamer. W trakcie eksperymentów zauważyliśmy, że niedokładne
+  spasowanie modelu twarzy powodowało efekt \textit{ghostingu}, gdzie można było
+  zauważyć wiele instancji osoby nakładających się niedokładnie ze sobą.
+  Dodatkowo, niski kontrast zmarszczek wynikających ze zniekształceń objawiał
+  się niską wartości funkcji straty, co powodowało niedokładne dopasowanie
+  modelu do danych.
+
+  \textbf{LumiGauss} ze względu na wykorzystanie harmonik sferycznych niskiego
+  stopnia nie był w stanie modelować ostrych cieni wynikających z kierunkowego
+  oświetlenia, np. słońca w bezchmurny dzień. Jednocześnie wykorzystanie
+  wyższych stopni powodowało błędne dopasowanie do danych i migotanie przy
+  ciągłej rotacji mapy oświetlenia.
+
+  \textbf{CLoG} natomiast miał dwa znaczące ograniczenia wynikające z jego
+  zdefiniowania. Po pierwsze, nie był w stanie modelować scen otwartych, w
+  których scena nie ma określonych granic. Po drugie, jakość rekonstrukcji była
+  niższa od standardowego podejścia Gaussian Splatting w scenach o dużej
+  złożoności (np. scena z trawnikiem, gdzie pojedyncze źdźbła są widoczne na
+  zdjęciach). To ograniczenie wynikało z użycia reprezentacji w postaci
+  dwuwymiarowej mapy, gdzie mapowanie otwartej reprezentacji lub wielu
+  szczegółów jest ograniczone.
+
+  \responsedelimiter
+
+\paragraph{Pytanie.}
+  Rozdział 2.4.4 -- ,,our controllability losses do not interfere with the
+  rendering quality'' -- jak zostało to zmierzone?
+\paragraph{Odpowiedź.}
+  Głównym celem zastosowanych składowych funkcji w CoNeRFie straty było
+  nauczenie sieci dwóch rzeczy---poprawnej rekonstrukcji obrazów po
+  zaaplikowaniu równania renderującego oraz rekonstrukcji adnotacji masek, które
+  były dostępne dla niektórych ze zdjęć. By dodatkowo wymusić gładkość
+  rekonstrukcji, czyli aby dla dwóch oznaczeń czasowych $t_1, t_2, t_2 - t_1 \to
+    0$ ich rekonstrukcje były maksymalnie podobne\footnote{W pracy powołuję się na
+    warunek Lipschitza, czyli $\|f(t_2) - f(t_1)\| \leq \|t_2 - t_1\|$, gdzie
+    $f(t)$ jest funkcją rekonstruującą obraz dla oznaczenia czasowego $t$.}. Celem
+  tej pracy były jedynie dodanie możliwości kontroli wyjścia bez wpływu na
+  jakość tej predykcji. W tym celu wykonałem ablację, gdzie mierzyłem jak
+  dodanie kolejnych elementów funkcji straty wpływa na zadanie rekonstrukcji. W
+  Tabeli~4 przedstawiłem wyniki i pokazałem, że przy zadaniu interpolacji
+  widoków wyniki nie zmieniają się w porównaniu do zwykłego NeRFa, który jest
+  warunkowany wyuczalnym, wielowymiarowym wektorem~\cite{mildenhall2020nerf}. W
+  tym kontekście przedstawiłem wniosek, że zdefiniowane funkcje straty
+  odpowiadający za dodanie kontroli predykcji nie wpływają na jakość
+  renderowania.
+
+  \responsedelimiter
+
+\paragraph{Pytanie.}
+  W przypadku prezentowanych metod warto byłoby żeby Doktorant umieścił linki do
+  przykładowych sekwencji ukazujących ich właściwości, np. w postaci wideo.
+  Kilka znalazłem, ale przez przypadek.
+\paragraph{Odpowiedź.}
+  Zgadzam się z Recenzentem, że linki do stron z materiałami powinny być
+  umieszczone w pracy. Pragnę je przytoczyć tutaj:
+  \begin{itemize}
+    \item CoNeRF: \url{https://conerf.github.io/}
+    \item BlendFields: \url{https://blendfields.github.io/}
+    \item LumiGauss: \url{https://lumigauss.github.io/}
+  \end{itemize}
+  Materiały dotyczący CLoG nie zostały upublicznione.
+  Można je znaleźć spakowane w pliku \texttt{zip} pod
+  \href{https://drive.google.com/file/d/1ViaYDDo-x5DjfMBDzO1bjK4UDX1qEomv/view?
+    usp=sharing}{tym linkiem}.
+
+  \responsedelimiter
+
+\paragraph{Pytanie.}
+  Rozdział 3.2.4, Rozdział 4.4.2 i wiele innych miejsc -- dziwne użycie słowa
+  ,,concurrent''. Być może chodziło o ,,competitive''?
+\paragraph{Odpowiedź.}
+  Publikacje znajdujące się w pracy doktorskiej były umieszczane z zawartością
+  taką, jaką posiadały w momencie publikacji lub wysyłania do recenzji. To
+  oznacza też, że w wielu przypadkach odnosiłem się do prac równoległych, czyli
+  takich, które były publikowane w podobnym momencie, w którym pisałem daną
+  publikację. Ze względu na chęć zachowania oryginalności treści publikacji, nie
+  redagowałem ich przy umieszczaniu ich w pracy doktorskiej.
+
+  \responsedelimiter
+
+\paragraph{Pytanie.}
+  Rozdział 5.3.5 -- nie do końca jasne jest uzasadnienie naukowe takiego, a nie
+  innego wyboru architektury sieci MLP.
+\paragraph{Odpowiedź.}
+  Zastosowana architektura była dobrana empirycznie w czasie wczesnych
+  eksperymentów. Została ona oparta na jednej z pierwszych prac dotyczącej
+  NeRFów~\cite{mildenhall2020nerf}. Jej dobór został podyktowany chęcią łatwego
+  dopasowania sieci do danych treningowych przy jednoczesnym zachowanie
+  ograniczenia pamięci wykorzystywanej wtedy karty graficznej A100 z 40GB VRAM.
+
+  \responsedelimiter
+
+\paragraph{Pytanie.}
+  Obecnie obserwujemy bardzo dynamiczny rozwój badań oraz metod dotyczących
+  połączenia, czy też sterowania procesami generatywnymi z a pomocą wielkich
+  modeli językowych LLM. Co prawda w końcowym rozdziale 6.2 Autor coś wspomina o
+  rozwiązaniach typu ,,text-prompted'', jednakże bardzo brakuje mi powiązania
+  tego nurtu z tym co Doktorant prezentuje w swojej rozprawie.
+\paragraph{Odpowiedź.}
+  Zgadzam się z recenzentem, że wykorzystanie modeli językowych do budowy
+  generatywnych podejść rekonstrukcji 3D jest bardzo ciekawym kierunkiem. W tej
+  rozprawie skupiłem się na podejściu rekonstrukcji \textit{per} scena ze
+  względu na ograniczenia obliczeniowe. Dodatkowo znaczący rozwój tych modeli
+  pojawił się w późniejszym okresie, kiedy prace na prezentowanymi publikacjami
+  były już w zaawansowanym stadium. Pragnę zaznaczyć jak bardzo rozwinęła się ta
+  klasa modeli i przytoczyć kilka przykładowych kategorii oraz prac, które
+  zostały opracowane w tym czasie:
+  \begin{itemize}
+    \item generowanie pojedynczych obiektów \cite{tang2024dreamgaussian},
+    \item generowanie całych scen \cite{bai2025360},
+    \item segmentacja obiektów w przestrzeni 3D \cite{kobayashi2022decomposing},
+    \item edytowanie pojedynczych obiektów \cite{haque2023instruct}.
+  \end{itemize}
+
+  \responsedelimiter
+
+  \printbibliography[title={Bibliografia}]
+
+\end{document}
