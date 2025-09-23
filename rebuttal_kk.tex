@@ -56,16 +56,20 @@
   i~działa w przestrzeni kanonicznej. Dzięki temu możemy dowolnie mieszać
   wartości atrybutów, mimo że w~czasie treningu przedstawione były tylko pewne
   możliwe kombinacje atrybutów. Na przykład, w~czasie treningu wektory atrybutów
-  wynosiły $[1, 0, 0], [0, 1, 0], [0, 0, 1]$, a~dzięki naszemu systemu
+  wynosiły $[1, 0, 0], [0, 1, 0], [0, 0, 1]$, natomiast~dzięki naszemu systemowi
   maskowania, możliwe jest realistyczne renderowanie obiektu zainteresowania
   przy podaniu wektora $[1, 1, 1]$ na wejście. Przykład takiej ekstrapolacji
   prezentuję na Rysunku~2 Rozdziału~2 oraz na wizualizacjach znajdujących się na
-  stronie \url{https://conerf.github.io}. Natomiast w~\blendfields mamy do
-  czynienia z~wielowymiarowym wektorem reprezentującym wartości ekspresji. Ten
-  wektor warunkuje pozycje wierzchołków czworościanów, które budują naszą
-  przestrzeń. Ze względu, że wartości kolorów predykowanych przez model są
-  warunkowane tylko lokalnym sąsiedztwem czworościanów, lokalne zmiany
-  w~przestrzeni są niezależne od siebie. To powoduje, że nawet przy
+  stronie \url{https://conerf.github.io}. Warto zauważyć, że te wektory
+  warunkujące posiadają wartości z~zakresu $[0, 1]$, wymuszone funkcją
+  sigmoidalną. Podanie wartości wektora kontroli spoza tego zakresu
+  spowodowałoby renderowanie nierealistycznych zmian w~obrazie.
+
+  W~\blendfields mamy do czynienia z~wielowymiarowym wektorem reprezentującym
+  wartości ekspresji. Ten wektor warunkuje pozycje wierzchołków czworościanów,
+  które budują naszą przestrzeń. Ze względu, że wartości kolorów predykowanych
+  przez model są warunkowane tylko lokalnym sąsiedztwem czworościanów, lokalne
+  zmiany w~przestrzeni są niezależne od siebie. To powoduje, że nawet przy
   wykorzystaniu niewielu skrajnych wyrazów twarzy w~czasie treningu, jesteśmy
   w~stanie przedstawiać wygląd zmarszczek nawet przy nowych wyrazach twarzy
   z~wysoką jakością. Taka ekstrapolacja jest właśnie przedstawiona na renderze
@@ -73,7 +77,12 @@
   \url{https://blendfields.github.io} dodatkowo prezentuję wpływ nowych wyrazów
   twarzy, nie widzianych w czasie treningu, na predykowany kolor skóry. Wysoki
   realizm renderowanych sekwencji pokazuje, że BlendFields jest w~stanie
-  predykować nowe zmarszczki przy minimalnym nakładzie danych.
+  predykować nowe zmarszczki przy minimalnym nakładzie danych. W~przypadku
+  BlendFields, wektor warunkujący (wektor ekspresji) również posiada wartości
+  z~zakresu $[0, 1]$. Zauważyliśmy, że w~tym modelu podanie wartości spoza
+  zakresu wciąż jest w~stanie renderować realistycznie wyglądający obrazy, w~tym
+  zmarszczki na twarzy ludzi. Jednakże same ekspresje wtedy wydają się
+  nierealistyczne w~sensie fizycznym.
 
   \responsedelimiter
 
