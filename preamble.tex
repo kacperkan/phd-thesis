@@ -56,7 +56,8 @@
       align=center} % only for debugging..
 }
 \input{tikz_addons.tex}
-\tikzexternalize[shell escape=-enable-write18]
+% Disable tikzexternalize for arXiv compatibility (requires shell-escape)
+% \tikzexternalize
 
 \newcommand{\KK}[1]{\textbf{\color{teal}[KK: #1]}}
 \newcommand{\kk}[1]{{\color{teal}#1}}

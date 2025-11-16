@@ -1,6 +1,8 @@
+% !TEX program = pdflatex
 % !TEX root = ./main.tex
 
 \documentclass{diploma} 
+
 
 \input{preamble.tex}
 
@@ -12,9 +14,9 @@
 
 \addbibresource{main.bib}
 
+% Disable tikzexternalize for arXiv compatibility
+% \tikzexternalize
 
-
-\tikzexternalize
 
 
 \includeonly{
@@ -27,18 +29,13 @@ sections/7_discussion,
 }
 
 
+
 \begin{document}
 
-\documentpreface{}
-\include{sections/1_introduction}
-\include{sections/3_conerf/paper}
-\include{sections/4_blendfields/paper}
-\include{sections/5_lumigauss/paper}
-\include{sections/6_clog/paper}
-\include{sections/7_discussion}
-\applybibliography{}
-\clearpage
-\tailpages{}
+\documentpreface{} \include{sections/1_introduction}
+\include{sections/3_conerf/paper} \include{sections/4_blendfields/paper}
+\include{sections/5_lumigauss/paper} \include{sections/6_clog/paper}
+\include{sections/7_discussion} \applybibliography{} \clearpage \tailpages{}
 
 \end{document}
 

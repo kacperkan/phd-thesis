@@ -37,10 +37,7 @@
 %\LoadClass[a4paper,12pt,twoside,openright]{book}
 
 % -------------------------------------------------------------------
-% Możliwość kompilacji przez pdflatex i xelatex
-% -------------------------------------------------------------------
-% -------------------------------------------------------------------
-% Zdefiniowanie parametru klasy
+% Configuration for pdflatex compilation
 % -------------------------------------------------------------------
 \RequirePackage{kvoptions}
 \SetupKeyvalOptions{family=diploma.cls, prefix=pw}
@@ -59,26 +56,12 @@
 \newcommand{\acronymstitle}{List of Abbreviations and Symbols}
 
 % -------------------------------------------------------------------
-% Krój pisma w XeLaTeX
-% Zalecane: krój bezszeryfowy (sfdefault)
-% Symbole matematyczne
-% Specyfikacja kroju pisma
-% Lista krojów pisma (aka "czcionek") w Overleaf:
-% https://www.overleaf.com/learn/latex/Questions/Which%20OTF%20or%20TTF%20fonts%20are%20supported%20via%20fontspec%3F
-% Lista krojów typowo dostępnych w LaTeX:
-% https://tug.org/FontCatalogue/
+% Math packages
 % -------------------------------------------------------------------
 
 \RequirePackage{mathtools}
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
-\RequirePackage{mathspec} % wczytuje również fontspec
-% \setmainfont{Latin Modern Roman}
-% \setromanfont{Latin Modern Roman}
-% \setsansfont{Latin Modern Sans}
-% \setmonofont{Latin Modern Mono}
-% \setmathrm{Latin Modern Math}
-% \setmathfont(Digits,Latin)[Scale=MatchLowercase]{Latin Modern Math}
 
 \RequirePackage{tocloft}
 \renewcommand{\cftpartleader}{\cftdotfill{\cftdotsep}} % for parts
@@ -87,27 +70,10 @@
 
 
 % -------------------------------------------------------------------
-% Podstawowa konfiguracja XeLaTeX
+% Language configuration
 % -------------------------------------------------------------------
 
-% -------------------------------------------------------------------
-% Lokalizacja XeLaTeX % PL-EN
-% Musi być wczytana na początku
-% -------------------------------------------------------------------
-% \RequirePackage[MeX]{polski}
-
-
-\RequirePackage{xltxtra}
-\RequirePackage{polyglossia}
-% \ifnum\strcmp{\locallang}{PL} = 0 
-%     \setdefaultlanguage{polish}
-% \else
-%     \setdefaultlanguage{english}
-% \fi
-% \setotherlanguage{polish}
-\setotherlanguage{english}
-\setdefaultlanguage{english}
-% \setotherlanguage{latin}
+\RequirePackage[english]{babel}
 % -------------------------------------------------------------------
 % Wymiary strony
 % Zalecane:
@@ -545,63 +511,55 @@
 
 \let\oldmaketitle\maketitle
 \renewcommand{\maketitle}{
-    \linespread{1.5}
     \thispagestyle{headings}
     \begin{center}
         {
-            {
-                \setmainfont{Adagio Slab}
-                \fontsize{23pt}{23pt}\selectfont
-                WARSAW UNIVERSITY OF TECHNOLOGY
-            }
-            \vskip 2em
-            {
-                \setmainfont{Helvetica Light}
-                \fontsize{12pt}{12pt}\selectfont
-                \dyscyplinalocal \@dyscyplina \\
-                \dziedzinalocal \@dziedzina 
-            }
+            \fontsize{23pt}{29pt}\selectfont\bfseries
+            WARSAW UNIVERSITY OF TECHNOLOGY
+            \par
+        }
+        \vskip 2em
+        {
+            \fontsize{12pt}{18pt}\selectfont
+            \dyscyplinalocal \@dyscyplina \\
+            \dziedzinalocal \@dziedzina
+            \par
         }
 
         \vskip 6em
         {
-            \setmainfont{Adagio Slab Light}
             \fontsize{43pt}{43pt}\selectfont
             Ph.D. Thesis
         }
         \vskip 4em
         {
-            \setmainfont{Helvetica Light}
             \fontsize{16pt}{16pt}\selectfont
             \@author \\
         }
         \vskip 4em
         {
-            \setmainfont{Helvetica}
-            \fontsize{16pt}{16pt}\selectfont
+            \fontsize{16pt}{16pt}\selectfont\bfseries
             \titlelocal \\
         }
         \vskip 5em
         \begin{flushright}
-            \setmainfont{Helvetica}
             \fontsize{12pt}{16pt}\selectfont
             % \albumlocal \@album
             \vskip 2em
-            \promotorlocal\\
-            \setmainfont{Helvetica Light}
+            \bfseries\promotorlocal\\
+            \mdseries
             \fontsize{12pt}{16pt}\selectfont
             \@promotor
             \vskip 2em
-            \setmainfont{Helvetica}
+            \bfseries
             \fontsize{12pt}{16pt}\selectfont
             \promotorpomocniczylocal\\
-            \setmainfont{Helvetica Light}
+            \mdseries
             \fontsize{12pt}{16pt}\selectfont
             \@promotorpomocniczy
         \end{flushright}
         {
         \vfill
-        \setmainfont{Helvetica Light}
         \fontsize{12pt}{12pt}\selectfont
         \citylocal \@date
         }

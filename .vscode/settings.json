@@ -1,20 +1,35 @@
 {
     "editor.formatOnSave": true,
-    "latex-workshop.latex.build.forceRecipeUsage": false,
+    "latex-workshop.latex.build.forceRecipeUsage": true,
     "latex-workshop.latex.tools": [
         {
-            "name": "latexmk",
-            "command": "latexmk",
+            "name": "pdflatex",
+            "command": "pdflatex",
             "args": [
-                "-xelatex",
                 "-synctex=1",
                 "-interaction=nonstopmode",
-                "-enable-write18",
                 "-file-line-error",
                 "-output-directory=./aux",
-                "-aux-directory=./aux",
-                "--shell-escape",
                 "%DOC%"
+            ]
+        },
+        {
+            "name": "biber",
+            "command": "biber",
+            "args": [
+                "--output-directory=./aux",
+                "%DOCFILE%"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "pdflatex ➞ biber ➞ pdflatex × 2",
+            "tools": [
+                "pdflatex",
+                "biber",
+                "pdflatex",
+                "pdflatex"
             ]
         }
     ],
@@ -24,7 +39,7 @@
         "-m",
         "-c",
         "%OUTDIR%/",
-        "%TMPFILE%",
+        "%TMPFILE%"
     ],
     "latex-workshop.latex.outDir": "%DIR%/aux",
     "editor.wordWrap": "wordWrapColumn",
@@ -33,5 +48,7 @@
     "cSpell.words": [
         "editability"
     ],
-    "editor.rulers": [81]
+    "editor.rulers": [
+        81
+    ]
 }

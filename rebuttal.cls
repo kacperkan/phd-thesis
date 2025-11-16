@@ -37,10 +37,7 @@
 %\LoadClass[a4paper,12pt,twoside,openright]{book}
 
 % -------------------------------------------------------------------
-% Możliwość kompilacji przez pdflatex i xelatex
-% -------------------------------------------------------------------
-% -------------------------------------------------------------------
-% Zdefiniowanie parametru klasy
+% Configuration for pdflatex compilation
 % -------------------------------------------------------------------
 \RequirePackage{kvoptions}
 \RequirePackage{polski}
@@ -61,44 +58,17 @@
 \newcommand{\acronymstitle}{List of Abbreviations and Symbols}
 
 % -------------------------------------------------------------------
-% Krój pisma w XeLaTeX
-% Zalecane: krój bezszeryfowy (sfdefault)
-% Symbole matematyczne
-% Specyfikacja kroju pisma
-% Lista krojów pisma (aka "czcionek") w Overleaf:
-% https://www.overleaf.com/learn/latex/Questions/Which%20OTF%20or%20TTF%20fonts%20are%20supported%20via%20fontspec%3F
-% Lista krojów typowo dostępnych w LaTeX:
-% https://tug.org/FontCatalogue/
+% Math packages
 % -------------------------------------------------------------------
 
 \RequirePackage{mathtools}
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
-\RequirePackage{mathspec} % wczytuje również fontspec
-% \setmainfont{Latin Modern Roman}
-% \setromanfont{Latin Modern Roman}
-% \setsansfont{Latin Modern Sans}
-% \setmonofont{Latin Modern Mono}
-% \setmathrm{Latin Modern Math}
-% \setmathfont(Digits,Latin)[Scale=MatchLowercase]{Latin Modern Math}
 
 \RequirePackage{tocloft}
 %\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} % for sections, if you really want! (It is default in report and book class (So you may not need it).
 
 
-% -------------------------------------------------------------------
-% Podstawowa konfiguracja XeLaTeX
-% -------------------------------------------------------------------
-
-% -------------------------------------------------------------------
-% Lokalizacja XeLaTeX % PL-EN
-% Musi być wczytana na początku
-% -------------------------------------------------------------------
-
-
-\RequirePackage{xltxtra}
-% \setdefaultlanguage{english}
-% \setotherlanguage{latin}
 % -------------------------------------------------------------------
 % Wymiary strony
 % Zalecane:
