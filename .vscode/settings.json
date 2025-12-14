@@ -1,5 +1,5 @@
 {
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": false,
     "latex-workshop.latex.build.forceRecipeUsage": true,
     "latex-workshop.latex.tools": [
         {
